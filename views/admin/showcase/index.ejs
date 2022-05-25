@@ -1,0 +1,58 @@
+<%- include('../partials/adminheader') %>
+<%- include('../partials/adminmenu') %>
+<%- include('../partials/adminflash') %>
+
+<div class="jumbotron">
+  <div class="container">
+    <!-- <i class="fas fa-id-card fa-6x"></i> -->
+    
+    <h1 class="display-3">SHOWCASE</h1>
+    <p class="lead">Cliquez sur les éléments à mettre en avant ici !</p>
+    
+    <hr>
+    <div class="row">
+      <%  elements.forEach(function(element){ %>
+        <a onclick="toggleShowcaseElement('<%=element._id%>');" class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+          <% if( general.showcaseElements.indexOf(element._id.toString()) == -1 ){ %>
+            <div id="showcase-<%=element._id%>" class="link-site"><%= element.title %></div> 
+          <% } else { %>
+            <div id="showcase-<%=element._id%>" style="background:black; color:white;" class="link-site"><%= element.title %></div>
+          <% } %>
+        </a>
+      <%  }) %>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/adminfooter') %>
+
+
+<script type="text/javascript">
+  
+  // $( document ).ready(function() {
+    function toggleShowcaseElement(id){
+      $.ajax({
+            url: "/admin/showcase",
+            type: "POST",
+            data: {
+                '_id': id
+            },
+            success: function(data){
+                // alert(data._id);
+                if(data.show == true){
+                  $("#showcase-"+id).css("background", "black");
+                  $("#showcase-"+id).css("color", "white");
+                }
+                else{
+                  $("#showcase-"+id).css("background", "transparent");
+                  $("#showcase-"+id).css("color", "black");
+                }
+                
+
+            }
+        });
+    }
+  // });
+    
+</script>
+

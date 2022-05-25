@@ -1,0 +1,24 @@
+<%- include('../partials/adminheader') %>
+<%- include('../partials/adminflash') %>
+
+
+<div class="jumbotron centered">
+  <div class="container">
+
+    <h1 class="display-3 text-center"><%= lang.appName %></h1>
+    <h1 class="display-6 text-center">back office</h1>
+    <br/>
+    <a class="link-site" href="/register"><%= lang.menuSignup %></a>
+    <a class="link-site" href="/login"><%= lang.menuLogin %></a>
+    <!-- <a style="border-radius:0 !important;" class="btn btn-outline-dark" href="/menu">Menu</a> -->
+    <!-- <a style="border-radius:0 !important;" class="btn btn-outline-dark" href="/recettes">Food</a> -->
+  </div>
+</div>
+
+<%- include('../partials/adminfooter') %>
+
+<script>
+  //Pour l'accueil
+  CreatePochette('.pochette', '400');
+
+</script>

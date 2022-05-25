@@ -1,0 +1,329 @@
+<%- include('../partials/adminheader') %>
+<%- include('../partials/adminmenu') %>
+<%- include('../partials/adminflash') %>
+
+
+<div class="jumbotron">
+  <div class="container">
+    <!-- <i class="fas fa-id-card fa-6x"></i> -->
+    
+    <h1 class="display-3">GENERAL</h1>
+    <hr>
+    <p class="lead">Vous pouvez modifier les infos générales du site ici !</p>
+    
+
+    <form class="form-custom" action="/admin/general" method="POST" encType="multipart/form-data">
+      <!-- <div class="form-group">
+        <p class="lead">Biographie :</p>
+        <textarea id="summernote-bio" name="bio"><%=general.bio%></textarea>
+      </div> -->
+
+      <!--------------------------- W E B Z I N E --------------------------->
+      <div class="form-group">
+        <p class="lead">Mode blog (active/désactive inscription, connexion et commentaires)</p>
+        <input id="checkboxWebZine" type="checkbox" name="webZine">
+        <%if(general.webZine === true){%>
+          <script>
+            $("#checkboxWebZine").bootstrapSwitch('state', true);
+          </script>
+        <%}else{%>
+          <script>
+            $("#checkboxWebZine").bootstrapSwitch('state', false);
+          </script>
+        <%}%>
+      </div>
+
+      <!--------------------------- E  -  C O M M E R CE --------------------------->
+      <div class="form-group">
+        <p class="lead">Mode e-commerce (active/désactive les boutiques, le panier, reviews produits et systèmes de paiement)</p>
+        <input id="checkboxECommerce" type="checkbox" name="eCommerce">
+        <%if(general.eCommerce === true){%>
+          <script>
+            $("#checkboxECommerce").bootstrapSwitch('state', true);
+          </script>
+        <%}else{%>
+          <script>
+            $("#checkboxECommerce").bootstrapSwitch('state', false);
+          </script>
+        <%}%>
+      </div>
+
+      <!--------------------------- A B O U T     V I S I B L E  --------------------------->
+      <!-- <div class="form-group">
+        <p class="lead">About :</p>
+        <input id="checkboxAbout" type="checkbox" name="aboutVisible">
+        <%if(general.aboutVisible === true){%>
+          <script>
+            $("#checkboxAbout").bootstrapSwitch('state', true);
+          </script>
+        <%}else{%>
+          <script>
+            $("#checkboxAbout").bootstrapSwitch('state', false);
+          </script>
+        <%}%>
+      </div> -->
+
+      <!--------------------------- C O N T A C T     V I S I B L E  --------------------------->
+      <div class="form-group">
+        <p class="lead">Contact :</p>
+        <input id="checkboxContact" type="checkbox" name="contactVisible">
+        <%if(general.contactVisible === true){%>
+          <script>
+            $("#checkboxContact").bootstrapSwitch('state', true);
+          </script>
+        <%}else{%>
+          <script>
+            $("#checkboxContact").bootstrapSwitch('state', false);
+          </script>
+        <%}%>
+      </div>
+        
+      <!--------------------------- M A I L  --------------------------->
+      <div class="form-group">
+        <p class="lead">Mail de contact :</p>
+        <input type="text" name="contactMail" class="form-control" value="<%= general.contactMail %>" />
+      </div>
+      <!--------------------------- E R R E U R    4 0 4  --------------------------->
+      <!-- <div class="form-group">
+        <p class="lead">Page erreur 404 :</p>
+        <textarea id="summernote-404" name="error404Message"><%= general.error404Message %></textarea>
+      </div> -->
+
+      <!-- ----------------------- B A C K G R O U N D     T H E M E  --------------------->
+      <!-- <div class="form-group border-box-site" >
+        <p class="lead">Background theme </p>
+        <% if(general.backgroundImage){ %>
+            <img id="displayImg" onclick="$('#input-file').click();" style="max-width:100%;max-height: 100px;" src="upload/<%=general.backgroundImage%>">
+        <%} else {%>
+            <img id="displayImg" onclick="$('#input-file').click();" style="max-width:100%;max-height: 100px;" src="img/<%= lang.noImg %>" alt="no img">
+        <%}%>
+        <a style="margin-left: 30px;" onclick="$('#input-file').click();" class="link-site">Choose file</a>
+        <input style="display:none;" id="input-file" onchange="encodeImgtoBase64(this)" name="backgroundImage" accept="image/png, image/gif, image/jpeg" type="file" class="form-control-file">
+        <input type="hidden" name="backgroundImage" value="<%=general.backgroundImage%>">
+      </div> -->
+
+      <div class="form-group border-box-site" >
+        <p class="lead">Background theme image &nbsp;
+          <input id="checkboxBackground" type="checkbox" name="backgroundImage">
+          <%if(general.backgroundImage){%>
+            <script>
+              $("#checkboxBackground").bootstrapSwitch('state', true);
+            </script>
+          <%}else{%>
+            <script>
+              $("#checkboxBackground").bootstrapSwitch('state', false);
+            </script>
+          <%}%>
+          <script>
+            $('#checkboxBackground').on('switchChange.bootstrapSwitch', function (event, state) {
+                if(state == true){
+                  $("#backgroundImage").fadeIn(300);
+                  $("#deleteBackgroundImage").val("no");
+                }
+                else{
+                  $("#backgroundImage").fadeOut(300);
+                  $("#deleteBackgroundImage").val("yes");
+                  // $("#backgroundImageInput").val(false);
+                }
+              });
+          </script>
+       </p>
+  
+       <!-- <input id="backgroundImageInput" type="hidden" value="" name="backgroundImage" /> -->
+  
+        <script>
+          $('#input-file').change(function() {
+            alert( "Handler for .change() called.");
+            $("#backgroundImageInput").val(true);
+          });
+        </script>
+        
+        
+        <!-- ----------------------- B A C K G R O U N D      I M A G E --------------------->
+        <span id="backgroundImage">
+          <% if(general.backgroundImage){ %>
+              <img id="displayImg" onclick="$('#input-file').click();" style="max-width:100%;max-height: 100px;" src="upload/<%=general.backgroundImage%>">
+          <%} else {%>
+              <img id="displayImg" onclick="$('#input-file').click();" style="max-width:100%;max-height: 100px;" src="img/<%= lang.noImg %>" alt="no img">
+              <script>$("#backgroundImage").fadeOut(300);</script>
+          <%}%>
+          <a style="margin-left: 30px;" onclick="$('#input-file').click();" class="link-site">Choose image</a>
+          <input style="display:none;" id="input-file" onchange="encodeImgtoBase64(this)" name="backgroundImage" accept="image/png, image/gif, image/jpeg" type="file" class="form-control-file">
+        </span>
+        
+      </div>
+
+      <input id="actualBackgroundImage" type="hidden" name="actualBackgroundImage" value="<%=general.backgroundImage%>">
+      <input id="deleteBackgroundImage" type="hidden" name="deleteBackgroundImage" value="no">
+
+      <!--------------------------- L I N K        S O C I A L --------------------------->
+      <div class="form-group border-box-site">
+        <p class="lead">Liens réseaux sociaux :</p>
+        <hr>
+        <div class="row" style="margin-bottom:30px;">
+          <div class="col-2">
+            <input id="linkName" placeholder="Nom" type="text" class="form-control" />
+          </div>
+          <div class="col-8">
+            <input id="linkValue" placeholder="Lien" type="text" class="form-control" />
+          </div>
+          <div class="col-1">
+            <a class="link-site" onclick="addLink();">Ajouter </a>
+          </div>
+        </div>
+        
+        <script>
+          var socialLinkTable = [];
+          let link;
+        </script>
+        <div id="links">
+          <% general.socialLinks.forEach(function(element){ %>
+            <span id="<%= element._id %>">
+              <hr>
+              <div class="row" >
+                <div class="col-2">
+                  <p class="lead"><%= element.name %></p>
+                </div>
+                <div class="col-8">
+                  <p class="lead"><%= element.adress %></p>
+                </div>
+                <div class="col-1">
+                  <a class="link-site" onclick="deleteLink('<%= element._id %>', '<%= element.name %>');">Supprimer</a>
+                </div>
+              </div>
+              <script>
+                link = {
+                    name: '<%= element.name %>',
+                    adress: '<%= element.adress %>'
+                }
+                socialLinkTable.push(link);
+              </script>
+            </span>
+          <%});%>
+
+        </div>
+      
+        <input id="socialLinks" type="hidden" name="socialLinks" />
+      </div>
+      <button type="submit" class="w-100 link-site">Enregistrer</button>
+    </form>
+
+  </div>
+</div>
+
+<%- include('../partials/adminfooter') %>
+
+
+<!-- Initialize  editor -->
+<script type="text/javascript">
+
+  //TextEncoder BASE 64
+  function encodeImgtoBase64(element) {
+  var img = element.files[0];
+  var reader = new FileReader();
+  reader.onloadend = function() {
+  $("#displayImg").attr("src", reader.result);
+  $("#displayImg").show();
+  // $("#convertImg").val(reader.result);
+  }
+  reader.readAsDataURL(img);
+  }
+
+  $(document).ready(function() {
+        $('#summernote-bio').summernote({
+          placeholder: 'Je suis née en Australie dans les années 90...',
+          tabsize: 2,
+          height: 200,
+          callbacks: {
+              onPaste: function (e) {
+                  var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                  e.preventDefault();
+                  document.execCommand('insertText', false, bufferText);
+              }
+          },
+          toolbar: [
+              ['style', ['bold', 'italic', 'underline']]
+              // ['color', ['color']],
+              // ['para', ['ul', 'ol', 'paragraph']],
+              // ['view', ['codeview']],
+          ],
+          focus: false 
+        });
+        $('#summernote-404').summernote({
+          placeholder: 'Je suis née en Australie dans les années 90...',
+          callbacks: {
+              onPaste: function (e) {
+                  var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                  e.preventDefault();
+                  document.execCommand('insertText', false, bufferText);
+              }
+          },
+          tabsize: 2,
+          height: 100,
+          toolbar: false
+        });
+  });
+</script>
+
+
+<!-- LINK SOCIALS -->
+<script type="text/javascript">
+
+  //On init le input hidden
+  $("#socialLinks").val(JSON.stringify(socialLinkTable));
+
+  
+  var id = 0;
+  function addLink(){
+    // let newLinkObject =  [];
+    let linkName = $("#linkName").val();
+    let linkValue = $("#linkValue").val();
+    if(linkName != "" && linkValue != ""){
+      let obj = {
+          name: linkName,
+          adress: linkValue
+      };
+      socialLinkTable.push(obj);
+
+      //on reset le formulaire
+      $("#linkName").val("");
+      $("#linkValue").val("");
+       
+      //On update le input hidden
+      $("#socialLinks").val(JSON.stringify(socialLinkTable));
+
+      //on rajoute sur la page
+
+      var html = '<span id="'+id+'"><hr>';
+      html += '<div class="row">';
+      html +='<div class="col-2" >';
+      html += '<p class="lead">'+linkName+'</p>';
+      html += '</div>';
+      html += '<div class="col-8">';
+      html += '<p class="lead">'+linkValue+'</p>';
+      html += '</div>';
+      html += '<div class="col-1">';
+      html += "<a class='link-site' onclick='deleteLink(`"+id+"`, `"+linkName+"`);'>Supprimer</a>";
+      html += '</div>';
+      html += '</div></span>';
+      $("#links").append(html);
+      id++;
+    }
+    else{
+      alert("Vous devez remplir les champs !");
+    }
+    
+  }
+
+  function deleteLink(id, name){
+    $('#'+id).remove();
+    //on supprime du tableau
+    socialLinkTable.forEach(function(element, index){
+      if(element.name == name){
+        var filtered = socialLinkTable.filter(function(el) { return el.name != name; });
+        //On update le input hidden
+        $("#socialLinks").val(JSON.stringify(filtered));
+      }
+    });
+  }
+</script>

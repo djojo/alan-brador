@@ -1,0 +1,515 @@
+<%- include('../partials/adminheader') %>
+<%- include('../partials/adminmenu') %>
+<%- include('../partials/adminflash') %>
+
+
+<div id="modal" class="modalBox">
+  <div class="modalContent">
+    <div id="modalMain" style="background: white;padding: 50px;">
+      <h1 class="display-6">Voulez vous vraiment supprimer l'élément <%=element.title%> ?</h1>
+      <p class="lead">Cela supprimera aussi toutes les photos associés...</p>
+      <form title="Supprimer" style="display: inline-block;" action="/admin/elements/delete" method="POST">
+        <input type="hidden" value="<%=element.sectionId%>" name="sectionId" />
+        <button value="<%=element._id%>" name="elementId" class="btn btn-outline-danger btn-sm" type="submit">Supprimer</button>
+        <span style="margin-left:20px;" class="modalClose btn btn-outline-dark btn-sm">Annuler</span>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+
+<div class="form-custom">
+  <form action="/admin/elements/edit" method="POST" encType="multipart/form-data">
+    <h1 class="display-5">Modifier l'élément: <%=element.title%></h1>
+    <input type="hidden" name="elementId" value="<%=element._id%>">
+    <input type="hidden" name="sectionId" value="<%=element.sectionId%>">
+    <input type="hidden" name="sectionTitle" value="<%=element.sectionTitle%>" >
+    <input type="hidden" name="sectionUrl" value="<%=section.url%>">
+    <input type="hidden" name="images" value="<%=element.images%>" id="imagesToKeep">
+    <input type="hidden" name="imagesToDelete" id="imagesToDelete" >
+
+
+    <!-------------------------- T I T L E -------------------->
+    <div class="form-floating">
+      <input value="<%=element.title%>" type="text" class="form-control" placeholder="Titre" name="title">
+      <label for="floatingInput">Titre</label>
+    </div>
+
+    <!-------------------------- V I S I B L E -------------------->
+    <div class="form-group border-box-site">
+      <p class="lead">En ligne</p>
+      <input id="checkboxVisible" type="checkbox" name="visible">
+      <%if(element.visible === true){%>
+        <script>
+          $("#checkboxVisible").bootstrapSwitch('state', true);
+        </script>
+      <%}else{%>
+        <script>
+          $("#checkboxVisible").bootstrapSwitch('state', false);
+        </script>
+      <%}%>
+    </div>
+
+    <!--------------------------- T A G S --------------------------->
+    <% if(section.type == "articles"){ %>
+      <div class="form-floating">
+        <input value="<%=element.tags%>" type="text" class="form-control" placeholder="Tags" name="tags">
+        <label for="floatingInput">Tags (séparez par une virgule)</label>
+      </div>
+    <% } %>
+
+    <!-------------------------- L E G E N D -------------------->
+    <% if(section.type == "shop" || section.type == "gallery") { %>
+      <div class="form-floating">
+        <input value="<%=element.legend%>" type="text" class="form-control" placeholder="Legend" name="legend">
+        <label for="floatingInput">Legende</label>
+      </div>
+    <% } else if(section.type === "articles") { %>
+      <div class="form-floating">
+        <input value="<%=element.legend%>" type="text" class="form-control" placeholder="Catégorie" name="legend">
+        <label for="floatingInput">Catégorie</label>
+      </div>
+    <%} %>  
+
+
+
+
+    <!-- ------------- IF   E V E N T S  ------------------->
+    <% if(section.type === "events") { %>
+      <!-------------------------- D A T E -------------------->
+      <div class="form-floating">
+        <input id="datePicker" type="date" class="form-control" name="date">
+        <label for="floatingInput">Date</label>
+      </div>
+      <script>
+        $('#datePicker').val(new Date('<%= element.date%>').toLocaleDateString('fr-CA'));
+      </script>
+      <!-------------------------- A D R E S S -------------------->
+      <div class="form-floating">
+        <input value="<%=element.adress%>" type="text" class="form-control" placeholder="Adresse" name="adress">
+        <label for="floatingInput">Lieu</label>
+      </div>
+    <%} %>  
+
+
+    
+   
+
+    <!-------------------------- T E X T    E D I T O R -------------------->
+    <% if(section.type == "gallery" || section.type == "shop"){ %>
+      <div class="form-group">
+        <textarea placeholder="Description" id="summernote" name="description"><%=element.description%></textarea>
+      </div>
+    <% } %>
+    
+
+    
+
+    <script type="text/javascript">
+      //On initialise le tableau des paragraphes
+      var tablePar = [];
+      var par;
+      var indexPar = 0;
+    </script>
+    <!-------------------------- P A R A G R A P H E S -------------------->
+    <% if(section.type == "articles" || section.type == "events"){ %>
+      <input id="articleContent" type="hidden" name="articleContent"/>
+      <span id="pars">
+        <% if(element.articleContent) { %>
+          <% element.articleContent.forEach(function(par, index){ %>
+            <div id="par-<%= par._id %>" class="form-group">
+              <div class="d-flex justify-content-between">
+                <h1 style="display:inline-block;" class="display-5">Paragraphe <%=index+1%></h1>  
+                <a onclick="deletePar('<%= par._id %>', '<%=index%>');" class="link-site">Supprimer paragraphe <%=index+1%> </a>
+              </div>
+              <!-------------------------- A R T I C L E    S U B T I T L E -------------------->
+              <div class="form-floating">
+                <input id="sub-<%=index%>" value="<%= par.subTitle %>" type="text" class="form-control">
+                <label for="floatingInput">Sous titre</label>
+              </div>
+
+              <!-------------------------- A R T I C L E      P A R A G R A P H E -------------------->
+              <div class="form-group">
+                <textarea class="editorPar" id="content-<%=index%>" placeholder="Description"><%= par.paragraph %></textarea>
+              </div>
+
+              <!-------------------------- A R T I C L E      Q U O T E -------------------->
+              <div class="form-floating">
+                <input id="quote-<%=index%>" value="<%= par.quote %>" type="text" class="form-control">
+                <label for="floatingInput">Citation (laisser vide si pas de citation)</label>
+              </div>
+            </div>
+
+            
+
+            <script type="text/javascript">
+                
+                par = {
+                  id: '<%=index%>',
+                  subTitle: '<%=par.subTitle%>',
+                  paragraph: '<%=par.paragraph%>',
+                  quote: '<%=par.quote%>'
+                };
+                tablePar.push(par);
+                $("#articleContent").val(JSON.stringify(tablePar));
+
+                indexPar++;
+            </script>
+
+
+          <% }); %>
+        <% } %> 
+      </span>
+      <br>
+      <a onclick="addPar();" class="link-site">Ajouter un paragraphe</a>
+      <br><br><br>
+      <!-- <a onclick="getParsData();" class="link-site">Mettre a jour</a> -->
+      <script type="text/javascript">
+
+        // alert("Par init : " + JSON.stringify(tablePar));
+
+        var indexRemoved=[];
+        function deletePar(id, index){
+          $('#par-'+id).remove();
+          indexRemoved.push(index);
+          // alert(indexRemoved);
+          // indexPar--;
+          // var newtablePar = tablePar.filter(function( obj ) {
+          //     // return obj._id.toString() != id;
+          // });
+
+          // alert(JSON.stringify(newtablePar));
+        }
+
+        function addPar(){
+          // alert(indexPar);
+          var html = "";
+          html +='<div id="par-'+indexPar+'" class="form-group">';
+          html +='<div class="d-flex justify-content-between">';
+          html +='<h1 class="display-5">Paragraphe '+(indexPar+1)+'</h1>';
+          html += '<a onclick="deletePar(\''+indexPar+'\', \''+indexPar+'\');" class="link-site">Supprimer</a>';
+          html += '</div>';
+          html +='<div class="form-floating">';
+          html +='<input id="sub-'+indexPar+'" type="text" class="form-control">';
+          html +='<label for="floatingInput">Sous titre</label>';
+          html +='</div>';
+
+          html +='<div class="form-group">';
+          html +='<textarea class="editorPar" id="content-'+indexPar+'" placeholder="Description"></textarea>';
+          html +='</div>';
+
+          html +='<div class="form-floating">';
+          html +=' <input id="quote-'+indexPar+'" type="text" class="form-control">';
+          html +='<label for="floatingInput">Citation (laisser vide si pas de citation)</label>';
+          html +='</div>';
+          html +='</div>';
+          indexPar ++;
+        $("#pars").append(html);
+        $('.editorPar').summernote({
+                      placeholder: 'Description...',
+                      tabsize: 2,
+                      height: 150,
+                      callbacks: {
+                          onPaste: function (e) {
+                              var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                              e.preventDefault();
+                              document.execCommand('insertText', false, bufferText);
+                          }
+                      },
+                      toolbar: [
+                          ['style', ['bold', 'italic', 'underline']]
+                          // ['color', ['color']],
+                          // ['para', ['ul', 'ol', 'paragraph']],
+                          // ['view', ['codeview']],
+                      ],
+                      focus: false 
+                    });
+        }
+
+        var endTablePar = [];
+        
+        function getParsData(){
+          var newpar = [];
+          for(i=0;i<indexPar;i++){
+            // alert($('#content-'+i).val());
+            let removed = false;
+            indexRemoved.forEach(function(removedPar){
+              if (removedPar == i){
+                // alert("removed : "+removedPar);
+                removed = true;
+              }
+            });
+            if(removed == false){
+              newpar = {
+                subTitle: $('#sub-'+i).val(),
+                paragraph: $('#content-'+i).val(),
+                quote: $('#quote-'+i).val()
+              };
+              endTablePar.push(newpar);
+            }
+            
+          }
+          // alert(JSON.stringify(endTablePar));
+          $("#articleContent").val(JSON.stringify(endTablePar));
+        }
+      </script>
+      
+    <% } %>
+    
+
+    
+
+    
+
+
+    
+
+    
+    
+    <!-- ------------- IF    S H O P  ------------------->     
+    <% if(section.type === "shop") { %>
+      <!-------------------------- P R I C E -------------------->
+      <div class="form-floating">
+        <input value="<%=element.price%>" type="number" class="form-control" placeholder="68" name="price">
+        <label for="floatingInput">Prix €</label>
+      </div>
+
+      <!-------------------------- N U M B E R -------------------->
+      <div class="form-floating">
+        <input value="<%=element.nbCopy%>" type="number" class="form-control" placeholder="8" name="nbCopy">
+        <label for="floatingInput">Nombre d'exemplaires</label>
+      </div>
+    <%} %> 
+
+
+
+    
+    <!-- ----------------------- I M A G E S --------------------->
+    <div class="form-group border-box-site">
+      <div class="d-flex justify-content-between">
+        <p class="lead">IMAGES</p>
+        <p><a href="https://www.iloveimg.com/" target="_blank">Please optimise your files before upload</a></p>
+        <button onclick="$('#input-multi-files').click();" class="link-site-small" type="button"><i class="fa fa-plus fa-lg"></i></button>
+        <input style="display:none;" id="input-multi-files" name="sampleFile" accept="image/png, image/gif, image/jpeg" multiple type="file" class="form-control-file">
+      </div>
+      
+      <hr>
+
+      <div class="row preview-images">
+        <%  element.images.forEach(function(image, order){ %>
+          <div onclick="DeleteImage('<%=image%>', '<%=order%>')" class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="<%=order%>">
+              <figure class="img-container">
+                  <img class="img-gallery" src="/upload/<%=image%>" />
+              </figure>
+          </div>
+        <%  }) %>
+      </div>
+    </div>
+
+    <!-- ---------------    Y O U T U B E    --------------------- -->
+
+    <div class="form-group border-box-site">
+      <div class="d-flex justify-content-between">
+        <div>
+          <p class="lead">LIENS YOUTUBE </p>
+        </div>
+        <div>
+          <input id="inputYoutubeLink" type="text" class="form-control" placeholder="ex: 2hSt_Wa0vIU">
+        </div>
+        <div>
+          <button onclick="addInputYoutube();" class="link-site-small" type="button"><i class="fa fa-plus fa-lg"></i></button>
+        </div>
+      </div>
+      
+      <hr>
+      <div class="row youtubeSection">
+        <%if((element.youtube.length != 0)){%>
+            <%for(i = 0; i<element.youtube.length; i++){ %>
+              <div class="col-xs-6 col-sm-4 col-md-3" id="<%=element.youtube[i]%>">
+                <div  class="boxYoutubeElement">
+                  <i style="cursor: pointer; color: white; position: absolute; z-index: 22; left: 10px;" onclick="removeYoutubeLink('<%=element.youtube[i]%>');" class="fa fa-times fa-2x" aria-hidden="true"></i>
+                  <div class="blurYoutube"></div>
+                  <iframe style="position: absolute;" width="180" height="120" src="https://www.youtube.com/embed/<%=element.youtube[i]%>?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+              </div>
+            <%}%>
+          <%}%>
+      </div>
+      <!-- le input caché -->
+      <div class="form-floating" style="display:none;" >
+        <input value="<%=element.youtube%>" type="text" class="form-control" id="YoutubeFinalInput" placeholder="" name="youtube">
+      </div>
+    </div>
+
+    
+    
+    <button onclick="getParsData();" class="w-100 link-site" type="submit">Enregistrer</button>
+  </form>
+
+  <button class="w-100 link-site" onclick="$('.modalBox').show();">Supprimer</button>
+
+</div>
+
+</div>
+
+<!-- -------------------- J A V A S C R I P T ----------------- -->
+<script type="text/javascript">
+
+
+  ////////////////////////////      MODAL DELETE
+  var ebModal = document.getElementById('modal');
+  var ebSpan = document.getElementsByClassName("modalClose")[0];
+  ebSpan.onclick = function() {
+      ebModal.style.display = "none";
+  }
+  window.onclick = function(event) {
+      if (event.target == ebModal) {
+          ebModal.style.display = "none";
+      }
+  }
+
+  ////////////////////////////      EDITOR
+  $(document).ready(function() {
+        $('#summernote').summernote({
+          placeholder: 'Description...',
+          tabsize: 2,
+          height: 150,
+          callbacks: {
+              onPaste: function (e) {
+                  var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                  e.preventDefault();
+                  document.execCommand('insertText', false, bufferText);
+              }
+          },
+          toolbar: [
+              ['style', ['bold', 'italic', 'underline']]
+              // ['color', ['color']],
+              // ['para', ['ul', 'ol', 'paragraph']],
+              // ['view', ['codeview']],
+          ],
+          focus: false 
+        });
+
+        $('.editorPar').summernote({
+            placeholder: 'Description...',
+            tabsize: 2,
+            height: 150,
+            callbacks: {
+                onPaste: function (e) {
+                    var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                    e.preventDefault();
+                    document.execCommand('insertText', false, bufferText);
+                }
+            },
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline']]
+            ],
+            focus: false 
+        });
+        
+  });
+
+  ////////////////////////////      IMAGES
+  $(document).ready(function() {  
+    let imagesPreview = function(input, placeToInsertImagePreview) {
+      if (input.files) {
+        let filesAmount = input.files.length;
+        for (i = 0; i < filesAmount; i++) {
+          let reader = new FileReader();
+          reader.onload = function(event) {
+            var html = "";
+            html += "<div onclick='$(this).remove();' class='col-xs-12 col-sm-12 col-md-6 col-lg-4'>";
+            html += "<figure class='img-container'>";
+            html += "<img class='img-gallery' src='"+event.target.result+"' />";
+            html += "</figure>";
+            html += "</div>";
+            $(".preview-images").append(html);  
+
+            // $($.parseHTML("<img>"))
+            //   .attr("src", event.target.result)
+            //   .appendTo(placeToInsertImagePreview);
+          };
+          reader.readAsDataURL(input.files[i]);
+        }
+      }
+    };
+    $("#input-multi-files").on("change", function() {
+      imagesPreview(this, "div.preview-images");
+    });
+  });
+
+  // On créer un tableau des images a delete
+  var TableDeleteImage = [];
+  //on créer le tableau des images à garder
+  var TableImages = [];
+  <%for(i = 0; i<element.images.length; i++){ %>
+      TableImages.push("<%=element.images[i]%>");
+  <%}%>
+  function DeleteImage(id,position){
+    // alert(id);
+    TableDeleteImage.push(id);
+    //on update le input hidden
+    $("#imagesToDelete").val(TableDeleteImage.toString());
+    
+    //On supprime de la page
+    $("#"+position).remove();
+    //On supprime du tableau des images a garder
+    TableImages = jQuery.grep(TableImages, function(value) {
+      return value != id;
+    });
+    //On update le input hidden
+    $("#imagesToKeep").val(TableImages.toString());
+  }
+
+  //select options auto
+  $('#typeSelector option[value="<%=element.type%>"]').prop('selected', true);
+
+  //--------------YOUTUBE -----------
+  // On créer le tableau deja present
+  var TableYoutube = [];
+  <%for(i = 0; i<element.youtube.length; i++){ %>
+      TableYoutube.push("<%=element.youtube[i]%>");
+  <%}%>
+
+  function removeYoutubeLink(id){
+    //On supprime de la page
+    $("#"+id).remove();
+    //On supprime du tableau
+    TableYoutube = jQuery.grep(TableYoutube, function(value) {
+      return value != id;
+    });
+    //On update le input hidden
+    $("#YoutubeFinalInput").val(TableYoutube.toString());
+  }
+  // alert(TableYoutube);
+  function addInputYoutube(){
+    //on ajoute au tableau youtube
+    var inputYoutubeLink = $("#inputYoutubeLink").val();
+
+    if(inputYoutubeLink != ""){
+      TableYoutube.push(inputYoutubeLink);
+      //On update le input hidden
+      $("#YoutubeFinalInput").val(TableYoutube.toString());
+
+      //On ajoute la video sur la page
+      var html = "";
+      html += "<div class='col-xs-6 col-sm-4 col-md-3' id='" + inputYoutubeLink + "'>";
+      html += "<div class='boxYoutubeElement'>";
+      html += "<i style='cursor: pointer; color: white; position: absolute; z-index: 22; left: 10px;' onclick='removeYoutubeLink(`" + inputYoutubeLink + "`);' class='fa fa-times fa-2x' aria-hidden='true'></i>";
+      html += "<div class='blurYoutube'></div>";
+      html += "<iframe style='position: absolute;' width='180' height='120' src='https://www.youtube.com/embed/"+inputYoutubeLink+"?controls=0' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
+      html += "</div>";
+      html += "</div>";
+      $(".youtubeSection").append(html);
+    }
+
+    //On remet le input a 0
+    $("#inputYoutubeLink").val("");
+  }
+
+
+</script>
+
+<%- include('../partials/adminfooter') %>

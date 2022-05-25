@@ -1,0 +1,79 @@
+<%- include('../partials/adminheader') %>
+<%- include('../partials/adminmenu') %>
+<%- include('../partials/adminflash') %>
+
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+<script type="text/javascript">
+  $( function() {
+    $( "#sortable" ).sortable({
+    axis: 'y',
+    update: function (event, ui) {
+        var data = $(this).sortable('serialize');
+        // POST to server using $.post or $.ajax
+        $.ajax({
+            url: "/admin/ordersections",
+            type: "POST",
+            data: {
+                'order': data
+            },
+            success: function(data){
+
+            }
+        });
+        }
+    });
+  } );
+</script>
+  
+<div class="jumbotron">
+  <div class="container">
+    <!-- <i class="fas fa-id-card fa-6x"></i> -->
+    <div class="row">
+      <div class="col-12">
+        <h1 class="display-3">SECTIONS</h1>
+        <hr>
+      </div>
+      <div class="col-12">
+        <p class="lead">Clicker sur une section pour la modifier.<br>Drag & drop pour réorganiser.</p>
+
+      </div>
+      <div class="col-12" style="margin-top: 1rem;">
+        <div style="text-align: center;">
+          <ul id="sortable" style="padding:0;max-width: 400px; margin: 0 auto;" >
+            <%  listSections.forEach(function(item){ %>
+              <li  style="list-style: none;" id="section-<%=item._id%>%>" class="ui-state-default">
+                <a href="/admin/sections/<%= item.title %>">
+                  <div class="link-site" style="background-color: rgba(255,255,255,0.3);">
+                    <%= item.title %>
+                  </div>
+                </a>
+              </li>
+            <%  }) %>
+          </ul>
+          
+          <!-- On autorise seulement 6 sections pour des raisons de design  -->
+          <%  if(listSections.length < 6){ %>
+            <a style="max-width: 400px; margin: 0 auto;display:block;" title="Ajouter une section" href="/admin/sections/create">
+              <div class="link-site">
+                <i class="fa fa-plus fa-lg"></i>
+              </div>
+            </a>
+          <% } %>
+        </div>
+      </div>
+    </div>  
+    
+    <!-- <hr> -->
+    
+    
+
+
+
+    <!-- <a class="btn btn-outline-dark link-site" href="/gallery"><%= lang.menuProjects %></a>
+    <a class="btn btn-outline-dark link-site" href="/contact"><%= lang.menuContact %></a> -->
+    <!-- <a style="border-radius:0 !important;" class="btn btn-outline-dark" href="/menu">Menu</a> -->
+    <!-- <a style="border-radius:0 !important;" class="btn btn-outline-dark" href="/recettes">Food</a> -->
+  </div>
+</div>
+
+<%- include('../partials/adminfooter') %>

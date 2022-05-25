@@ -1,0 +1,390 @@
+<%- include('../partials/header') %>
+
+<style>
+    * {
+  margin: 0;
+  padding: 0; }
+
+body, html {
+  height: 100%;
+  width: 100%;
+  /* background-color: #31231d; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: arial;
+  position: relative;
+  overflow: hidden; }
+
+.big_animation {
+  display: none; }
+
+.inside {
+  display: flex; }
+  .inside h1 {
+    color: #fff;
+    font-size: 3.5rem;
+    margin-right: 50px;
+    margin-bottom: 30px; }
+  .inside h3 {
+    font-size: 1.2rem;
+    color: #fff;
+    opacity: 0.7; }
+
+.buibui, .buibui1 {
+  width: 180px;
+  height: 140px;
+  background-color: #e3d0bd;
+  border-radius: 120px 120px 65px 65px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.8);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  animation: jumping 0.8s infinite alternate cubic-bezier(0.445, 0.05, 0.55, 0.95); }
+
+.face .eyes {
+  display: flex;
+  justify-content: center; }
+  .face .eyes .left-eye, .face .eyes .right-eye {
+    width: 8px;
+    height: 10px;
+    background-color: #000;
+    border-radius: 50%; }
+  .face .eyes .right-eye {
+    margin-left: 20px; }
+
+.face .mouse {
+  margin-top: 12px;
+  width: 90px;
+  height: 20px;
+  background-color: #f4e29a;
+  border-radius: 160px 160px 50px 50px;
+  position: relative; }
+  .face .mouse .nose {
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    transform: translateX(-50%); }
+    .face .mouse .nose .left-nose {
+      width: 8px;
+      height: 1px;
+      background-color: #000;
+      border-radius: 10px;
+      transform: rotate(10deg); }
+    .face .mouse .nose .right-nose {
+      width: 8px;
+      height: 1px;
+      background-color: #000;
+      border-radius: 10px;
+      transform: rotate(-10deg);
+      margin-left: 18px; }
+  .face .mouse .line {
+    width: 90px;
+    height: 1.2px;
+    background-color: #e4cb6a;
+    position: absolute;
+    top: 50%; }
+
+@keyframes jumping {
+  50% {
+    top: 0px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2); }
+  100% {
+    top: -50px;
+    box-shadow: 0px 100px 50px rgba(0, 0, 0, 0.2); } }
+
+.buibui1 {
+  animation: jumping 0.8s -0.8s infinite alternate cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  margin-left: -10px;
+  background-color: #31231d; }
+  .buibui1 .mouse {
+    background-color: #f4e29a; }
+    .buibui1 .mouse .line {
+      background-color: #9c7450; }
+
+.bg_animation {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    transition: 0.5s;
+ }
+  .bg_animation.active {
+    opacity: 0; }
+  .bg_animation .bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+    .bg_animation .bg .loading_bar {
+      width: 180px;
+      height: 5px;
+      background-color: #fff;
+      border-radius: 10px;
+      margin-top: 50px;
+      position: relative;
+      overflow: hidden; }
+      .bg_animation .bg .loading_bar .loading {
+        width: 120px;
+        height: 5px;
+        background-color: #9c7450;
+        border-radius: 10px; }
+
+</style>
+
+<div class="wrap">
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+</div>
+
+
+
+
+
+<div class="big_animation">
+   
+    <div class="display-1" id="revealDate"></div>
+
+    <div class="center-box">
+        <img class="imgShowcase" src="upload/<%=section.images[0]%>" />
+    </div>
+</div>
+<!--animation loding-->
+<div class="bg_animation">
+    <div class="bg">
+        <div class="buibui">
+            <div class="face">
+                <div class="eyes">
+                    <div class="left-eye"></div>
+                    <div class="right-eye"></div>
+                </div>
+                <div class="mouse">
+                    <div class="line"></div>
+                    <div class="nose">
+                        <div class="left-nose"></div>
+                        <div class="right-nose"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="loading_bar">
+            <div class="loading"></div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var percent = 0
+
+var timer = setInterval(function () {
+  $('.loading').css("width",percent+"%")
+  percent += 1
+  
+  if( percent > 100 ){
+    $('.bg_animation ').addClass('active');
+    $('.big_animation').fadeIn();
+    // $('body').css('background-color','#ba9879')
+    clearInterval(timer);
+  }
+},5);
+</script>
+
+<!-- <h1 class="display-3 centered"><%= section.title %></h1> -->
+
+
+<!-- <%= section.revealDate %> -->
+<style>
+
+
+    #revealDate {
+        text-align: center;
+        font-weight: 500;
+        font-family: "Barlow Condensed", sans-serif;
+        display: block;
+        position: absolute;
+        color: white;
+        width: 100%;
+        left: 0;
+        top: 70px;
+        /* transform: translate(-50%, -50%); */
+        animation: date 1s ease-in-out;
+    }
+    .dateBox{
+        display:inline-block;
+        width:130px;
+    }
+
+    .center-box{
+        z-index: 10;
+        position: fixed;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        text-align: center;
+        width: 90%;
+    }
+
+    .imgShowcase{
+        width:400px;
+        max-width: 100%;
+        position: relative;
+        cursor:pointer;
+        animation: leaves 1s ease-in-out;
+    }
+    .imgShowcase:hover{
+        box-shadow: 0px 0px 150px 20px rgba(255, 255, 255, 0.3);
+        /* transform: scale(1.5); */
+    }
+    @keyframes leaves {
+        0% {
+            transform: scale(0.5);
+            opacity: 0;
+        }
+        100% {
+            transform: scale(1.0);
+            opacity: 1;
+        }
+    }
+    @keyframes date {
+        0% {
+            transform: scale(2);
+            opacity: 0;
+        }
+        100% {
+            transform: scale(1.0);
+            opacity: 1;
+        }
+    }
+    
+    *{
+  padding:0;
+  margin:0;
+}
+
+.wrap{
+  overflow:hidden;
+  position:absolute;
+  width:100%;
+  height:100%;
+      background: #1a0c2c;
+    background-size: 100% 100%;
+    padding-top: 125px;
+    min-height: 100vh;
+    color: #fff;
+      overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.stars, .twinkling, .clouds {
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.stars {
+  z-index: 0;
+  background: #000 url("https://image.ibb.co/mjnygo/stars.png") repeat top center;
+  animation: zoominoutsinglefeatured 30s infinite;
+}
+
+.twinkling {
+  /* z-index: 1; */
+  background: transparent url("https://image.ibb.co/ir1DE8/twinkling.png") repeat top center;
+  animation: move-twink-back 200s linear infinite;
+}
+
+.clouds {
+  z-index: 2;
+  background: transparent url("https://image.ibb.co/bT4N7T/clouds.png") repeat top center;
+  animation: move-clouds-back 200s linear infinite;
+}
+
+@keyframes move-twink-back {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -10000px 5000px;
+  }
+}
+@keyframes move-clouds-back {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 10000px 0;
+  }
+}
+@keyframes zoominoutsinglefeatured {
+    0% {
+        transform: scale(1,1);
+    }
+    50% {
+        transform: scale(1.2,1.4);
+    }
+    100% {
+        transform: scale(1,1);
+    }
+}
+
+
+</style>
+
+
+
+
+<script>
+// Set the date we're counting down to
+
+// var countDownDate = new Date("Jan 5, 2024 15:37:25").getTime();
+var countDownDate = new Date("<%= section.revealDate %>").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="demo"
+//   alert(days);
+
+    var html = "";
+    if(days != 0){
+        html += "<div class='dateBox'>"+ days + "j </div>";
+    }
+    if(hours != 0){
+        html += "<div class='dateBox'>"+ hours + "h </div>";
+    }
+    if(minutes != 0){
+        html += "<div class='dateBox'>"+ minutes + "m </div>";
+    }
+    if(seconds != 0){
+        html += "<div class='dateBox'>"+ seconds + "s </div>";
+    }
+    document.getElementById("revealDate").innerHTML = html;
+
+  // If the count down is finished, write some text
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("revealDate").innerHTML = "EXPIRED";
+  }
+}, 1000);
+</script>
+

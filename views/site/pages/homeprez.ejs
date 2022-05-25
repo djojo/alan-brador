@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        ::before, ::after {
+            box-sizing: border-box;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        body{
+            margin: 0 !important;
+            overflow: hidden;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .container{
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+        }
+        .enter-btn {
+            cursor: pointer;
+            border: 7px solid black;
+            background: transparent;
+            padding: 20px 30px;
+            border-radius: 5px;
+        }
+        .enter-btn:hover {
+            border: 7px solid black;
+            background: black;
+            color: white;
+            transition: all 200ms ease-in-out;
+        }
+        .v-slider-block{
+            font-size:30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            scroll-snap-align: center;
+        }
+        .v-slider-block:nth-child(1){background: #fff}
+        .v-slider-block:nth-child(2){background: #f0ee97}
+        .v-slider-block:nth-child(3){background: #f097aa}
+        .v-slider-block:nth-child(4){background: #97dbf0}
+        .v-slider-block:nth-child(5){background: #d797f0}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="v-slider-block">
+            <h1><%=lang.appName%></h1>
+        </div>
+        <% menu.forEach(function(section){ %>
+            <div class="v-slider-block">
+                <h1 onclick="location.href='<%=section.url%>'" class="enter-btn"><%=section.title%></h1>
+                <!-- <br>
+                <p><%=section.description%></p> -->
+            </div>
+        <% }) %>
+    </div>
+    
+</body>
+</html>

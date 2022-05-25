@@ -1,0 +1,123 @@
+<%- include('../partials/header') %>
+<%- include('../partials/menu', {menu: menu, general: general}) %>
+
+<%if(general.backgroundImage){%>
+  <style media="screen">
+      .content {
+      background: url('/upload/<%=general.backgroundImage%>') no-repeat center center fixed !important;
+      -webkit-background-size: cover !important;
+      -moz-background-size: cover !important;
+      -o-background-size: cover !important;
+      background-size: cover !important;
+      /* backdrop-filter: brightness(40%) !important; */
+      min-height: 100vh !important;
+      color:white  !important;
+      /* backdrop-filter: blur(10px) !important; */
+      }
+      .police-menu{
+      color:white !important;
+      }
+  </style>
+<%}%>
+  
+<!-- <div class="my-5">
+    <h1 class="display-3 centered"><%= lang.contactMessageTitle %></h1>
+</div> -->
+<div class="container">
+  <div class="row">
+      <div class="col-md-12 justify-content-centered">
+        <h3 class="centered my-5"><%= lang.contactMessageTitle %></h3>
+        <div style="display: grid;grid-template-columns: repeat(1, 1fr);margin-bottom:50px;" >
+      <a style="text-transform:uppercase; color: #c23616 !important;text-align: center;" target="_blank" href="mailto:geoffroy.rouaix@hotmail.com">
+        EMAIL
+      </a>
+  </div>
+
+  <div style="display: grid;grid-template-columns: repeat(1, 1fr);margin-bottom:50px;" >
+    <a style="text-transform:uppercase; color: #c23616 !important;text-align: center;" href="tel:+33618275025">
+      +33 6 18 27 50 25
+    </a>
+    </div>
+          <div class="ibox form-custom-medium">
+              <div class="ibox-content">
+                <form  action="/contact" method="POST">
+                  <div class="row my-md-2">
+                      <div class="col my-1 my-md-0">
+                          <div class="form-floating">
+                              <input type="text" class="form-control" placeholder="First Name" name="firstName" required>
+                              <label for="floatingInput"><%= lang.firstName %></label>
+                          </div>
+                      </div>
+                      <div class="col my-1 my-md-0">
+                          <div class="form-floating">
+                              <input type="text" class="form-control" placeholder="Last Name" name="lastName" required>
+                              <label for="floatingInput"><%= lang.lastName %></label>
+                          </div>
+                          <!-- <input type="number" name="contactNo" placeholder="Telephone" class="form-control" required> -->
+                      </div>
+                  </div>
+                  <div class="form-floating">
+                    <input required type="email" class="form-control" placeholder="name@example.com" name="email">
+                    <label for="floatingInput"><%= lang.email %></label>
+                  </div>
+                  <div class="form-floating">
+                    <!-- <input type="textarea" class="form-control" id="floatingInput" placeholder="Content" name="content"> -->
+                    <textarea class="editor" required name="content"></textarea>
+                    <!-- <label for="floatingInput"><%= lang.yourProject %></label> -->
+                  </div>
+                  <div class="form-floating">
+                    <input type="number" class="form-control" placeholder="Telephone" name="phone">
+                    <label for="floatingInput"><%= lang.phone %></label>
+                  </div>
+                  <div class="d-flex justify-content-center" style="margin:30px 0;">
+                    <div id="buttonText"><button onclick="Loading();" class="button-link"  type="submit"><%= lang.buttonSend %></button></div>
+                    <div id="buttonLoading" style="display:none;">Loading...</div>
+                  </div>
+                </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<script type="text/javascript" >
+  //-------------------------- E D I T O R ------------------
+  $(document).ready(function() {
+      $('.editor').summernote({
+        // placeholder: 'Votre message...',
+        tabsize: 2,
+        height: 150,
+        callbacks: {
+            onPaste: function (e) {
+                var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                e.preventDefault();
+                document.execCommand('insertText', false, bufferText);
+            }
+        },
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline']]
+            // ['color', ['color']],
+            // ['para', ['ul', 'ol', 'paragraph']],
+            // ['view', ['codeview']],
+        ],
+        focus: false 
+      });
+
+
+
+      function Loading(){
+        if(
+          $('input[name="firstName"]').val() != "" &&
+          $('input[name="lastName"]').val() != "" &&
+          $('input[name="email"]').val() != "" &&
+          $('textarea[name="content"]').val() != ""
+        ){
+          $('#buttonText').hide();
+          $('#buttonLoading').fadeIn();
+        }
+      }
+});
+</script>
+
+
+<%- include('../partials/footer') %>

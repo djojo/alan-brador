@@ -1,0 +1,95 @@
+
+<div class="sidebar">
+
+  <!-- ============ L O G O ============ -->
+  <a class="menu-title-site" href="/"><%= lang.appName %></a> 
+
+
+  <!-- BUTTON TOGGLE MENU -->
+  <span class="toggle-menu button-toggle-menu">
+    <div onclick="animMenu(this)">
+      <div class="bar1"></div>
+      <div class="bar2"></div>
+      <div class="bar3"></div>
+    </div>
+  </span>
+  
+
+  <div class="menu-box">
+    <!-- ============ S E C T I O N S ============ -->
+    <% menu.forEach(function(menuElement){ %>
+      <% if((menuElement.type === "shop" && general.eCommerce) || menuElement.type != "shop"){ %>
+        <a class="menu-element-link" href="<%=menuElement.url%>"><%=menuElement.title%></a>
+      <% } %>
+    <% }); %>
+    <!-- ============ A B O U T ============ -->
+    <% if(general.aboutVisible){%>
+      <!-- <a href="/about">About</a> -->
+    <%} %>
+    <!-- ============ C O N T A C T ============ -->
+    <% if(general.contactVisible){%>
+      <a class="menu-element-link" href="/contact">Contact</a>
+    <%} %>
+
+    <!-- ============ P A N I E R ============ -->
+    <% if(general.eCommerce && currentUser){%>
+      <a href="/cart" >
+        <div class="link-cart-site menu-element-link">
+          <!-- <i class="fa fa-shopping-cart fa-1x"></i>&nbsp;  -->
+          Panier
+        </div>
+      </a>
+    <%} %>
+
+    <!-- ============ U S E R ============ -->
+    <% if(general.eCommerce === true || general.webZine === true){%>
+      <% if(currentUser){%>
+        <div class="dropdown">
+          <a class="dropbtn menu-element-link">User</a>
+          <div id="myDropdown" class="dropdown-content">
+            <a class="menu-element-link" href="profile">Profil</a>
+            <a class="menu-element-link" href="/logout" role="button">Logout</a>
+          </div>
+        </div>
+      <%} else { %>
+        <div class="dropdown">
+          <a class="dropbtn menu-element-link">User</a>
+          <div id="myDropdown" class="dropdown-content">
+            <a class="menu-element-link" href="/login" role="button">Login</a>
+            <a class="menu-element-link" href="/register">Sign in</a>
+          </div>
+        </div>
+      <%}%>
+    <%}%>
+    
+    
+    <script>
+    
+    </script>
+
+    <div class="box-user" >
+
+       
+
+    </div>
+   
+
+  </div>
+  
+</div>
+
+
+
+<!-------- LOADING BOX -------->
+
+<div class="loading-box">
+  <div class="box"></div>
+  <!-- <div class="loading-bar">
+      <h2 style="text-align: center;">Loading...</h2>
+      <div class="loading"></div>
+  </div> -->
+</div>
+
+
+
+<div class="content"> <!------- CONTENT PAGE ------->

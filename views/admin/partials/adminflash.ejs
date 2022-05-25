@@ -1,0 +1,13 @@
+<div class="container" style="padding:0 !important;">
+  <% if(success && success.length>0) { %>
+    <div class="alert lead">
+      <%= success %>
+    </div>
+  <% } %>
+
+  <% if(error && error.length>0) { %>
+    <div class="alert lead">
+      <%= error %>
+    </div>
+  <% } %>
+</div>

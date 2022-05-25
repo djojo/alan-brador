@@ -1,0 +1,492 @@
+<%- include('../partials/adminheader') %>
+<%- include('../partials/adminmenu') %>
+<%- include('../partials/adminflash') %>
+
+<style media="screen">
+
+  body{
+    overflow-x: hidden;
+  }
+
+  .line-show{
+    display:none;
+  }
+
+  #sortable>li {
+    display:inline-block;
+    list-style: none;
+}
+
+/* TOGGLE GRID / LIST Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.toolelement {
+  position: relative;
+  display: inline-block;
+  /* border-bottom: 1px dotted black; */
+}
+
+.toolelement .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #212529;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.toolelement .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #212529 transparent transparent transparent;
+}
+
+.toolelement:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+</style>
+
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+<script type="text/javascript">
+  $( function() {
+    $( "#sortable" ).sortable({
+    axis: 'x,y',
+    update: function (event, ui) {
+        var data = $(this).sortable('serialize');
+        // POST to server using $.post or $.ajax
+        $.ajax({
+            url: "/admin/orderelements",
+            type: "POST",
+            data: {
+                'order': data
+            },
+            success: function(data){
+            }
+        });
+        }
+    });
+  } );
+  
+  </script>
+
+<div id="modal" class="modalBox">
+  <div class="modalContent">
+    <div id="modalMain" style="background: white;padding: 50px;">
+      <h1 class="display-6">Voulez vous vraiment supprimer la section <%= section.title %> ?</h1>
+      <p class="lead">Cela supprimera aussi tous les elements associés...</p>
+      <form title="Supprimer" style="display: inline-block;" action="/admin/sections/delete" method="POST">
+        <button value="<%=section._id%>" name="sectionId" class="btn btn-outline-danger btn-sm" type="submit">Supprimer</button>
+        <span style="margin-left:20px;" class="modalClose btn btn-outline-dark btn-sm">Annuler</span>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+  <!-- ----------------------- H E A D E R ----------------------- -->
+
+
+
+  <div class="container">
+    <div class="row" style="margin-bottom: 30px;">
+      <!-- <div class="col-xs-12 col-sm-6 col-md-5 col-lg-3">
+        <div class="img-container">
+          <% if(section.image){ %>
+            <img class="img-gallery" style="width: 100%;" src="/upload/<%=section.image%>" />
+          <%} else {%>
+              <img class="img-gallery" style="width: 100%;" src="img/<%= lang.noImg %>">
+          <%}%>
+        </div>
+      </div> -->
+      <div class="col-lg-12">
+        <div class="d-flex justify-content-between">
+          <h1 style="display: inline;position: relative;" class="display-3">
+            <span style="text-transform: uppercase;"><%= section.title %> </span>
+            <span style="font-size:2rem;">(<%= section.type %>)</span>
+            <!-- <input id="checkboxVisible" type="checkbox" name="visible"> -->
+            <div style="display: inline; position: absolute; left: -50px; font-size: 2rem; top: 20px;">
+              <%if(section.visible === true){%>
+                🟢&nbsp;&nbsp;
+                <!-- <script>
+                  $("#checkboxVisible").bootstrapSwitch('state', true);
+                </script> -->
+              <%}else{%>
+                🔴&nbsp;&nbsp;
+                <!-- <script>
+                  $("#checkboxVisible").bootstrapSwitch('state', false);
+                </script> -->
+              <%}%>
+            </div>
+          </h1>
+          <!-- MENU BUTTONS TOOLS -->
+          <div style="margin: 1rem 0;">
+              
+            <% if(section.type != "page" && section.type != "about" && section.type != "landing") { %>
+              <div class="toolelement">
+                <a onclick="listView()" class="link-site-small"><i class="fa fa-bars"></i></a>
+                <span class="tooltiptext">Organiser en liste</span>
+              </div>
+              <div class="toolelement">
+                <a onclick="gridView()" class="link-site-small"><i class="fa fa-th-large"></i></a>
+                <span class="tooltiptext">Organiser en grid</span>
+              </div>
+              <div class="toolelement">
+                <a class="link-site-small" href="/admin/elements/create/<%= section._id %>" ><i class="fa fa-plus fa-lg"></i></a>
+                <span class="tooltiptext">Ajouter un élément</span>
+              </div>
+            <% } %>
+            
+            <div class="toolelement">
+              <a class="link-site-small" href="/admin/sections/edit/<%= section._id %>" ><i class="fa fa-edit fa-lg"></i></a>
+              <span class="tooltiptext">Modifier la section</span>
+            </div>
+            <div class="toolelement">
+              <a class="link-site-small" onclick="$('.modalBox').show();"><i class="fa fa-trash fa-lg"></i></a>
+              <span class="tooltiptext">Supprimer la section</span>
+            </div>
+            <div class="toolelement">
+              <a target="_blank" class="link-site-small" href="/<%= section.title %>" ><i class="fa fa-eye fa-lg"></i></a>
+              <span class="tooltiptext">Voir sur le site</span>
+            </div>
+            <div class="toolelement">
+              <% if(section.type != "page" && section.type != "about") { %>
+                <input style="width:200px;display:inline-block;" class="form-control" id="searchElement" type="text" placeholder="Rechercher..">  
+              <% } %>
+            </div>
+            
+          </div>
+        </div>
+
+        
+        
+      </div>
+        
+      <div class="col-lg-12">
+        <hr>
+        <!-- <p id="descriptionText" class="lead"></p> -->
+        <% if(section.type != "page" && section.type != "about" && section.type != "landing") { %>
+          <p class="lead">
+            Clicker sur un élément pour le modifier.<br> Drag & drop pour réorganiser.
+          </p>
+        <% } %>
+      </div>
+        
+    </div>
+    
+    <!-- <hr> -->
+
+
+    <!--------------------------  T Y P E   -----   P A G E -------------------->
+    <% if(section.type === "page" || section.type === "about") { %>
+      
+      <div class="row">
+        <div class="col-12">
+
+          <%if(section.description){%>
+          <h3 class="lead">Description</h3>
+          <hr>
+          <p id="descriptionText"></p>
+          <%}%>
+          
+          <br>
+
+          <!--------------------------- I M A G E S ------------------------------->
+          <%if(section.images){%>
+            <h3 class="lead">Galerie</h3>
+            <hr>
+            <div class="row">
+              <% section.images.forEach(function(image){%>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-2">
+                  <a href="upload/<%=image%>" data-lightbox="slider">
+                    <img style="margin-bottom: 5px;width:100%;" src="upload/<%=image%>" />
+                  </a>
+                </div>
+                <%});%>
+            </div>
+          <%}%>
+
+          <br>
+
+          <%if(section.youtube){%>
+            <div class="element-details-box">
+              <h3 class="lead">Vidéos</h3>
+              <hr>
+              <div class="row">
+                <%for(i=0; i<section.youtube.length; i++){ %>
+                  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <!-- <div class="gallery-alan" style="color: #333 !important; text-decoration: none; cursor: pointer;"> -->
+                      <figure class="img-container">
+                        <iframe width="100%" height="250px"
+                          src="https://www.youtube.com/embed/<%=section.youtube[i]%>?controls=0" title="YouTube video player"
+                          frameborder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowfullscreen></iframe>
+                      </figure>
+                    <!-- </div> -->
+                  </div>
+                  <%}%>
+              </div>
+            </div>
+          <%}%>
+
+          <!--------------------------- W E B     L I N K S --------------------------------->
+        <%if(section.webLinks){%>
+          <div class="element-details-box">
+            <h3 class="lead"><%=lang.textLinks%></h3>
+            <hr>
+            <div class="row">
+
+              <% section.webLinks.forEach(function(element){ %>
+                <a target="_blank" href="<%= element.adress %>">
+                  <p class="lead" style="color:white;"><%= element.name %></p>
+                </a>
+              <%});%>
+              
+            </div>
+          </div>
+        <%}%>
+        </div>
+      </div>
+      
+    <%} else { %>  <!--------------------------  T Y P E   -----   S E C T I O N S -------------------->
+
+    
+      <ul class="row" id="sortable" style="padding:0;" >
+      <%  listElements.forEach(function(element, index){ %>
+        
+        <!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4"> -->
+        <li class="column col-sm-4 col-md-3 col-lg-3 col-xl-2" id="element-<%=element._id%>" class="ui-state-default">
+          <a class="element-box" href="/admin/elements/edit/<%=element._id%>">
+            <div style="position: absolute; top: -17px; right: -20px; z-index: 10; font-size: 2rem;">
+              <% if(element.visible == true){%>
+                  🟢&nbsp;
+              <%} else { %>
+                  🔴&nbsp;
+              <%} %>
+            </div>
+            <div class="element-image-container">
+              <% if(element.images.length>0){%>
+                <img class="element-img" src="/upload/<%=element.images[0]%>" alt="<%=element.title%>" />
+              <%}else{%>
+                <img class="element-img" src="/img/no-img.png" alt="<%=element.title%>" />
+              <%}%>
+              
+              <!-- <span class="encart-alan" style="display:none;">
+                <span class="img-alan-hover">
+                  <h2 class="title"><%=element.title%></h2>
+                  <h3 class="category">Cliquez pour modifier</h3>
+                </span>
+              </span> -->
+  
+            </div>
+            
+            <div class="element-info" style="text-align: center;margin-top: 20px;">
+              <div style="display:inline-block;">
+                <p class="lead" style="text-transform: uppercase;">
+                  <%=element.title%>
+                </p>
+              </div>
+
+              <!-- -------------  A R T I C L E S  ------------------->
+              <% if(section.type === "articles") { %>
+                <div class="line-show">
+                  <p class="lead"> | </p>
+                </div>
+                <div class="line-show">
+                  <p class="lead" id="<%=index%>"></p>
+                </div>
+                <script>
+                  if('<%= element.createdAt%>'){
+                    $('#<%=index%>').html(new Date('<%= element.createdAt%>').toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
+                  }
+                </script>
+              <%} %>  
+
+              <!-- -------------  E V E N T S  ------------------->
+              <% if(section.type === "events") { %>
+                <div class="line-show">
+                  <p class="lead"> | </p>
+                </div>
+                <div class="line-show">
+                  <p class="lead" id="<%=index%>"></p>
+                </div>
+                <script>
+                  if('<%= element.date%>'){
+                    $('#<%=index%>').html(new Date('<%= element.date%>').toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
+                  }
+                </script>
+                <!-- <div class="line-show">
+                  <p class="lead"> | <%= element.adress %></p>
+                </div> -->
+              <%} %>  
+              <!-- -------------  G A L L E R Y  ------------------->  
+              <% if(section.type === "gallery") { %>
+                <div class="line-show">
+                  <p class="lead"> | Photos: <%= element.images.length %></p>
+                </div>
+                <div class="line-show">
+                  <p class="lead"> | Videos: <%= element.youtube.length %></p>
+                </div>
+              <%} %>
+              <!-- -------------  S H O P  ------------------->     
+              <% if(section.type === "shop") { %>
+                <div class="line-show">
+                  <p class="lead"> | Prix: <%= element.price %></p>
+                </div>
+                <div class="line-show">
+                  <p class="lead"> | Exemplaires: <%= element.nbCopy %></p>
+                </div>
+              <%} %>  
+            </div>
+            
+            
+          </a>
+          
+        <!-- </div> -->
+        </li>
+      <%  }) %>
+    </ul>
+      
+      <!-- <div class="">
+        <figcaption class="img-alan">
+          <h2 class="display-6">Ajouter un élement</h2>
+        </figcaption>
+        <a class="element-box" href="/admin/elements/create/<%= section._id %>">
+          <figure class="element-img-container">
+            <i style="text-align: center;padding: 100px;width: 100%; height: 100%;" class="fa fa-plus fa-3x"></i>
+
+          </figure>
+        </a>
+      </div> -->
+    <!-- </div> -->
+    <% } %>
+
+  </div>
+
+
+<%- include('../partials/adminfooter') %>
+
+<!--------------------------- G A L E R I E   S C R I P T --------------------------------->
+<script src="js/lightbox.min.js"></script>
+<script>
+  lightbox.option({
+  'resizeDuration': 0,
+  'wrapAround': true,
+  'fadeDuration':	100,
+  'imageFadeDuration': 600,
+  'fitImagesInViewport': true,
+  'albumLabel': '%1 sur %2',
+  'alwaysShowNavOnTouchDevices': true
+  });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#searchElement").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#sortable li").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>
+
+
+<!--------------------------- T O G G L E    G R I D / L I S T --------------------------------->
+<script type="text/javascript">
+  // Get the elements with class="column"
+var elements = document.getElementsByClassName("column");
+
+// Declare a loop variable
+var i;
+var j;
+
+// List View
+function listView() {
+  for (i = 0; i < elements.length; i++) {
+    elements[i].style.width = "100%";
+  }
+  
+  $(".element-box").css({height : "60px"});
+  $(".element-image-container").css({width : "60px", height : "60px", display : "inline-block"});
+  $(".element-img").css({height : "60px"});
+  $(".element-info").css({height : "20px", display : "inline-block", bottom: "22px", left: "20px", position: "relative"});
+  $(".line-show").css({display: "inline-block"});
+}
+
+// Grid View
+function gridView() {
+  for (i = 0; i < elements.length; i++) {
+    elements[i].style.width = "";
+  }
+  $(".element-box").css({height : ""});
+  $(".element-img").css({height : "150px"});
+  $(".element-image-container").css({width : "", height : "", display : ""});
+  $(".element-info").css({height : "", display : "", bottom: "", left: "", position: ""});
+  $(".line-show").css({display: "none"});
+}
+</script>
+
+
+<script type="text/javascript">
+  
+  $( document ).ready(function() {
+
+
+    // ------------- M O D A L    D E L E T E ---------------
+    var ebModal = document.getElementById('modal');
+    var ebSpan = document.getElementsByClassName("modalClose")[0];
+    ebSpan.onclick = function() {
+        ebModal.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == ebModal) {
+            ebModal.style.display = "none";
+        }
+    }
+
+    // ------------- T E X T    F O R M A T ---------------
+    var txt = "<%=section.description%>"
+    function htmlDecode(input) {
+      var doc = new DOMParser().parseFromString(input, "text/html");
+      return doc.documentElement.textContent;
+    }
+    var html = htmlDecode(txt);
+    $("#descriptionText").html(html);
+
+    // -------------A J A X    V I S I B L E ---------------
+    $('#checkboxVisible').on('switchChange.bootstrapSwitch', function (event, state) {
+      $.ajax({
+            url: "/admin/sections/visible",
+            type: "POST",
+            data: {
+                '_id': '<%=section._id%>',
+                'state': state
+            },
+            success: function(data){
+                alert(data.state);
+            }
+        });
+    }); 
+
+  }); 
+</script>

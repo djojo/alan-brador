@@ -1,0 +1,131 @@
+
+<h3 style="position:absolute;">
+  <span onclick="location.href='<%=section.url%>';" style="cursor:pointer;" >
+    <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+    &nbsp;
+    <%= section.title %>
+  </span>
+</h3>
+
+<div class="py-5">
+
+<!--------------------------- T I T L E ------------------------------->
+<%if(element.title !=0){%>
+  <h1 class="display-5 fw-bolder gsapBox"><%=element.title%></h1>
+<%}%>
+
+
+<!-- <section class="my-5"> -->
+  <div class="row">
+      <div class="col-lg-8 gsapBox">
+          <!-- Post content-->
+          <article>
+              <!-- Post header-->
+              <header class="mb-4">
+                  
+                  <!--------------------------- D A T E ------------------------------->
+                  <div id="datePosted" class="fst-italic mb-2"></div>
+                  <script>
+                      if('<%= element.updatedAt%>'){
+                          $('#datePosted').html('Posté le ' + new Date('<%= element.updatedAt%>').toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
+                      }
+                  </script>
+                  <!--------------------------- T A G S ------------------------------->
+                  <% element.tags.forEach(function(tag){ %>
+                    <a class="tag" href="#!"><%=tag%></a>
+                  <% }); %>
+              </header>
+              <%if(element.images.length !=0){%>
+                <!-- Preview image figure-->
+                <figure class="mb-4"><img class="element-article-details-img" src="upload/<%=element.images[0]%>" alt="..." /></figure>
+              <%}%>
+              <!--------------------------- D E S C R I P T I O N ------------------------------->
+              <!-- <%if(element.description){%>
+                <div class="element-details-box">
+                  <h3><%=element.legend%></h3>
+                  <hr>
+                  <p id="description"></p>
+                </div>
+              <%}%> -->
+
+              <!--------------------------- A R T I C L E    C O N T E N T ------------------------------->
+              <script>
+                function htmlDecode(input) {
+                          var doc = new DOMParser().parseFromString(input, "text/html");
+                          return doc.documentElement.textContent;
+                      }
+              </script>
+              <%if(element.articleContent){%>
+                  <% element.articleContent.forEach(function(par, index){ %>
+                    <div class="element-details-box">
+                      <%if(par.subTitle){%>
+                        <h3><%=par.subTitle%></h3>
+                        <hr>
+                      <%} %>
+                      <%if(par.paragraph){%>
+                        <p id="content-<%=index%>"></p>
+                        <script>
+                          var txt = '<%=par.paragraph%>';
+                          var html = htmlDecode(txt);
+                          $("#content-<%=index%>").html(html);
+                        </script>
+                      <%}%>
+                      <%if(par.quote){%>
+                        <div class="quote">"<%=par.quote%>"</div>
+                      <%} %>
+                    </div>
+                  <% }); %>
+              <%}%>
+
+              <!--------------------------- I M A G E S ------------------------------->
+              <%if(element.images.length !=0){%>
+                <div class="element-details-box">
+                  <h3>Galerie</h3>
+                  <hr>
+                  <div class="row">
+                    <% element.images.forEach(function(image){%>
+                      <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-2">
+                        <a href="upload/<%=image%>" data-lightbox="slider">
+                          <img style="margin-bottom: 5px;width:100%;" src="upload/<%=image%>" />
+                        </a>
+                      </div>
+                      <%});%>
+                  </div>
+                </div>
+              <%}%>
+              <!--------------------------- Y O U T U B E     L I N K S --------------------------------->
+              <%if(element.youtube.length !=0){%>
+                <div class="element-details-box">
+                  <h3>Vidéos</h3>
+                  <hr>
+                  <div class="row">
+                    <%for(i=0; i<element.youtube.length; i++){ %>
+                      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="gallery-alan" style="color: #333 !important; text-decoration: none; cursor: pointer;">
+                          <figure class="img-container">
+                            <div onclick="OpenModal('<%=element.youtube[i]%>');" class="blurYoutube"></div>
+                            <iframe width="100%" height="250px"
+                              src="https://www.youtube.com/embed/<%=element.youtube[i]%>?controls=0" title="YouTube video player"
+                              frameborder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowfullscreen></iframe>
+                          </figure>
+                        </div>
+                      </div>
+                      <%}%>
+                  </div>
+                </div>
+                <%}%>
+
+
+          </article>
+
+          <%- include('../partials/comments', {element: element}) %>
+
+      </div>
+      
+      <%- include('../partials/side', {showcaseElements: showcaseElements}) %>
+  </div>
+
+</div>
+<!-- </section> -->

@@ -1,0 +1,1399 @@
+
+<html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <!-- <link rel="icon" type="image/svg+xml" href="favicon.svg" /> -->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <!-- Primary Meta Tags -->
+      <title>Alan Brador - Composer, Producer, DJ</title>
+      <meta name="title" content="Alan Brador - Composer, Producer, DJ">
+      <meta name="description" content="Discover my latest projects and contact me for a collaboration.">
+
+      <!-- Open Graph / Facebook -->
+      <meta property="og:type" content="website">
+      <meta property="og:url" content="https://metatags.io/">
+      <meta property="og:title" content="Alan Brador - Composer, Producer, DJ">
+      <meta property="og:description" content="Discover my latest projects and contact me for a collaboration.">
+      <meta property="og:image" content="https://metatags.io/assets/meta-tags-16a33a6a8531e519cc0936fbba0ad904e52d35f34a46c97a2c9f6f7dd7d336f2.png">
+
+      <!-- Twitter -->
+      <meta property="twitter:card" content="summary_large_image">
+      <meta property="twitter:url" content="https://metatags.io/">
+      <meta property="twitter:title" content="Alan Brador - Composer, Producer, DJ">
+      <meta property="twitter:description" content="Discover my latest projects and contact me for a collaboration.">
+      <meta property="twitter:image" content="https://metatags.io/assets/meta-tags-16a33a6a8531e519cc0936fbba0ad904e52d35f34a46c97a2c9f6f7dd7d336f2.png">
+
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Roboto+Flex:opsz,wght@8..144,300&family=Russo+One&display=swap" rel="stylesheet">
+      <!-- GSAP -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+  
+      <!-- JQUERY -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  
+      <script async src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@latest/dist/lazyload.min.js"></script>
+
+      <style>
+        /* @import url("https://use.typekit.net/jmk3xov.css"); */
+  
+        body{
+          margin:0;
+          overflow: hidden;
+        }
+
+        :root {
+          --dark-bg: rgba(15, 15, 15, 0.95);
+          --spacing: 2000px;
+          font-family: brandon-grotesque, sans-serif;
+          font-weight: 400;
+          font-style: normal;
+        }
+
+        canvas {
+          position: fixed;
+          top: 0;
+          left: 0;
+        }
+
+        main {
+          /* width: 100vw; */
+          color: white;
+          z-index: 99;
+          position: absolute;
+          /* width: 100%; */
+          margin: 0px auto;
+          padding: 20px 0;
+          /* display: grid; */
+          /* grid-template-columns: repeat(12, 1fr); */
+        }
+
+        .textgeo{
+          text-shadow: 2px 0 0 #c23616, -2px 0 0 #c23616, 0 2px 0 #c23616, 0 -2px 0 #c23616, 1px 1px #c23616, -1px -1px 0 #c23616, 1px -1px 0 #c23616, -1px 1px 0 #c23616;
+        }
+
+        header {
+          /* background: var(--dark-bg); */
+          /* grid-column: 2 / span 10; */
+          font-size: 1.5rem;
+          /* padding: 2rem; */
+          margin-bottom: var(--spacing);
+          text-align:center;
+          /* background:red; */
+          /* margin-top: 100px; */
+          width: 100%;
+          display: block;
+        }
+
+        section {
+          opacity:0;
+          /* grid-column: 2 / 8; */
+          padding: 1rem 0;
+          background: var(--dark-bg);
+          font-size: 1.25rem;
+          line-height: 1.5;
+          margin-bottom: var(--spacing);
+          width: 100%;
+          
+          overflow-y: scroll !important;
+          max-height: 100vh;
+
+          box-shadow: 0 100px 100px var(--dark-bg), 0 -100px 100px var(--dark-bg);
+          /* display:flex;
+          justify-content: center;
+          align-items:center; */
+        }
+        
+
+        h1, h2, h3, blockquote {
+          /* font-family: elevon, sans-serif; */
+          font-weight: 700;
+          font-style: normal;
+        }
+
+        #navScroll{
+          transition: all 300ms ease-out;
+        }
+
+        #navScroll:hover{
+          transform: scale(1.5);
+        }
+
+        .menuSite{
+          position:fixed;
+          width:100%;
+          text-align: center;
+          top:0;
+          left:0;
+          z-index:100;
+          /* rendre impossioble la selection */
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+
+        .link-site-medium{
+          text-transform: uppercase;
+          color: white !important;
+          /* border: 3px dotted #c23616 !important; */
+          font-size: 1.3rem !important;
+          padding: 11px !important;
+          margin: 20px 5px !important;
+          text-decoration: none !important;
+          display:inline-block;
+          transition: all 200ms ease-in-out;
+          background: transparent !important;
+          cursor:pointer;
+          font-family: 'Russo One', sans-serif;
+          text-shadow: 2px 0 0 #c23616, -2px 0 0 #c23616, 0 2px 0 #c23616, 0 -2px 0 #c23616, 1px 1px #c23616, -1px -1px 0 #c23616, 1px -1px 0 #c23616, -1px 1px 0 #c23616;
+        }
+  
+        .active,.link-site-medium:hover{
+          color: #c23616 !important;
+          background: rgba(255, 255, 255, 0.95) !important;
+          /* border: 3px solid rgba(255, 255, 255, 0.95) !important; */
+          /* transform: scale(1.1); */
+          text-shadow: none;
+        }
+
+        .text-title{
+          font-size: 3rem; 
+          font-weight: bold; 
+          text-align: center;
+          margin-top:150px;
+          text-transform: uppercase;
+          font-family: 'Monoton', cursive;
+          text-shadow: 2px 0 0 #c23616, -2px 0 0 #c23616, 0 2px 0 #c23616, 0 -2px 0 #c23616, 1px 1px #c23616, -1px -1px 0 #c23616, 1px -1px 0 #c23616, -1px 1px 0 #c23616;
+        }
+
+        .text-subtitle{
+          font-size: 1.5rem; font-weight: bold; text-align: center;
+          margin-top:45vh;text-transform: uppercase;
+        }
+
+        .text-description{
+          padding: 100px 0px 50px 0px;
+          margin: 0 auto;
+          text-align: center;
+          max-width: 850px;
+          /* text-transform: uppercase; */
+          line-height: 2.5rem;
+          font-family: 'Roboto Flex', sans-serif;
+        }
+  
+        .form-custom-small{
+          text-align: left;
+          width: 600px;
+          margin: 0 auto;
+        }
+  
+        .form-control{
+          display: inline-block;
+          font-size: 1.2rem;
+          padding: 13px;
+          margin-right: 20px;
+          width: 250px;
+        }
+  
+        .form-floating{
+          display: block;
+          margin:20px;
+        }
+  
+        
+  
+        
+
+        .img{
+          width: 100%;
+          /* width:300px; */
+          object-fit: cover;
+          /* -webkit-filter: grayscale(1);
+          filter: grayscale(1);
+          transition: all 300ms ease-out; */
+          /* cursor:pointer; */
+        }
+
+        .img-legend{
+          position: relative;
+          top: -100%;
+          z-index: 10;
+          width: 100%;
+          text-align: center;
+          background: rgba(0,0,0,0.8);
+          display: flex;
+          align-items: center;
+          font-size: 2rem;
+          justify-content: center;
+          text-transform: uppercase;
+          transition: all 300ms ease-out;
+          opacity:0;
+          font-family: 'Russo One', sans-serif;
+        }
+
+        .img-legend:hover{
+          opacity:1;
+        }
+
+        .grid{
+          display: grid;
+          /* grid-gap: 20px; */
+          grid-template-columns: repeat(6, 1fr);
+          grid-auto-rows: minmax(500px, 500px);
+          height: calc(100% - 100px);
+          overflow-y: scroll;
+          width:100%;
+        }
+
+        #buttonMenu{
+          display: none;
+        }
+
+        #menuBox{
+          display: block;
+        }
+
+        .links-page{
+          margin-bottom: 70px;
+          font-family: 'Russo One', sans-serif;text-decoration: none;text-transform:uppercase; color: white !important;text-align: center;
+        }
+
+        .links-page:hover{
+          color: #c23616 !important;
+        }
+
+          
+        .loaderAlan {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          color: white;
+          /* font-family: 'Monoton', cursive; */
+          font-weight: bold;
+          text-align: center;
+        }
+        .loadingAlan {
+          font-size: 80px;
+          letter-spacing: 5px;
+          text-transform: uppercase;
+          line-height: 1;
+          mix-blend-mode: difference;
+        }
+        .loaderAlan::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100px;
+          height: 100%;
+          background-color: white;
+          animation: move 4s linear infinite;
+        }
+        @keyframes move {
+          0%,
+          100% {
+            left: 0;
+          }
+          50% {
+            left: calc(100% - 100px);
+          }
+        }
+
+
+        .grid-event{
+          display:grid;
+          /* grid-template-columns: repeat(2, 1fr); */
+          margin-bottom:150px;
+          height: calc(100% - 100px);
+        }
+
+        .youtubelinksgrid{
+          display: grid;
+          margin-bottom:150px;
+        }
+
+        .imagesgrid{
+          display:grid;
+          margin-bottom:150px;
+        }
+
+        .weblinks-grid{
+          display: grid;margin-bottom:150px;
+        }
+
+        @media screen and (max-width: 5000px) {
+          .grid{
+            grid-template-columns: repeat(3, 1fr);
+          }
+          .youtubelinksgrid{
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .imagesgrid{
+            grid-template-columns: repeat(4, 1fr);
+          }
+          .weblinks-grid{
+            grid-template-columns: repeat(4, 1fr);
+          }
+          .grid-event{
+            grid-auto-rows: minmax(500px, 500px);
+
+          }
+          .img-legend{
+            height: 500px;
+            font-size: 2rem;
+          }
+          .img{
+            height: 500px; 
+          }
+          .text-description{
+            font-size: 2rem;
+          }
+        }
+
+        @media screen and (max-width: 1300px) {
+          .grid{
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media screen and (max-width: 1200px) {
+          .grid{
+            grid-template-columns: repeat(1, 1fr);
+          }
+          .img{
+            height: 300px; 
+          }
+          .grid-event{
+            grid-auto-rows: minmax(300px, 300px);
+
+          }
+          .img-legend{
+            height: 300px;
+          }
+        }
+
+        @media screen and (max-width: 800px) {
+          .grid{
+            grid-template-columns: repeat(1, 1fr);
+          }
+          .youtubelinksgrid{
+            grid-template-columns: repeat(1, 1fr);
+          }
+          .imagesgrid{
+            grid-template-columns: repeat(3, 1fr);
+          }
+
+          .weblinks-grid{
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .img{
+            height: 200px; 
+          }
+          #buttonMenu{
+            display: block;
+          }
+
+          .text-title{
+            font-size: 2rem;
+          }
+          .text-subtitle{
+            font-size: 1rem; 
+          }
+
+          .loadingAlan {
+            font-size: 2rem;
+          }
+
+          #menuBox{
+            display: none;
+            background: #c23616;
+            width: 100%;
+            height: 200vh;
+            position: fixed;
+            top:0;
+            left:0;
+          }
+
+          .link-site-medium{
+            display: block;
+          }
+          .grid-event{
+            grid-auto-rows: minmax(200px, 200px);
+
+          }
+          .img-legend{
+            height: 200px;
+            font-size: 1rem;
+          }
+          .text-description{
+            font-size: 1.6rem;
+          }
+          
+        }
+
+        @media screen and (max-width: 600px) {
+          .grid{
+            grid-template-columns: repeat(1, 1fr);
+          }
+        }
+  
+        
+  
+  
+/*   
+  
+        .gallery {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 20px;
+          padding: 15px;
+        }
+        .gallery-item {
+          width: 100%;
+          display: block;
+        }
+        .gallery-img {
+          cursor: pointer;
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+          display: block;
+          -webkit-filter: grayscale(1);
+          filter: grayscale(1);
+          transition: all 300ms ease-out;
+        }
+  
+        .gallery-img:hover {
+          -webkit-filter: grayscale(0);
+          filter: grayscale(0);
+        } */
+  
+        
+  
+      </style>
+    </head>
+    <body>
+
+      <div class="splashscreen" style="z-index: 300;
+      background: #c23616;
+      height: 100%;
+      width: 100%;
+      position: fixed;">
+        <div class="loaderAlan">
+          <span class="loadingAlan">Alan Brador</span>
+        </div>
+      </div>
+      
+  
+      <canvas id="bg"></canvas>
+        
+
+      <!-- MENU -->
+
+      <div class="menuSite gsapBox">
+        <!-- ORDI  -->
+        <span id="menuBox">
+          <div onclick="scrollll('home');" class="link-site-medium active">Home</div>
+          <% menu.forEach(function(menuElement){ %>
+              <div onclick="scrollll('<%=menuElement.url%>');" class="link-site-medium"><%=menuElement.title%></div>
+          <% }); %>
+          <div onclick="scrollll('contact');" class="link-site-medium">Contact</div>
+        </span>
+
+        <!-- MOBILE -->
+        <div onclick="$('#menuBox').fadeIn();" class="link-site-medium" id="buttonMenu">Menu</div>
+        <!-- <span id="menuMobile">
+          <div onclick="scrollll('home');" class="link-site-medium active">Home</div>
+          <br>
+          <% menu.forEach(function(menuElement){ %>
+              <div onclick="scrollll('<%=menuElement.url%>');" class="link-site-medium"><%=menuElement.title%></div>
+              <br>
+          <% }); %>
+          <div onclick="scrollll('contact');" class="link-site-medium">Contact</div>
+        </span> -->
+      </div>
+  
+      <div onclick="scrollll('<%=menu[0].url%>');" id="navScroll" style="cursor:pointer;z-index:110;position:fixed;bottom:3rem;width:100%;text-align:center;">
+        <img  style="width: 5rem;" src="img/scroll.png" />
+      </div>
+      <script>
+
+        $(".link-site-medium").on("click",function(){
+              $("section").scrollTop(0);
+        });
+
+        $(window).scroll(function() {
+          $("#navScroll").fadeOut();
+        });
+        function scrollll(id){
+          // alert(window.innerWidth);
+          if(window.innerWidth < 800 ){
+            $('#menuBox').fadeOut();
+          }
+          if(id == "home"){
+            // $("#navScroll").fadeIn();
+          } else{
+            $("#navScroll").fadeOut();
+          }
+          $("section").css({'opacity': 0});
+          // $("section").animate({
+          //   opacity: 0
+          // }, 1000);
+          $([document.documentElement, document.body]).animate({
+            scrollTop: $("#"+id).offset().top,
+              // scrollTop: $("#"+id).offset().top -150
+            },
+            {
+              easing: 'swing',
+              duration: 800,
+              complete: function(){
+                // $("#"+id).css({'opacity': 1});
+                $("#"+id).animate({
+                  opacity: 1
+                }, 300);
+              }
+            });
+          
+
+          // <% for(index=0;index<10*menu.length+3;index++){ %>
+    
+          //     torus<%= index %>.rotation.z += 30;
+
+          // <% }; %>
+          // camera.rotation.z = t * 0.2;
+
+          // alert('oui')
+            // $(window).scrollTop(1000);
+        }
+
+        // Get the container element
+        // var btnContainer = document.getElementsByClassName("menuSite");
+
+        // Get all buttons with class="btn" inside the container
+        var btns = document.getElementsByClassName("link-site-medium");
+
+        // Loop through the buttons and add the active class to the current/clicked button
+        for (var i = 0; i < btns.length; i++) {
+          btns[i].addEventListener("click", function() {
+            
+            var current = document.getElementsByClassName("active");
+            // alert(current);
+            current[0].className = current[0].className.replace(" active", "");
+            this.className += " active";
+          });
+        }
+      </script>
+  
+      <main id="home">
+  
+        <header style="margin-top:130px;" class="gsapBox">
+            <h1 class="textgeo text-title">Alan&nbsp;&nbsp;&nbsp;&nbsp;Brador</h1>
+            <h1 class="textgeo text-subtitle">Composer, Producer, DJ</h1>
+        </header>
+        
+
+        <% app.forEach(function(menuElement, index){ %>
+            <% if(menuElement.type === "page"){ %>
+                <section id="<%=menuElement.url%>" >
+
+                  <div style="grid-template-columns: repeat(1, 1fr);">
+
+                    <h1 class="text-title"><%= menuElement.title %></h1>
+
+                    <img class="img" style="margin: 50px auto;height: 300px;" src="upload/<%=menuElement.images[0]%>"/>
+
+                    <% if(menuElement.description){ %>
+                      <div style="grid-template-columns: repeat(1, 1fr);padding: 0 2rem;max-width: 800px; margin: 0 auto 150px auto;">
+                        <p class="text-description" id="description<%=index%>" class="lead gsapBox"></p>
+                      </div>
+                    <% } %>
+
+                    <!--------------------------- W E B     L I N K S --------------------------------->
+                    <%if(menuElement.webLinks.length !=0){%>
+                      <div class="weblinks-grid" >
+                          <% menuElement.webLinks.forEach(function(element){ %>
+                            <a class="links-page" target="_blank" href="<%= element.adress %>">
+                              <%= element.name %>
+                            </a>
+                          <%});%>
+                      </div>
+                    <%}%>
+
+                    <!--------------------------- I M A G E S --------------------------------->
+                    <div class="imagesgrid">
+                      <% menuElement.images.forEach(function(image){ %>
+                        <div class="grid-element">
+                          <img class="img" src="upload/<%=image%>"/>
+                        </div>
+                      <% }); %>
+                    </div>
+
+                    <!--------------------------- Y O U T U B E     L I N K S --------------------------------->
+                    <%if(menuElement.youtube.length !=0){%>
+                      <div class="youtubelinksgrid">
+                            <%for(i=0; i<menuElement.youtube.length; i++){ %>
+                              <div class="grid-element">
+                                <div class="gallery-alan" style="color: #333 !important; text-decoration: none; cursor: pointer;">
+                                  <figure class="img-container">
+                                    <div onclick="OpenModal('<%=menuElement.youtube[i]%>');" class="blurYoutube"></div>
+                                    <iframe width="100%" height="250px" class="lazy" 
+                                    data-src="https://www.youtube.com/embed/<%=menuElement.youtube[i]%>?controls=1" title="YouTube video player"
+                                      frameborder="0"
+                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                      allowfullscreen></iframe>
+                                  </figure>
+                                </div>
+                              </div>
+                              <%}%>
+                      </div>
+                    <%}%>
+
+                    <script>
+                      //LAZYYYY YOUTUBE
+                      // Set the options globally
+                      // to make LazyLoad self-initialize
+                      window.lazyLoadOptions = {
+                          // Your custom settings go here
+                      };
+                      
+                      // Listen to the initialization event
+                      // and get the instance of LazyLoad
+                      window.addEventListener("LazyLoad::Initialized", function (event) {
+                          window.lazyLoadInstance = event.detail.instance;
+                      }, false);
+                    </script>
+
+                    
+
+
+
+
+                  </div>
+
+                        <!--------------------------- D E S C R I P T I O N     S C R I P T --------------------------------->
+
+                        <script type="text/javascript">
+                          var txt = "<%=menuElement.description%>";
+                          function htmlDecode(input) {
+                              var doc = new DOMParser().parseFromString(input, "text/html");
+                              return doc.documentElement.textContent;
+                          }
+                          var html = htmlDecode(txt);
+                          $("#description<%=index%>").html(html);
+                        </script> 
+
+
+
+                    
+
+                </section>
+            <% } else if(menuElement.type === "about"){ %>
+              <section id="<%=menuElement.url%>" >
+                <!-- <blockquote> -->
+                  <h1 class="text-title">Alan&nbsp;&nbsp;&nbsp;&nbsp;Brador</h1>
+                  
+                    <% menuElement.images.forEach(function(image){ %>
+                      <div style="display:grid;grid-template-columns: repeat(1, 1fr);width:100%; display: block; height: 300px;margin-top:150px;">
+                        <img style="width: 100%;height: 300px;object-fit: cover;" src="upload/<%=image%>"/>
+                      </div>
+                    <% }); %>
+                    
+                    <% if(menuElement.description){ %>
+                      <div style="display:grid;grid-template-columns: repeat(1, 1fr);margin-bottom:50px;padding: 0 2rem;">
+                        <p class="text-description" id="description<%=index%>" class="lead gsapBox"></p>
+                      </div>
+                    <% } %>
+
+
+                    <div style="display: grid;grid-template-columns: repeat(1, 1fr);margin-bottom:50px;" >
+                        <a class="links-page" target="_blank" href="mailto:geoffroy.rouaix@hotmail.com">
+                          Contact, Booking
+                        </a>
+                    </div>
+
+                    <div style="display: grid;grid-template-columns: repeat(1, 1fr);margin-bottom:150px;" >
+                      <a class="links-page" href="tel:+33618275025">
+                        WattsApp: +33 6 18 27 50 25
+                      </a>
+                  </div>
+
+
+                    <!-- <p><%=menuElement.description%></p> -->
+                    <!--------------------------- D E S C R I P T I O N     S C R I P T --------------------------------->
+
+                    <script type="text/javascript">
+                      var txt = "<%=menuElement.description%>";
+                      function htmlDecode(input) {
+                          var doc = new DOMParser().parseFromString(input, "text/html");
+                          return doc.documentElement.textContent;
+                      }
+                      var html = htmlDecode(txt);
+                      $("#description<%=index%>").html(html);
+
+                      
+                    </script> 
+                <!-- </blockquote> -->
+                
+                <!-- <p><%=menuElement.description%></p> -->
+            </section>
+          <% } else if(menuElement.type === "shop"){ %>
+                <section id="<%=menuElement.url%>">
+                  <div class="grid">
+                    <% menuElement.elements.forEach(function(element){ %>
+                      <div class="grid-element" onclick="location.href='<%=menuElement.url%>/<%=element.url%>';" style="cursor:pointer;">
+                        <img class="img" src="upload/<%=element.images[0]%>"/>
+                        <div class="img-legend">
+                          <%=element.title%>
+                        </div>
+                      </div>
+                    <% }); %>
+                  </div>
+              </section>
+            <% } else if(menuElement.type === "events"){ %>
+                <section id="<%=menuElement.url%>" style="overflow-y: scroll;" >
+                  <h1 class="text-title">Events</h1>
+                  <div class="grid-event">
+                    <% menuElement.elements.forEach(function(element, index){ %>
+                      <!-- <div onclick="location.href='<%=menuElement.url%>/<%=element.url%>';" style="cursor:pointer;"> -->
+                      <div>
+                        <img class="img" src="upload/<%=element.images[0]%>"/>
+                        <div class="img-legend">
+                          <div style="cursor:pointer;">
+                            <h3><%=element.title%></h3>
+                            <h5 id="date-<%=element._id%>"></h5>
+                            <h5><%=element.adress%></h5>
+                            <script>
+                                if('<%= element.date%>'){
+                                    $('#date-<%=element._id%>').html(new Date('<%= element.date%>').toLocaleDateString('en-EN', { year: 'numeric', month: 'long', day: 'numeric' }));
+                                }
+                            </script>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    <% }); %>
+                  </div>
+                  <!-- <%=day%> -->
+
+              </section>
+            <% } else { %>
+              <section id="<%=menuElement.url%>">
+                <div class="grid">
+                  <% menuElement.elements.forEach(function(element){ %>
+                    <div class="grid-element" onclick="location.href='<%=menuElement.url%>/<%=element.url%>';" style="cursor:pointer;">
+                      <img class="img" src="upload/<%=element.images[0]%>"/>
+                      <div class="img-legend">
+                        <%=element.title%>
+                      </div>
+                    </div>
+                  <% }); %>
+                </div>
+            </section>
+            <% } %>
+        <% }); %>
+        
+  
+       
+  
+        
+  
+  
+        
+  
+  
+        <section id="contact" >
+
+          <h1 class="textgeo text-title">Contact</h1>
+
+          <div style="display: grid;grid-template-columns: repeat(1, 1fr);margin:150px auto 50px auto;" >
+            <a class="links-page" target="_blank" href="mailto:geoffroy.rouaix@hotmail.com">
+              Contact, Booking
+            </a>
+        </div>
+
+        <div style="display: grid;grid-template-columns: repeat(1, 1fr);margin-bottom:150px;" >
+          <a class="links-page" href="tel:+33618275025">
+            WattsApp: +33 6 18 27 50 25
+          </a>
+        </div>
+      
+          <!-- <div style="grid-template-columns: repeat(1, 1fr);">
+
+            <h1 style="font-size: 3rem; font-weight: bold; text-align: center;margin-top:150px;text-transform: uppercase;">Message me</h1>
+            <div class="form-custom-small">
+              <form action="/contact" method="POST" style="font-family: brandon-grotesque, sans-serif;">
+                <div class="form-floating">
+                  <input required type="text" class="form-control" placeholder="<%= lang.firstName %>" name="firstName">
+                  <input required type="text" class="form-control" placeholder="<%= lang.lastName %>" name="lastName">
+                </div>
+                <div class="form-floating">
+                  <input required type="email" class="form-control" placeholder="<%= lang.email %>" name="email">
+                  <input type="text" class="form-control" placeholder="<%= lang.phone %>" name="phone">
+                </div>
+                <div class="form-floating">
+                  <textarea required style="font-family: brandon-grotesque, sans-serif;height: calc(9.5rem + 2px);" class="form-control" placeholder="<%= lang.yourProject %>" rows="3" name="content"></textarea>
+                </div>
+                <div id="buttonText" style="text-align: center;width: 100%;"><button onclick="Loading();" class="link-site-medium" type="submit"><%= lang.buttonSend %></button></div>
+                <span id="buttonLoading" style="display:none;"></span>
+              </form>
+            </div>
+          </div> -->
+          
+        </section>
+        <script>
+  
+          function Loading(){
+            if(
+              $('input[name="firstName"]').val() != "" &&
+              $('input[name="lastName"]').val() != "" &&
+              $('input[name="email"]').val() != "" &&
+              $('textarea[name="content"]').val() != ""
+            ){
+              $('#buttonText').hide();
+              $('#buttonLoading').fadeIn();
+            }
+          }
+  
+        </script>
+  
+  
+  
+        
+  
+      </main>
+  
+  
+  
+  
+  
+  <script src="js/three.min.js"></script>
+  <script src="https://rawcdn.githack.com/mrdoob/three.js/r96/examples/js/loaders/GLTFLoader.js"></script>
+  <!-- <script type="module" src="js/OrbitControls.js"></script> -->
+  <!-- <script type="module" src="js/landing.js"></script> -->
+
+
+
+
+  <script type="text/javascript">
+
+  //GSAP
+  gsap.from(".gsapBox", {duration: 1, y: -100, opacity: 0, scale: 0.5, ease: "circ.out"});
+
+
+    // import './style.css';
+  // import * as THREE from '../three';
+  // import { OrbitControls } from '../../node_modules/three/examples/jsm/controls/OrbitControls';
+  
+  
+  // Setup
+  
+  const scene = new THREE.Scene();
+  
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  
+  const renderer = new THREE.WebGLRenderer({
+    canvas: document.querySelector('#bg'),
+  });
+  
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.position.setZ(30);
+  camera.position.setX(0);
+  
+  renderer.render(scene, camera);
+  
+  </script>
+
+
+<!-- on construit les éléments  -->
+<script>
+
+function randomIntFromInterval(min, max) { // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+// const moonTexture = new THREE.TextureLoader().load('img/moon.jpg');
+// const normalTexture = new THREE.TextureLoader().load('img/normal.jpg');
+// const planetSizes = [3,5,8,12,15, 20, 30];
+// const posYs = [0,10,20];
+// const posXs = [1,3,4];
+
+const geometry = new THREE.TorusGeometry(10, 2, 6, 6);
+const material = new THREE.MeshStandardMaterial({ color: 0xf1c40f });
+
+
+
+
+
+// const geometry2 = new THREE.SphereGeometry( 15, 30, 30 );
+// const material2 = new THREE.LineBasicMaterial( {
+// 					vertexColors: true,
+// 					blending: THREE.AdditiveBlending,
+// 					transparent: true
+// 				} );
+// const sphere = new THREE.Mesh( geometry2, material2 );
+// scene.add( sphere );
+// sphere.position.z = -50;
+// sphere.position.x = 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+<% for(index=0;index<10*menu.length+3;index++){ %>
+    <script>
+
+
+        // if(index == 12){
+        //   pos
+        // }
+        var pos = '<%= (index+1)*2 %>';
+        // const torus = new THREE.Mesh(geometry, material);
+        const torus<%= index %> = new THREE.Mesh(geometry);
+        
+        
+        torus<%= index %>.position.z = pos;
+        torus<%= index %>.position.x = 0;
+        
+        scene.add(torus<%= index %>);
+        
+        // var planetSize = planetSizes[randomIntFromInterval(0,planetSizes.length)];
+        // var posY = posYs[randomIntFromInterval(0,posYs.length)];
+        // var pos = '<%= (index+1)*30 %>' * posXs[randomIntFromInterval(0,posXs.length)];
+        // const moon<%= index %> = new THREE.Mesh(
+        //     new THREE.SphereGeometry(planetSize, 32, 32),
+        //     new THREE.MeshStandardMaterial({
+        //     map: moonTexture,
+        //     normalMap: normalTexture,
+        //     })
+        // );
+        // scene.add(moon<%= index %>);
+        // if(<%= index %> % 2 == 1){
+        //     moon<%= index %>.position.setX(-planetSize*2 - 10);
+        //     moon<%= index %>.position.setY(-posY);
+        // }
+        // else{
+        //     moon<%= index %>.position.setX(+planetSize*1.3 +10);
+        //     moon<%= index %>.position.setY(+posY);
+        // }
+        // moon<%= index %>.position.z = pos;
+    </script>
+<% }; %>
+
+
+<script type="text/javascript">
+  
+  //le model 3d car
+  // let car;
+  // let loader = new THREE.GLTFLoader();
+  // loader.load('3d/car/scene.gltf', function(gltf){
+  //   car = gltf.scene.children[0];
+  //   car.scale.set(0.01,0.01,0.01);
+  //   scene.add(gltf.scene);
+  //   car.position.z = 100;
+  //   car.position.setX(-20);
+  //   car.position.setY(0);
+  //   car.rotation.z = 1;
+  //   // animate();
+  // });
+  
+  //le model 3d face hero
+//   let face;
+//   let loaderFace = new THREE.GLTFLoader();
+//   loaderFace.load('3d/cryptodealer.gltf', function(gltf){
+//     face = gltf.scene.children[0];
+//     // face.scale.set(1,1,1);
+//     scene.add(gltf.scene);
+//     face.position.z = 40;
+//     face.position.setX(-5);
+//     face.position.setY(-3);
+//     face.rotation.y = 1.7;
+//     // animate();
+//   });
+  
+  
+  // *************************************************************************
+  
+  // ------------------------------ ETOILES -------------------------------------
+  
+  // *************************************************************************
+  
+  let starGeo = new THREE.Geometry();
+  for(let i=0;i<6000;i++) {
+    let star = new THREE.Vector3(
+      Math.random() * 600 - 300,
+      Math.random() * 600 - 300,
+      Math.random() * 600 - 300
+    );
+    star.velocity = 0;
+    star.acceleration = 0.0002;
+    starGeo.vertices.push(star);
+  }
+  
+  let sprite = new THREE.TextureLoader().load( 'upload/<%=general.showcaseElements[0].images[0]%>' );
+  let starMaterial = new THREE.PointsMaterial({
+    // color: 0xaaaaaa,
+    // size: 1.6,
+    size: 2,
+    map: sprite
+  });
+  
+  let stars = new THREE.Points(starGeo,starMaterial);
+  scene.add(stars);
+  
+  
+  
+  
+  // function addStar() {
+  //   const geometry = new THREE.SphereGeometry(0.25, 24, 24);
+  //   const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
+  //   const star = new THREE.Mesh(geometry, material);
+  //
+  //   // const [x, y, z] = Array(3)
+  //   //   .fill()
+  //   //   .map(() => THREE.MathUtils.randFloatSpread(100));
+  //
+  //   const [x, y, z] = [Math.random() * (-50), Math.random() * -50, Math.random() * -50];
+  //
+  //
+  //   // alert(x + " " + y + " " + z);
+  //
+  //   star.position.set(x, y, z);
+  //   star.acceleration = 0.0002;
+  //   scene.add(star);
+  // }
+  // Array(200).fill().forEach(addStar);
+  
+  
+  
+  
+  
+  window.addEventListener("resize", onWindowResize, false);
+  
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+  
+  
+  
+  
+  // *************************************************************************
+  
+  // ------------------------------ LIGHTS -------------------------------------
+  
+  // *************************************************************************
+  
+  const pointLight = new THREE.PointLight(0xffffff);
+  pointLight.position.set(5, 5, 5);
+  
+  const ambientLight = new THREE.AmbientLight(0xffffff);
+  ambientLight.intensity = 1;
+  scene.add(pointLight, ambientLight);
+  
+  // Helpers
+  
+  // const lightHelper = new THREE.PointLightHelper(pointLight)
+  // const gridHelper = new THREE.GridHelper(200, 50);
+  // scene.add(lightHelper, gridHelper)
+  
+  // const controls = new OrbitControls(camera, renderer.domElement);
+  
+  
+  
+  // *************************************************************************
+  
+  // ------------------------------ BACKGROUND -------------------------------------
+  
+  // *************************************************************************
+  
+//   const spaceTexture = new THREE.TextureLoader().load('img/galaxyTexture2.jpg');
+//   scene.background = spaceTexture;
+  
+  
+  // *************************************************************************
+  
+  // ------------------------------ TORUS -------------------------------------
+  
+  // *************************************************************************
+  
+//   const geometry = new THREE.TorusGeometry(10, 2, 6, 6);
+//   const material = new THREE.MeshStandardMaterial({ color: 0xf1c40f });
+  // const torus = new THREE.Mesh(geometry, material);
+//   const torus = new THREE.Mesh(geometry);
+  
+//   torus.position.z = -13;
+//   torus.position.x = 0;
+  
+//   scene.add(torus);
+
+  
+  // *************************************************************************
+  
+  // ------------------------------ ELGEOGEO -------------------------------------
+  
+  // *************************************************************************
+  
+  const geoTexture = new THREE.TextureLoader().load('upload/<%=general.showcaseElements[0].images[0]%>');
+  const elgeogeo = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map: geoTexture }));
+  scene.add(elgeogeo);
+  elgeogeo.position.z = -10;
+  elgeogeo.position.x = 0;
+  
+  
+  // *************************************************************************
+  
+  // ------------------------------ MOON -------------------------------------
+  
+  // *************************************************************************
+  
+//   const moonTexture = new THREE.TextureLoader().load('img/moon.jpg');
+//   const normalTexture = new THREE.TextureLoader().load('img/normal.jpg');
+//   const moon = new THREE.Mesh(
+//     new THREE.SphereGeometry(5, 32, 32),
+//     new THREE.MeshStandardMaterial({
+//       map: moonTexture,
+//       normalMap: normalTexture,
+//     })
+//   );
+//   scene.add(moon);
+//   moon.position.z = 30;
+//   moon.position.setX(-10);
+  
+  
+  
+  // *************************************************************************
+  
+  // ------------------------------ EARTH -------------------------------------
+  
+  // *************************************************************************
+  
+//   const earthTexture = new THREE.TextureLoader().load('img/earth.jpeg');
+//   const earth = new THREE.Mesh(
+//     new THREE.SphereGeometry(15, 32, 32),
+//     new THREE.MeshStandardMaterial({
+//       map: earthTexture,
+//       normalMap: normalTexture,
+//     })
+//   );
+//   scene.add(earth);
+//   earth.position.z = 60;
+//   earth.position.setX(-30);
+  
+  
+  
+  
+  // *************************************************************************
+  
+  // ------------------------------ SCROLL ANIMATION -------------------------------------
+  
+  // *************************************************************************
+  
+  function moveCamera() {
+    const t = document.body.getBoundingClientRect().top;
+
+
+// <% menu.forEach(function(menuElement, index){ %>
+ 
+//         moon<%= index %>.rotation.y += 0.0075;
+
+// <% }); %>
+
+    // menu.forEach(function(menuElement, index){ 
+    //   <% for(index=0;index<10*menu.length+3;index++){ %>
+    
+    //         torus<%= index %>.rotation.z += 1;
+
+    // <% }; %>
+
+    // moon.rotation.y += 0.0075; !!!!
+    // earth.rotation.y += 0.0075;
+    stars.rotation.y +=0.02;
+    camera.position.z = t * -0.01;
+    // camera.rotation.z += 1;
+    // camera.position.z = t * -0.01;
+    // camera.position.x = t * -0.0002;
+    // camera.rotation.y = t * -0.0002;
+  }
+  
+  document.body.onscroll = moveCamera;
+  
+  var lastScrollTop = 0;
+  $(window).scroll(function(event){
+    var st = $(this).scrollTop();
+    // console.log(st);
+    if (st > lastScrollTop){
+      // console.log("down" + st);
+      elgeogeo.rotation.y += 0.02;
+      if(st > 9140){
+      }
+        // downscroll code
+    } else {
+      // console.log("up" + st);
+      elgeogeo.rotation.y -= 0.02;
+      // upscroll code
+      if(st > 9140){
+  
+        // car.position.x -= 1.2;
+  
+      }
+  
+    }
+    lastScrollTop = st;
+  });
+  
+  $(document).ready(function(){
+    moveCamera();
+  });
+  
+  
+  // Animation Loop
+  
+  var i = 0;
+  function animate(index) {
+    requestAnimationFrame(animate);
+  
+
+    //const count = geometry.attributes.position.count;
+
+    // const now = Date.now() / 300
+    // for (let i= 0; i<200 ; i++){
+      
+      // var scale = i/100000; // adjust the multiplier to whatever
+      // sphere.scale.x += scale;
+      // sphere.scale.y += scale;
+      // sphere.scale.z += scale;
+      // i++;
+      // console.log(i);
+      // const xsin = Math.sin(i + now)
+      // geometry.attributes.position.setZ(i, xsin)
+    // }
+    elgeogeo.rotation.x += 0.01;
+    elgeogeo.rotation.y += 0.01;
+    // torus.rotation.x += 0.01;
+    // torus.rotation.y += 0.005;
+    // torus.rotation.z += 0.01;
+    // <% menu.forEach(function(menuElement, index){ %>
+ 
+    //     moon<%= index %>.rotation.x += 0.005;
+    //     moon<%= index %>.rotation.y -= 0.005;
+    // <% }); %>
+    // moon.rotation.x += 0.005; !!!!!
+    // earth.rotation.y += 0.005;
+    starGeo.vertices.forEach(p => {
+      p.velocity += p.acceleration
+      p.z -= p.velocity;
+  
+      if (p.z < -200) {
+        p.z = 200;
+        p.velocity = 0;
+      }
+    });
+    starGeo.verticesNeedUpdate = true;
+    stars.rotation.z +=0.002;
+    renderer.render(scene, camera);
+  }
+  
+  animate();
+  
+  </script>
+  
+  
+  
+  
+  
+  
+  <script>
+    // alert("oouiiii");
+    // function docReady(fn) {
+    //     // see if DOM is already available
+    //     if (document.readyState === "complete" || document.readyState === "interactive") {
+    //         // call on next available tick
+    //         setTimeout(fn, 1);
+    //     } else {
+    //         document.addEventListener("DOMContentLoaded", fn);
+    //     }
+    // }    
+
+    // docReady(function() {
+    //     // DOM is loaded and ready for manipulation here
+    //     alert("oouiiii");
+    // });
+
+    // $(document).ready(function(){
+    //     // alert("kuizine");
+    //     $('.splashscreentext').fadeOut();
+    // });
+
+    window.onload = function() {
+      // init();
+      $('.splashscreen').fadeOut();
+      // doSomethingElse();
+    };
+  </script>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    </body>
+  </html>
+  

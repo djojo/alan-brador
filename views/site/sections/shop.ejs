@@ -1,0 +1,51 @@
+
+    
+<div class=" px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-4 row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+        <% elements.forEach(function(element){ %>
+            <!-- <a href="<%=section.title%>/<%=element.title%>"></a> -->
+            <div style="cursor:pointer;" onclick="location.href='<%=section.url%>/<%=element.url%>';" alt="Redirection" class="col mb-5 gsapBox">
+                <div class="h-100 element-box-hover">
+                    <!-- Sale badge-->
+                    <!-- <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div> -->
+                    <!-- Product image-->
+                    <img class="element-shop-img" src="upload/<%=element.images[0]%>" alt="..." />
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h3 class="fw-bolder"><%=element.title%></h3>
+                            <!-- Product reviews-->
+                            <!-- <div class="d-flex justify-content-center small text-warning mb-2">
+                                <div class="bi-star-fill"></div>
+                                <div class="bi-star-fill"></div>
+                                <div class="bi-star-fill"></div>
+                                <div class="bi-star-fill"></div>
+                                <div class="bi-star-fill"></div>
+                            </div> -->
+                            <!-- Product price-->
+                            <span><%=element.price%> €</span>
+                            <!-- <span class="text-muted text-decoration-line-through"><%=1.5*element.price %> €</span> -->
+                        </div>
+                    </div>
+                    <!--  E L E M E N T   -   A D D    T O    C A R T-->
+                    <!-- <% if(general.eCommerce == true){ %>
+                        <div style="margin-bottom:20px;" class="card-footer pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <% if(element.nbCopy > 0){ %>
+                                    <% if(currentUser && currentUser.cart.items.some(function(cartItem){ return cartItem.element._id.equals(element._id); })) { %>
+                                                <a href="/cart" style="color:white !important;background:rgba(0,0,0,0.8);" class="button-link">Dans le panier</a>
+                                    <% } else { %>
+                                                <a class="button-link" href="/cart/new/<%= element._id %>/<%= element.section.url %>/section">Ajouter au panier</a>
+                                    <% } %>
+                                <% } else { %>
+                                    <span class="button-link" style="color:white !important;background:rgba(0,0,0,0.8);">Out of stock</a>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% } %> -->
+                </div>
+            </div>
+        <%})%>
+    </div>
+</div>

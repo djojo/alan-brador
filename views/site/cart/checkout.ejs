@@ -1,0 +1,204 @@
+<%- include('../partials/header') %>
+<%- include('../partials/menu', {menu: menu, general: general}) %>
+<%- include('../partials/flash') %>
+
+<%if(general.backgroundImage){%>
+    <style media="screen">
+        .content {
+        background: url('/upload/<%=general.backgroundImage%>') no-repeat center center fixed !important;
+        -webkit-background-size: cover !important;
+        -moz-background-size: cover !important;
+        -o-background-size: cover !important;
+        background-size: cover !important;
+        /* backdrop-filter: brightness(40%) !important; */
+        min-height: 100vh !important;
+        color:white  !important;
+        /* backdrop-filter: blur(10px) !important; */
+        }
+        .police-menu{
+        color:white !important;
+        }
+    </style>
+<%}%>
+
+<div class="container gsapBox">
+    <h1 class="display-3 centered">CHECKOUT</h1>
+
+<div class="container gsapBox">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h3>Informations de livraison</h3>
+                </div>
+                <form action="/checkout" method="POST">
+                    <div class="ibox-content">
+                            <div class="row my-md-2">
+                                <div class="col my-1 my-md-0">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="First Name" name="firstName" required>
+                                        <label for="floatingInput"><%= lang.firstName %></label>
+                                    </div>
+                                    <!-- <input type="text" name="name" placeholder="Nom Complet" class="form-control" required> -->
+                                </div>
+                                <div class="col my-1 my-md-0">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="Last Name" name="lastName" required>
+                                        <label for="floatingInput"><%= lang.lastName %></label>
+                                    </div>
+                                    <!-- <input type="number" name="contactNo" placeholder="Telephone" class="form-control" required> -->
+                                </div>
+                            </div>
+                            <div class="row my-md-2">
+                                <div class="col-md-7 my-1 my-md-0 pr-md-1">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="Adresse" name="address" required>
+                                        <label for="floatingInput">Adresse</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 my-1 my-md-0 pl-md-1">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="Adresse" name="phone" required>
+                                        <label for="floatingInput">Telephone</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row my-md-2">
+                                <div class="col-md-4 my-1 my-md-0 pr-md-1">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="Ville" name="city" required>
+                                        <label for="floatingInput">Ville</label>
+                                    </div>
+                                    <!-- <input type="text" name="address[city]" placeholder="Ville" class="form-control" required> -->
+                                </div>
+                                <div class="col-md-4 my-1 my-md-0 px-md-1">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="Pays" name="country" required>
+                                        <label for="floatingInput">Pays</label>
+                                    </div>
+                                    <!-- <input type="text" name="address[state]" placeholder="Pays" class="form-control" required> -->
+                                </div>
+                                <div class="col-md-4 my-1 my-md-0 pl-md-1">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="Code Postal" name="zipCode" required>
+                                        <label for="floatingInput">Code Postal</label>
+                                    </div>
+                                    <!-- <input type="number" name="address[pin]" placeholder="Code Postal" class="form-control" required> -->
+                                </div>
+                            </div>
+                            <!-- <div class="row my-3">
+                                <div class="col-md-5 mb-3">
+                                    <h6>Payment Method: COD</h6>
+                                </div>
+                                <div class="col-md-7 ">
+                                    <div class="border pt-3 pb-2 px-3">
+                                        <h6 class="float-right">$<%=user.cart.cart_total%></h6>
+                                        <h6>Cart Total</h6>
+                                        <h6 class="float-right disc">(-)$<%=user.cart.discount%></h6>
+                                        <h6 class="disc">Discount</h6>
+                                        <h6 class="float-right">$<%=user.cart.total%></h6>
+                                        <h6>Total Payable</h6>
+                                    </div>
+                                </div>
+                            </div> -->
+
+
+
+                    
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="d-flex justify-content-between">
+                            <a href="/cart"><button class="btn btn-white roboto"><i class="fa fa-arrow-left"></i> Retour Panier</button></a>
+                            <button type="submit" class="button-link" ><i class="fa fa fa-shopping-cart"></i> Commander</button>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h3>Récapitulatif</h3>
+                </div>
+                <% if(user.cart.items.length>0){ %>
+                    <div class="ibox-content">
+                        <span class="roboto">
+                            Total
+                        </span>
+                        <h2 class="font-bold">
+                            <%=user.cart.total%> €
+                        </h2>
+    
+                        <hr>
+                        <!-- <span class="text-muted small">
+                            *For United States, France and Germany applicable sales tax will be applied
+                        </span> -->
+                        <div class="m-t-sm" style="text-align: center;">
+                            <div class="btn-group">
+                                <!-- <a href="/"></a><button class="btn btn-white"><i class="fa fa-arrow-left"></i> Annuler</button> -->
+                                <a href="/checkout"><button class="button-link" ><i class="fa fa fa-shopping-cart"></i> Checkout</button></a>
+                            </div>
+                        </div>
+                    </div>
+                <% } else { %>		
+                    <div class="text-center screen-center-cart">
+                        <!-- <img src="https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90" class="empty-cart-img"> -->
+                        <p>Voir la boutique</p>
+                        <!-- <a href="/" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Start </a> -->
+                    </div>
+                <% } %>
+                
+            </div>
+
+            <!-- <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Support</h5>
+                </div>
+                <div class="ibox-content text-center">
+                    <h3><i class="fa fa-phone"></i> +33 6 18 27 50 25</h3>
+                    <span class="small">
+                        Please contact with us if you have any questions. We are avalible 24h.
+                    </span>
+                </div>
+            </div>
+
+            <div class="ibox">
+                <div class="ibox-content">
+
+                    <p class="font-bold">
+                    Other products you may be interested
+                    </p>
+                    <hr>
+                    <div>
+                        <a href="#" class="product-name"> Product 1</a>
+                        <div class="small m-t-xs">
+                            Many desktop publishing packages and web page editors now.
+                        </div>
+                        <div class="m-t text-righ">
+
+                            <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div>
+                        <a href="#" class="product-name"> Product 2</a>
+                        <div class="small m-t-xs">
+                            Many desktop publishing packages and web page editors now.
+                        </div>
+                        <div class="m-t text-righ">
+
+                            <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+
+<%- include('../partials/footer') %>

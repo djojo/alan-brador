@@ -1,0 +1,246 @@
+
+<!-- <h1 class="display-3 centered"><%= section.title %></h1> -->
+
+<style>
+  .swiperGallery {
+    width: 100%;
+  }
+
+  /* #Lightbox {
+    vertical-align:middle;
+    position:fixed;
+    } */
+
+  #containerbio{
+    width: 100%;
+  }
+  #floatedtop{
+    float: left;
+    width: 50%;
+    padding: 30px 30px 10px 0px;
+  }
+  
+  </style>
+
+<!-- <div class="container"> -->
+  <div id="containerbio" style="padding: 0 2em;    min-height: 600px;">
+    <div id="floatedtop">
+      <div class="gsapBox">
+        <% if(section.images[0]) { %>
+          <img style="max-width: 100%;" src="upload/<%=section.images[0]%>" />
+        <% } %>
+      </div>
+      
+      <!-- <div class="swiperGallery">
+        <div class="swiper-wrapper">
+          <% section.images.forEach(function(image, index){%>
+              <a href="upload/<%=image%>" data-lightbox="slider" class="swiper-slide">
+                <img style="margin-bottom: 5px;max-width:100%;max-height:100%;top: 50%;position: relative;transform: translateY(-50%);" src="upload/<%=image%>" />
+              </a>
+          <%});%>
+          <% if(section.images.length>1){ %>
+            <div style="bottom:-10px !important;" class="swiper-pagination"></div>
+          <%}%>
+        </div>
+      </div> -->
+      
+      
+  
+    </div>
+    <% if(section.description){ %>
+        <p style="padding: 10px 0px;text-align: justify;line-height: 3rem; font-size: 1.5rem;" id="description" class="lead gsapBox"></p>
+    <% } %>
+
+    <div style="display: grid;grid-template-columns: repeat(1, 1fr);margin-bottom:50px;" >
+      <a style="text-transform:uppercase; color: #c23616 !important;text-align: center;" target="_blank" href="mailto:geoffroy.rouaix@hotmail.com">
+        CONTACT ME
+      </a>
+  </div>
+
+  <div style="display: grid;grid-template-columns: repeat(1, 1fr);margin-bottom:150px;" >
+    <a style="text-transform:uppercase; color: #c23616 !important;text-align: center;" href="tel:+33618275025">
+      +33 6 18 27 50 25
+    </a>
+</div>
+    
+  </div>
+  
+  
+  <!--------------------------- Y O U T U B E     L I N K S --------------------------------->
+  <%if(section.youtube.length !=0){%>
+    <div class="element-details-box" style="margin-top: 100px;">
+      <h3>Vidéos</h3>
+      <hr>
+      <div class="row">
+        <%for(i=0; i<section.youtube.length; i++){ %>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="gallery-alan" style="color: #333 !important; text-decoration: none; cursor: pointer;">
+              <figure class="img-container">
+                <div onclick="OpenModal('<%=section.youtube[i]%>');" class="blurYoutube"></div>
+                <iframe width="100%" height="250px"
+                  src="https://www.youtube.com/embed/<%=section.youtube[i]%>?controls=0" title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
+              </figure>
+            </div>
+          </div>
+          <%}%>
+      </div>
+    </div>
+  <%}%>
+  
+  <!--------------------------- W E B     L I N K S --------------------------------->
+  <%if(section.webLinks.length !=0){%>
+    <div class="element-details-box">
+      <h3><%=lang.textLinks%></h3>
+      <hr>
+      <div class="row">
+        <% section.webLinks.forEach(function(element){ %>
+          <a target="_blank" href="<%= element.adress %>">
+            <p class="lead"><%= element.name %></p>
+          </a>
+        <%});%>
+        
+      </div>
+    </div>
+  <%}%>
+
+<!-- </div> -->
+
+
+
+
+
+
+<script type="text/javascript">
+  const swiper1 = new Swiper(".swiperGallery", {
+        spaceBetween: 30,
+        effect: "fade",
+        speed: 1000,
+        fadeEffect: { crossFade: true },
+        // loop: true,
+        autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
+
+  // alert(window.innerHeight);
+  var size = window.innerHeight - 300;
+  $(".swiperGallery").css({height: size});
+  // $("#lightbox").css({top: "300px"});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-----------------------------   M O D A L    B O X --------------------------------->
+<div id="modal" class="modalBox">
+
+  <div class="modalContent">
+    
+    <div id="modalMain"></div>
+    <span class="modalClose">&times;</span>
+  </div>
+
+</div>
+
+<!--------------------------- G A L E R I E   S C R I P T --------------------------------->
+<script type="text/javascript" src="js/lightbox.min.js"></script>
+<script type="text/javascript">
+lightbox.option({
+'resizeDuration': 0,
+'wrapAround': true,
+'fadeDuration':	100,
+'imageFadeDuration': 600,
+'fitImagesInViewport': true,
+'albumLabel': '%1 sur %2',
+'alwaysShowNavOnTouchDevices': true,
+disableScrolling:true
+});
+
+</script>
+
+<!--------------------------- Y O U T U B E     S C R I P T --------------------------------->
+<script type="text/javascript">
+  function OpenModal(url){
+    let html = "<iframe style='height:80vh' width='100%' src='https://www.youtube.com/embed/"+url+"?controls=0&autoplay=true' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
+    //document.body.scrollTop = 0; // For Safari
+    //document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    $("#modalMain").html(html);
+    $(".modalBox").show();
+  }
+    // Get the modal
+  var ebModal = document.getElementById('modal');
+
+  // Get the button that opens the modal
+  var ebBtn = document.getElementById("mySizeChart");
+
+  // Get the <span> element that closes the modal
+  var ebSpan = document.getElementsByClassName("modalClose")[0];
+
+  // When the user clicks on <span> (x), close the modal
+  ebSpan.onclick = function() {
+      ebModal.style.display = "none";
+      $("#modalMain").html(html);
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+      if (event.target == ebModal) {
+          ebModal.style.display = "none";
+          $("#modalMain").html(html);
+      }
+  }
+
+  $( window ).resize(function() {
+    ResizeBoxYoutube();
+  });
+
+  $(document).ready(function() {
+    ResizeBoxYoutube();
+  });
+
+  function ResizeBoxYoutube(){
+    let width = $(".img-container").width();
+      $(".blurYoutube").css("width", width);
+  }
+
+
+</script>
+
+<!--------------------------- D E S C R I P T I O N     S C R I P T --------------------------------->
+
+<script type="text/javascript">
+  var txt = "<%=section.description%>";
+  function htmlDecode(input) {
+      var doc = new DOMParser().parseFromString(input, "text/html");
+      return doc.documentElement.textContent;
+  }
+  var html = htmlDecode(txt);
+  $("#description").html(html);
+
+  
+</script> 

@@ -1,0 +1,66 @@
+<!-- <section class="my-5"> -->
+
+    <!-- Grid row -->
+    <div class="row">
+        <% elements.forEach(function(element, index){ %>
+            <!-- <a href="<%=section.title%>/<%=element.title%>"> -->
+
+            <!-- Grid column -->
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 gsapBox" style="margin-bottom: 30px;">
+
+                <!-- Card -->
+                <!-- <a href="<%=section.title%>/<%=element.title%>"> -->
+                    <!-- <a style="display:block" href="<%=section.title%>/<%=element.title%>" " > -->
+                    <div style="cursor:pointer;" onclick="location.href='<%=section.url%>/<%=element.url%>';" class="card card-personal element-box-hover">
+                        
+                        
+                        <!--------------------------- I M A G E ------------------------------->
+                        <%if(element.images.length !=0){%>
+                            <img class="card-img-event" src="/upload/<%=element.images[0]%>" alt="Card image cap">
+                        <%}%>
+                        
+                        <div style="padding: 1rem;" class="card-article">
+                            <!-- Title-->
+                            
+                            <h1 class="display-6 fw-bolder" style="color:white;background: black;display: inline;padding: 5px;">
+                                <%if(element.legend){%>
+                                    <%=element.legend%>
+                                <%} else{%>
+                                    News
+                                <%}%>
+                            </h1>
+                            
+                            <h1 style="color:black !important;position: absolute;bottom: 0; font-size: 1.6rem !important;" class="display-5 fw-bolder">
+                                <span style="background: white;padding: 5px;line-height: 3rem;"><%=element.title%></span>
+                            </h1>
+
+                            
+
+                        </div>
+
+                        <!--------------------------- T A G S ------------------------------->
+                        <!-- <div style="padding: 5px 1rem;;">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="fw-normal" style="color:black !important;min-width: 11rem;margin-bottom: 0 !important;" id="<%=index%>">
+                                </h5>
+                                <script>
+                                    if('<%= element.createdAt%>'){
+                                        $('#<%=index%>').html('' + new Date('<%= element.createdAt%>').toLocaleDateString('fr-FR', { weekday: 'long', month: 'long', day: 'numeric' }));
+                                    }
+                                </script>
+                                <span style="overflow: hidden;height: calc(1rem + 0.7rem);line-height: 1.7rem;">
+                                    
+                                    <% element.tags.forEach(function(tag){ %>
+                                        <a class="tag" href="#!"><%=tag%></a>
+                                    <% }); %>
+                                </span>
+                            </div>
+                        </div> -->
+                    </div>
+            </div>
+            <!-- Grid column -->
+            <% }) %>
+    </div>
+    <!-- Grid row -->
+
+<!-- </section> -->

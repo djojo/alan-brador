@@ -1,0 +1,120 @@
+<!-- Comments section-->
+<div class="element-details-box">
+    <h3>Commentaires</h3>
+    <hr>
+    <!-- <div class="card bg-light">
+        <div class="card-body"> -->
+            
+            <!-- Comment form-->
+            <% if(currentUser){%>
+                <form action="/comment/add" method="POST" class="mb-4">
+                    <input type="hidden" name="elementId" value="<%= element._id %>" />
+                    <textarea class="editor" name="content" placeholder="Leave a comment!"></textarea>
+                    <div class="d-flex justify-content-end" style="margin:20px 0;">
+                        <button class="button-link" type="submit">Poster le commentaire</button>
+                    </div>
+                    
+                </form>
+            <% } else { %>
+                <!-- <a> Bonjour</a> -->
+                <!-- <br> -->
+                <div class="centered" style="margin:50px 0;">
+                    <p>Vous devez être connecté pour commenter</p>
+                    <a class="btn btn-success btn-sm menu-element-link" href="/login" role="button">Se Connecter</a>
+                </div>
+                <hr>
+            <%}%>
+            
+            <% element.comments.forEach(function(comment){ %>
+                <div class="d-flex" style="margin: 20px 0px;">
+                    
+                    <div class="flex-shrink-0">
+                        <span class="fa-stack fa-2x">
+                            <i class="fas fa-circle fa-stack-2x "></i>
+                            <i class="fas fa-user fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </div>
+                    <div class="ms-3">
+                        <h5 class="fw-bold">
+                            <% if(comment.user.pseudo){ %>
+                                <%=comment.user.pseudo%>
+                            <% } else{ %>
+                                Utilisateur anonyme
+                            <% } %>
+                            
+                        </h5>
+                        <p id="comment-<%=comment._id%>"></p>
+                    </div>                                                       
+                </div>
+                <script type="text/javascript">                                                          
+                var txt = "<%=comment.content%>";
+                    // function htmlDecode(input) {
+                    //     var doc = new DOMParser().parseFromString(input, "text/html");
+                    //     return doc.documentElement.textContent;
+                    // }
+                    var html = htmlDecode(txt);
+                    $("#comment-<%=comment._id%>").html(html);
+                </script>
+                <hr>
+            <% }); %>
+            <!-- Comment with nested comments-->
+            <!-- <div class="d-flex mb-4"> -->
+                <!-- Parent comment-->
+                <!-- <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                <div class="ms-3"> -->
+                    <!-- <div class="fw-bold">Commenter Name</div>
+                    If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks. -->
+                    <!-- Child comment 1-->
+                    <!-- <div class="d-flex mt-4">
+                        <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                        <div class="ms-3">
+                            <div class="fw-bold">Commenter Name</div>
+                            And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
+                        </div>
+                    </div> -->
+                    <!-- Child comment 2-->
+                    <!-- <div class="d-flex mt-4">
+                        <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                        <div class="ms-3">
+                            <div class="fw-bold">Commenter Name</div>
+                            When you put money directly to a problem, it makes a good headline.
+                        </div>
+                    </div> -->
+                <!-- </div> -->
+            <!-- </div> -->
+            <!-- Single comment-->
+            <!-- <div class="d-flex">
+                <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                <div class="ms-3">
+                    <div class="fw-bold">Commenter Name</div>
+                    When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
+                </div>
+            </div> -->
+        <!-- </div>
+    </div> -->
+</div>
+
+<script type="text/javascript" >
+    //-------------------------- E D I T O R ------------------
+    $(document).ready(function() {
+        $('.editor').summernote({
+          placeholder: 'Description...',
+          tabsize: 2,
+          height: 150,
+          callbacks: {
+              onPaste: function (e) {
+                  var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                  e.preventDefault();
+                  document.execCommand('insertText', false, bufferText);
+              }
+          },
+          toolbar: [
+              ['style', ['bold', 'italic', 'underline']]
+              // ['color', ['color']],
+              // ['para', ['ul', 'ol', 'paragraph']],
+              // ['view', ['codeview']],
+          ],
+          focus: false 
+        });
+  });
+</script>

@@ -1,0 +1,137 @@
+<h3 style="position:absolute;">
+  <span onclick="location.href='<%=section.url%>';" style="cursor:pointer;" >
+    <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+    &nbsp;
+    <%= section.title %>
+  </span>
+</h3>
+
+<style>
+  .swiperGallery {
+    width: 100%;
+    min-height: 400px;
+  }
+
+  /* #Lightbox {
+    vertical-align:middle;
+    position:fixed;
+    } */
+  
+  </style>
+
+<section style="margin-top:4rem;">
+  <!-- <div class="container px-4 px-lg-5"> -->
+      <div class="row gx-4 gx-lg-5 align-items-center">
+          <div class="col-md-6 gsapBox" style="text-align: center;margin-bottom:2rem;">
+            <div class="swiperGallery">
+              <!-- Additional required wrapper -->
+              <div class="swiper-wrapper">
+                <% element.images.forEach(function(image, index){%>
+                    <a href="upload/<%=image%>" data-lightbox="slider" class="swiper-slide">
+                      <img style="margin-bottom: 5px;max-width:100%;max-height:100%;top: 50%;position: relative;transform: translateY(-50%);" src="upload/<%=image%>" />
+                    </a>
+                <%});%>
+                <% if(element.images.length>1){ %>
+                  <!-- If we need pagination -->
+                  <div style="bottom:-30px !important;" class="swiper-pagination"></div>
+            
+                  <!-- If we need navigation buttons -->
+                  <div class="swiper-button-prev"></div>
+                  <div class="swiper-button-next"></div>
+                <%}%>
+              </div>
+              
+            </div>
+          </div>
+          <div class="col-md-6 gsapBox" style="padding: 2rem;">
+              <!-- <div class="small mb-1">SKU: BST-498</div> -->
+              <h1 class="display-5 fw-bolder"><%=element.title%></h1>
+              <!-- <div class="fs-5 mb-5">
+                  <span><%=element.price%> €</span>
+              </div> -->
+              <p class="lead"><%=element.legend%></p>
+              <% if(element.description){ %>
+                <div class="col-md-12 my-5">
+                    <!-- <h3>Description</h3> -->
+                    <!-- <hr> -->
+                    <p id="description" class="lead"></p>
+                </div>
+              <% } %>
+              
+          </div>
+          
+      </div>
+      
+      <!--------------------------- Y O U T U B E     L I N K S --------------------------------->
+      <%if(element.youtube.length !=0){%>
+        <div class="element-details-box" style="margin-top: 100px;">
+          <h3>Vidéos</h3>
+          <hr>
+          <div class="row">
+            <%for(i=0; i<element.youtube.length; i++){ %>
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="gallery-alan" style="color: #333 !important; text-decoration: none; cursor: pointer;">
+                  <figure class="img-container">
+                    <div onclick="OpenModal('<%=element.youtube[i]%>');" class="blurYoutube"></div>
+                    <iframe width="100%" height="250px"
+                      src="https://www.youtube.com/embed/<%=element.youtube[i]%>?controls=0" title="YouTube video player"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen></iframe>
+                  </figure>
+                </div>
+              </div>
+              <%}%>
+          </div>
+        </div>
+        <%}%>
+</section>
+
+
+<div style="margin-bottom: 200px;"></div>
+
+
+<h1 class="display-3 centered">Voir plus</h1>
+
+<div class="py-5 row gx-4 gx-lg-4 row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+  <% showcaseElements.forEach(function(element, index){ %>
+      <div style="max-width:50%;cursor:pointer;" onclick="location.href='<%=section.url%>/<%=element.url%>';" alt="Redirection" class="col mb-5">
+          <div class="h-100 element-box-hover">
+              <img class="element-gallery-img" src="upload/<%=element.images[0]%>" />
+              <div class="card-body p-4">
+                  <div class="text-center">
+                      <h3 class="fw-bolder"><%=element.title%></h3>
+                  </div>
+              </div>
+              
+          </div>
+      </div>
+  <%})%>
+</div>
+
+<script type="text/javascript">
+  const swiper1 = new Swiper(".swiperGallery", {
+        spaceBetween: 30,
+        effect: "fade",
+        speed: 1000,
+        fadeEffect: { crossFade: true },
+        loop: true,
+        autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
+
+  // alert(window.innerHeight);
+  var size = window.innerHeight - 300;
+  $(".swiperGallery").css({height: size});
+  // $("#lightbox").css({top: "300px"});
+</script>

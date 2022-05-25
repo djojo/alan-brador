@@ -1,0 +1,20 @@
+<div class="flash">
+    <% if(success && success.length>0) { %>
+      <h3 class="alert lead" style="margin-bottom: 0;">
+        <%= success %>
+      </h3>
+    <% } %>
+  
+    <% if(error && error.length>0) { %>
+      <h3 class="alert lead" style="margin-bottom: 0;">
+        <%= error %>
+      </h3>
+    <% } %>
+</div>
+
+<script type="text/javascript">
+  $( document ).ready(function() {
+    $(".flash").fadeOut(8000);
+  });
+</script>
+  

@@ -1,0 +1,237 @@
+<%- include('../partials/adminheader') %>
+<%- include('../partials/adminmenu') %>
+<%- include('../partials/adminflash') %>
+
+
+<div class="container">
+
+<div class="form-custom">
+  <form action="/admin/elements/create" method="POST" encType="multipart/form-data">
+    <h1 class="display-6">Ajouter un élément à <%=section.title%></h1>
+    <input type="hidden" name="sectionId" value="<%=section._id%>">
+    <input type="hidden" name="sectionTitle" value="<%=section.title%>">
+    <input type="hidden" name="sectionUrl" value="<%=section.url%>">
+    <input type="hidden" name="image">
+
+    <!-------------------------- T I T L E -------------------->
+    <div class="form-floating">
+      <input required type="text" class="form-control" placeholder="Titre" name="title">
+      <label for="floatingInput">Titre</label>
+    </div>
+
+    <!-------------------------- V I S I B L E -------------------->
+    <div class="form-group border-box-site" style="display:none;">
+      <p class="lead">En ligne</p>
+      <input type="checkbox" name="visible" checked> 
+    </div>
+
+    <!--------------------------- T A G S --------------------------->
+    <!-- <% if(section.type == "articles"){ %>
+      <div class="form-floating">
+        <input type="text" class="form-control" placeholder="Tags" name="tags">
+        <label for="floatingInput">Tags (séparez par une virgule)</label>
+      </div>
+    <% } %> -->
+
+    <!-------------------------- L E G E N D -------------------->
+    <!-- <div class="form-floating">
+      <input type="text" class="form-control" placeholder="Nom" name="legend">
+      <label for="floatingInput">Legende</label>
+    </div> -->
+
+    <!-------------------------- T E X T    E D I T O R -------------------->
+    <!-- <div class="form-group">
+      <textarea placeholder="Description" id="summernote" name="description"></textarea>
+    </div> -->
+
+    <!-- ------------- IF   E V E N T S  ------------------->
+    <!-- <% if(section.type === "events") { %> -->
+      <!-------------------------- D A T E -------------------->
+      <!-- <div class="form-floating">
+        <input type="date" class="form-control" name="date">
+        <label for="floatingInput">Date</label>
+      </div> -->
+      <!-------------------------- A D R E S S -------------------->
+      <!-- <div class="form-floating">
+        <input type="text" class="form-control" placeholder="Adresse" name="adress">
+        <label for="floatingInput">Lieu</label>
+      </div> -->
+    <!-- <%} %>   -->
+    
+    <!-- ------------- IF    S H O P  ------------------->     
+    <!-- <% if(section.type === "shop") { %> -->
+      <!-------------------------- P R I C E -------------------->
+      <!-- <div class="form-floating">
+        <input type="number" class="form-control" placeholder="68" name="price">
+        <label for="floatingInput">Prix €</label>
+      </div> -->
+
+      <!-------------------------- N U M B E R -------------------->
+      <!-- <div class="form-floating">
+        <input type="number" class="form-control" placeholder="8" name="nbCopy">
+        <label for="floatingInput">Nombre d'exemplaires</label>
+      </div> -->
+    <!-- <%} %>   -->
+
+    
+
+    
+
+    <!-- ----------------------- I M A G E S --------------------->
+      
+    <!-- <div class="form-group border-box-site">
+      <div class="d-flex justify-content-between">
+        <p class="lead">IMAGES</p>
+        <p><a href="https://imagecompressor.com/fr/" target="_blank">Please optimise your files before upload</a></p>
+        <button onclick="$('#input-multi-files').click();" class="link-site-small" type="button"><i class="fa fa-plus fa-lg"></i></button>
+        <input style="display:none;" id="input-multi-files" name="sampleFile" accept="image/png, image/gif, image/jpeg" multiple type="file" class="form-control-file">
+      </div>
+      <div class="row preview-images">
+      </div>
+    </div> -->
+
+
+    <!-- ---------------    Y O U T U B E    --------------------- -->
+    <!-- <div class="form-group border-box-site">
+      <div class="d-flex justify-content-between">
+        <div>
+          <p class="lead">LIENS YOUTUBE </p>
+        </div>
+        <div>
+          <input id="inputYoutubeLink" type="text" class="form-control" placeholder="ex: 2hSt_Wa0vIU">
+        </div>
+        <div>
+          <button onclick="addInputYoutube();" class="link-site-small" type="button"><i class="fa fa-plus fa-lg"></i></button>
+        </div>
+      </div>
+
+      <div class="row youtubeSection">
+        
+      </div>
+    </div> -->
+    
+    <!-- le input caché -->
+    <!-- <div class="form-floating" style="display:none;" >
+      <input type="text" class="form-control" id="YoutubeFinalInput" placeholder="" name="youtube">
+      <label for="floatingInput">Youtube</label>
+    </div> -->
+
+  
+    
+    
+    
+   
+    <button class="w-100 link-site" type="submit">Suivant</button>
+  </form>
+  <a href="admin/sections/<%=section.title%>"><button class="w-100 link-site">Annuler</button></a>
+</div>
+
+</div>
+
+
+<script type="text/javascript">
+
+  ////////////////////////////      EDITOR
+  $(document).ready(function() {
+        $('#summernote').summernote({
+          placeholder: 'Description...',
+          tabsize: 2,
+          height: 150,
+          callbacks: {
+              onPaste: function (e) {
+                  var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                  e.preventDefault();
+                  document.execCommand('insertText', false, bufferText);
+              }
+          },
+          toolbar: [
+              ['style', ['bold', 'italic', 'underline']]
+              // ['color', ['color']],
+              // ['para', ['ul', 'ol', 'paragraph']],
+              // ['view', ['codeview']],
+          ],
+          focus: false 
+        });
+  });
+
+//IMAGES
+      $(document).ready(function() {  
+        let imagesPreview = function(input, placeToInsertImagePreview) {
+          if (input.files) {
+            let filesAmount = input.files.length;
+            for (i = 0; i < filesAmount; i++) {
+              let reader = new FileReader();
+              reader.onload = function(event) {
+                var html = "";
+                html += "<div class='col-xs-12 col-sm-12 col-md-6 col-lg-4'>";
+                html += "<figure class='img-container'>";
+                html += "<img class='img-gallery' src='"+event.target.result+"' />";
+                html += "</figure>";
+                html += "</div>";
+                $(".preview-images").append(html);  
+
+                // $($.parseHTML("<img>"))
+                //   .attr("src", event.target.result)
+                //   .appendTo(placeToInsertImagePreview);
+              };
+              reader.readAsDataURL(input.files[i]);
+            }
+          }
+        };
+        $("#input-multi-files").on("change", function() {
+          imagesPreview(this, "div.preview-images");
+        });
+      });
+
+
+  //Add YouTube
+
+  // On créer le tableau deja present
+  var TableYoutube = [];
+
+
+  function removeYoutubeLink(id){
+    //On supprime de la page
+    $("#"+id).remove();
+    //On supprime du tableau
+    TableYoutube = jQuery.grep(TableYoutube, function(value) {
+      return value != id;
+    });
+    //On update le input hidden
+    $("#YoutubeFinalInput").val(TableYoutube.toString());
+  }
+  // alert(TableYoutube);
+  function addInputYoutube(){
+    //on ajoute au tableau youtube
+    var inputYoutubeLink = $("#inputYoutubeLink").val();
+
+    if(inputYoutubeLink != ""){
+      TableYoutube.push(inputYoutubeLink);
+      //On update le input hidden
+      $("#YoutubeFinalInput").val(TableYoutube.toString());
+
+      //On ajoute la video sur la page
+      var html = "";
+      html += "<div class='col-xs-6 col-sm-4 col-md-3' id='" + inputYoutubeLink + "'>";
+      html += "<div class='boxYoutubeElement'>";
+      html += "<i style='cursor: pointer; color: white; position: absolute; z-index: 22; left: 10px;' onclick='removeYoutubeLink(`" + inputYoutubeLink + "`);' class='fa fa-times fa-2x' aria-hidden='true'></i>";
+      html += "<div class='blurYoutube'></div>";
+      html += "<iframe style='position: absolute;' width='180' height='120' src='https://www.youtube.com/embed/"+inputYoutubeLink+"?controls=0' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
+      html += "</div>";
+      html += "</div>";
+      $(".youtubeSection").append(html);
+    }
+
+    //On remet le input a 0
+    $("#inputYoutubeLink").val("");
+  }
+
+
+</script>
+
+<%- include('../partials/adminfooter') %>
+
+
+
+
+

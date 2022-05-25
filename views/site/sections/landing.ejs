@@ -1,0 +1,749 @@
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Geoffroy Rouaix</title>
+
+    <!-- JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <style>
+      @import url("https://use.typekit.net/jmk3xov.css");
+
+      canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+
+
+      :root {
+        --dark-bg: rgba(15, 15, 15, 0.55);
+        --spacing: 8050px;
+
+        font-family: brandon-grotesque, sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+
+      main {
+        /* width: 100vw; */
+        color: white;
+        z-index: 99;
+        position: absolute;
+        /* width: 100%; */
+        margin: 0px auto;
+        padding: 20px 0;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+      }
+
+      .form-custom-small{
+        text-align: left;
+        width: 600px;
+        margin: 0 auto;
+      }
+
+      .form-control{
+        display: inline-block;
+        font-size: 1.2rem;
+        padding: 13px;
+        margin-right: 20px;
+        width: 250px;
+      }
+
+      .form-floating{
+        display: block;
+        margin:20px;
+      }
+
+      h1, h2, h3, blockquote {
+        font-family: elevon, sans-serif;
+        font-weight: 700;
+        font-style: normal;
+      }
+
+      canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+
+      .link-site-medium{
+        color: white !important;
+        border: 3px solid white !important;
+        font-size: 1.3rem !important;
+        padding: 11px !important;
+        margin: 20px 5px !important;
+        text-decoration: none !important;
+        display:inline-block;
+        transition: all 200ms ease-in-out;
+        background: transparent !important;
+        cursor:pointer;
+      }
+
+      .link-site-medium:hover{
+        color: black !important;
+        background: white !important;
+        /* transform: scale(1.1); */
+      }
+
+
+
+
+
+
+        header {
+          background: var(--dark-bg);
+          grid-column: 2 / span 10;
+          font-size: 1.5rem;
+          /* padding: 2rem; */
+          margin-bottom: var(--spacing);
+          text-align:center;
+          margin-top: 100px;
+        }
+
+        section {
+          grid-column: 2 / 8;
+          padding: 1rem;
+          background: var(--dark-bg);
+          font-size: 1.25rem;
+          line-height: 1.5;
+          margin-bottom: var(--spacing);
+        }
+
+        .left {
+          grid-column: 6 / 12;
+        }
+
+
+
+
+        .full {
+          grid-column: 2 / span 10;
+        }
+
+        blockquote {
+          margin: 0;
+          padding: 0;
+          grid-column: 2 / span 9;
+          margin-bottom: var(--spacing);
+        }
+
+        blockquote p {
+          color: black;
+          background-color: white;
+          font-size: 4rem;
+          display: inline;
+          line-height: 1;
+        }
+
+
+        @media screen and (max-width: 1000px) {
+          section {
+            grid-column: 2 / span 10;
+          }
+          .left {
+            grid-column: 2 / span 10;
+          }
+        }
+
+        @media screen and (max-width: 600px) {
+          blockquote p {
+            text-align: center;
+            display:block;
+            font-size: 2rem !important;
+          }
+          header {
+            text-align: center;
+            display:block;
+            font-size: 1rem !important;
+          }
+        }
+
+
+
+
+
+
+        .gallery {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 20px;
+          padding: 15px;
+        }
+        .gallery-item {
+          width: 100%;
+          display: block;
+        }
+        .gallery-img {
+          cursor: pointer;
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+          display: block;
+          -webkit-filter: grayscale(1);
+          filter: grayscale(1);
+          transition: all 300ms ease-out;
+        }
+
+        .gallery-img:hover {
+          /* transform: scale(1.04); */
+          -webkit-filter: grayscale(0);
+          filter: grayscale(0);
+        }
+
+        .menuSite{
+          position:fixed;
+          width:100%;
+          text-align: center;
+          top:0;
+          left:0;
+          z-index:100;
+          /* rendre impossioble la selection */
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+
+        #navScroll{
+          transition: all 300ms ease-out;
+        }
+
+        #navScroll:hover{
+          transform: scale(1.5);
+        }
+
+    </style>
+  </head>
+  <body>
+
+    <canvas id="bg"></canvas>
+
+    <div class="menuSite">
+      <div onclick="scrollll('home');" class="link-site-medium">Home</div>
+      <div onclick="scrollll('codingSkills');" class="link-site-medium">Code</div>
+      <div onclick="scrollll('artisticSkills');" class="link-site-medium">Music</div>
+      <div onclick="scrollll('projects');" class="link-site-medium">Projects</div>
+      <div onclick="scrollll('contact');" class="link-site-medium">Contact</div>
+    </div>
+
+    <div onclick="scrollll('prez');" id="navScroll" style="cursor:pointer;z-index:110;position:fixed;bottom:3rem;width:100%;text-align:center;">
+      <img  style="width: 5rem;" src="img/scroll.png" />
+    </div>
+    <script>
+      $(window).scroll(function() {
+        $("#navScroll").fadeOut();
+      });
+      function scrollll(id){
+        if(id == "home"){
+          // $("#navScroll").fadeIn();
+        } else{
+          $("#navScroll").fadeOut();
+        }
+
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $("#"+id).offset().top -130
+        }, 1000);
+        // alert('oui')
+          // $(window).scrollTop(1000);
+      }
+    </script>
+
+    <main id="home">
+
+      <header>
+        <h1><%=section.title%></h1>
+      </header>
+
+      <!-- <%=section.images[0]%> -->
+      <blockquote id="prez">
+        <p>Hello !</p>
+        <br><br>
+        <p>I'm a freelance fullstack developer,</p>
+        <br><br>
+        <p>I'm also a music producer.</p>
+      </blockquote>
+
+      <section id="codingSkills">
+        <h2 style="text-align:center;">👩🏽‍🚀 Coding Skills</h2>
+        <h3>Front End</h3>
+        <p>
+          ⭐ Javascript (ES6), ⚡ ReactJS, 🌜 Redux, ☀️ ThreeJS, Css
+        </p>
+
+        <h3>Back End</h3>
+        <p>
+          💡 C#, ✨ NodeJS, 🔥 ExpressJS
+        </p>
+
+        <h3>Database</h3>
+        <p>
+          💾 MySQL, 🗄️ MongoDB
+        </p>
+
+        <h3>Cloud</h3>
+        <p>
+          ☁️ Azure, ⛅ Heroku
+        </p>
+
+        <h3>Languages</h3>
+        <p>
+          🇫🇷 French (native), 🇬🇧 English(Fluent), 🇪🇸 Spanish & 🇩🇪 German (basic)
+        </p>
+
+      </section>
+
+
+      <section id="artisticSkills" class="left">
+        <h2 style="text-align:center;">👨‍🎤 Artistic Skills</h2>
+        <h3>Instruments</h3>
+        <p>
+          🎸 Guitar, 🎹 Keyboards, 🪕 Bass, 🥁 Drums, 🎤 vocals
+        </p>
+
+        <h3>Music Production</h3>
+        <p>
+          🎧 Ableton Live, Max for live, Pro Tools
+        </p>
+
+        <h3>Art Direction</h3>
+        <p>
+          🎬 Adobe Premiere, 🎨 Adobe Photoshop
+        </p>
+
+        <h3>Live performances</h3>
+        <p>
+          🎚 Music live shows, 🎛 DJing
+        </p>
+
+        <h3>Main Projects</h3>
+        <p>
+          🌹 <a style="color:white;" target="_blank" href="http://yumaguma.com">Yuma Guma</a>, 💽 <a style="color:white;" target="_blank" href="https://linktr.ee/ephese">Ephese</a>, 🐶 Alan Brador (solo)
+        </p>
+
+      </section>
+
+      <blockquote>
+        <p>Here are my very lasts projects !</p>
+      </blockquote>
+
+      <section id="projects" class="full">
+        <h2 style="text-align:center;">🏆 Projects</h2>
+
+        <div class="gallery">
+            <div onclick="location.href=''" class="gallery-item">
+              <h3 style="text-align:center;">OUIII</h3>
+              <img class="gallery-img" src="/upload/<%=section.images[0]%>" />
+            </div>
+        </div>
+      </section>
+
+      <blockquote>
+        <p>Contact me to talk about your project !</p>
+      </blockquote>
+
+
+      <section id="contact" class="full">
+        <div class="form-custom-small">
+          <form action="/contact" method="POST">
+            <div class="form-floating">
+              <input required type="text" class="form-control" placeholder="<%= lang.firstname %>" name="firstName">
+              <input required type="text" class="form-control" placeholder="<%= lang.lastname %>" name="lastName">
+            </div>
+            <div class="form-floating">
+              <input required type="email" class="form-control" placeholder="<%= lang.email %>" name="email">
+              <input type="text" class="form-control" placeholder="<%= lang.phone %>" name="phone">
+            </div>
+            <div class="form-floating">
+              <textarea required style="min-width:525px;height: calc(9.5rem + 2px);" class="form-control" placeholder="<%= lang.yourProject %>" rows="3" name="content"></textarea>
+            </div>
+            <div id="buttonText" style="text-align: center;width: 100%;"><button onclick="Loading();" class="link-site-medium" type="submit"><%= lang.buttonSend %></button></div>
+            <span id="buttonLoading" style="display:none;"></span>
+          </form>
+        </div>
+      </section>
+      <script>
+
+        function Loading(){
+          if(
+            $('input[name="firstName"]').val() != "" &&
+            $('input[name="lastName"]').val() != "" &&
+            $('input[name="email"]').val() != "" &&
+            $('textarea[name="content"]').val() != ""
+          ){
+            $('#buttonText').hide();
+            $('#buttonLoading').fadeIn();
+          }
+        }
+
+      </script>
+
+
+
+      <blockquote style="margin-bottom: 50vh !important;">
+        <p>See you soon !</p>
+      </blockquote>
+
+    </main>
+
+
+
+
+
+<script src="js/three.min.js"></script>
+<script src="https://rawcdn.githack.com/mrdoob/three.js/r96/examples/js/loaders/GLTFLoader.js"></script>
+<!-- <script type="module" src="js/OrbitControls.js"></script> -->
+<!-- <script type="module" src="js/landing.js"></script> -->
+<script type="text/javascript">
+  // import './style.css';
+// import * as THREE from '../three';
+// import { OrbitControls } from '../../node_modules/three/examples/jsm/controls/OrbitControls';
+
+
+// Setup
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+const renderer = new THREE.WebGLRenderer({
+  canvas: document.querySelector('#bg'),
+});
+
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(window.innerWidth, window.innerHeight);
+camera.position.setZ(30);
+camera.position.setX(-3);
+
+renderer.render(scene, camera);
+
+
+
+//le model 3d car
+// let car;
+// let loader = new THREE.GLTFLoader();
+// loader.load('3d/car/scene.gltf', function(gltf){
+//   car = gltf.scene.children[0];
+//   car.scale.set(0.01,0.01,0.01);
+//   scene.add(gltf.scene);
+//   car.position.z = 100;
+//   car.position.setX(-20);
+//   car.position.setY(0);
+//   car.rotation.z = 1;
+//   // animate();
+// });
+
+//le model 3d face hero
+let face;
+let loaderFace = new THREE.GLTFLoader();
+loaderFace.load('3d/cryptodealer.gltf', function(gltf){
+  face = gltf.scene.children[0];
+  // face.scale.set(1,1,1);
+  scene.add(gltf.scene);
+  face.position.z = 40;
+  face.position.setX(-5);
+  face.position.setY(-3);
+  face.rotation.y = 1.7;
+  // animate();
+});
+
+
+// *************************************************************************
+
+// ------------------------------ ETOILES -------------------------------------
+
+// *************************************************************************
+
+let starGeo = new THREE.Geometry();
+for(let i=0;i<6000;i++) {
+  let star = new THREE.Vector3(
+    Math.random() * 600 - 300,
+    Math.random() * 600 - 300,
+    Math.random() * 600 - 300
+  );
+  star.velocity = 0;
+  star.acceleration = 0.0002;
+  starGeo.vertices.push(star);
+}
+
+let sprite = new THREE.TextureLoader().load( 'upload/<%=section.images[0]%>.png' );
+let starMaterial = new THREE.PointsMaterial({
+  // color: 0xaaaaaa,
+  // size: 1.6,
+  size: 2,
+  map: sprite
+});
+
+let stars = new THREE.Points(starGeo,starMaterial);
+scene.add(stars);
+
+
+
+
+// function addStar() {
+//   const geometry = new THREE.SphereGeometry(0.25, 24, 24);
+//   const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
+//   const star = new THREE.Mesh(geometry, material);
+//
+//   // const [x, y, z] = Array(3)
+//   //   .fill()
+//   //   .map(() => THREE.MathUtils.randFloatSpread(100));
+//
+//   const [x, y, z] = [Math.random() * (-50), Math.random() * -50, Math.random() * -50];
+//
+//
+//   // alert(x + " " + y + " " + z);
+//
+//   star.position.set(x, y, z);
+//   star.acceleration = 0.0002;
+//   scene.add(star);
+// }
+// Array(200).fill().forEach(addStar);
+
+
+
+
+
+window.addEventListener("resize", onWindowResize, false);
+
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+
+// *************************************************************************
+
+// ------------------------------ TORUS -------------------------------------
+
+// *************************************************************************
+
+const geometry = new THREE.TorusGeometry(10, 2, 6, 6);
+const material = new THREE.MeshStandardMaterial({ color: 0xf1c40f });
+// const torus = new THREE.Mesh(geometry, material);
+const torus = new THREE.Mesh(geometry);
+
+torus.position.z = -7;
+torus.position.x = 0;
+
+scene.add(torus);
+
+// *************************************************************************
+
+// ------------------------------ LIGHTS -------------------------------------
+
+// *************************************************************************
+
+const pointLight = new THREE.PointLight(0xffffff);
+pointLight.position.set(5, 5, 5);
+
+const ambientLight = new THREE.AmbientLight(0xffffff);
+ambientLight.intensity = 1;
+scene.add(pointLight, ambientLight);
+
+// Helpers
+
+// const lightHelper = new THREE.PointLightHelper(pointLight)
+// const gridHelper = new THREE.GridHelper(200, 50);
+// scene.add(lightHelper, gridHelper)
+
+// const controls = new OrbitControls(camera, renderer.domElement);
+
+
+
+// *************************************************************************
+
+// ------------------------------ BACKGROUND -------------------------------------
+
+// *************************************************************************
+
+const spaceTexture = new THREE.TextureLoader().load('img/backgroundlanding.jpeg');
+scene.background = spaceTexture;
+
+
+
+// *************************************************************************
+
+// ------------------------------ ELGEOGEO -------------------------------------
+
+// *************************************************************************
+
+const geoTexture = new THREE.TextureLoader().load('upload/<%=section.images[0]%>');
+const jeff = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map: geoTexture }));
+scene.add(jeff);
+jeff.position.z = -7;
+jeff.position.x = 0;
+
+
+// *************************************************************************
+
+// ------------------------------ MOON -------------------------------------
+
+// *************************************************************************
+
+const moonTexture = new THREE.TextureLoader().load('img/moon.jpg');
+const normalTexture = new THREE.TextureLoader().load('img/normal.jpg');
+const moon = new THREE.Mesh(
+  new THREE.SphereGeometry(5, 32, 32),
+  new THREE.MeshStandardMaterial({
+    map: moonTexture,
+    normalMap: normalTexture,
+  })
+);
+scene.add(moon);
+moon.position.z = 30;
+moon.position.setX(-10);
+
+
+
+// *************************************************************************
+
+// ------------------------------ EARTH -------------------------------------
+
+// *************************************************************************
+
+const earthTexture = new THREE.TextureLoader().load('img/earth.jpeg');
+const earth = new THREE.Mesh(
+  new THREE.SphereGeometry(15, 32, 32),
+  new THREE.MeshStandardMaterial({
+    map: earthTexture,
+    normalMap: normalTexture,
+  })
+);
+scene.add(earth);
+earth.position.z = 60;
+earth.position.setX(-30);
+
+
+
+
+// *************************************************************************
+
+// ------------------------------ SCROLL ANIMATION -------------------------------------
+
+// *************************************************************************
+
+function moveCamera() {
+  const t = document.body.getBoundingClientRect().top;
+  // moon.rotation.x += 0.05;
+  moon.rotation.y += 0.0075;
+  // moon.rotation.z += 0.05;
+
+  // earth.rotation.x += 0.005;
+  earth.rotation.y += 0.0075;
+  // earth.rotation.z += 0.05;
+
+  // jeff.rotation.y += 0.02;
+  // jeff.rotation.z += 0.01;
+
+  // face.rotation.y += 0.001;
+
+
+
+  stars.rotation.y +=0.02;
+
+  camera.position.z = t * -0.01;
+  // camera.position.x = t * -0.0002;
+  // camera.rotation.y = t * -0.0002;
+}
+
+document.body.onscroll = moveCamera;
+
+var lastScrollTop = 0;
+$(window).scroll(function(event){
+  var st = $(this).scrollTop();
+  // console.log(st);
+  if (st > lastScrollTop){
+    console.log("down" + st);
+    jeff.rotation.y += 0.02;
+    // car.rotation.z -= 0.0015;
+    if(st > 9140){
+      // car.position.x += 0.2;
+
+    }
+      // downscroll code
+
+      // alert("down");
+  } else {
+    console.log("up" + st);
+    jeff.rotation.y -= 0.02;
+    // car.rotation.z += 0.0015;
+    // upscroll code
+    // alert("up");
+    if(st > 9140){
+
+      // car.position.x -= 1.2;
+
+    }
+
+  }
+  lastScrollTop = st;
+});
+
+$(document).ready(function(){
+  moveCamera();
+});
+
+
+// Animation Loop
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  torus.rotation.x += 0.01;
+  torus.rotation.y += 0.005;
+  torus.rotation.z += 0.01;
+
+  moon.rotation.x += 0.005;
+
+  earth.rotation.y += 0.005;
+
+
+
+  // controls.update();
+
+  starGeo.vertices.forEach(p => {
+    p.velocity += p.acceleration
+    p.z -= p.velocity;
+
+    if (p.z < -200) {
+      p.z = 200;
+      p.velocity = 0;
+    }
+  });
+  starGeo.verticesNeedUpdate = true;
+  stars.rotation.z +=0.002;
+
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

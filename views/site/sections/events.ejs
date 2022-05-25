@@ -1,0 +1,86 @@
+<!-- <section class="my-5"> -->
+
+    <!-- Grid row -->
+    <div class="row">
+        <% elements.forEach(function(element, index){ %>
+            <!-- <a href="<%=section.title%>/<%=element.title%>"> -->
+
+            <!-- Grid column -->
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 gsapBox" style="margin-bottom: 50px;">
+
+                <div style="cursor:pointer;" onclick="location.href='<%=section.url%>/<%=element.url%>';">
+
+                    <!-- T I T L E -->
+                    <% if(element.title){ %>
+                        <h1 class="display-5 fw-bolder">
+                            <%=element.title%>
+                        </h1>
+                    <% } %>
+
+                    <!-- I M A G E -->
+                    <% if(element.images[0]){ %>
+                        <img class="card-img-event" src="/upload/<%=element.images[0]%>" alt="Card image cap">
+                    <% } else { %>
+                        <hr>
+                    <% } %>
+
+                    <!-- L E G E N D -->
+                    <!-- <% if(element.legend){ %>
+                        <p class="card-meta">
+                            <%=element.legend%>
+                        </p>
+                    <% } %> -->
+
+                    
+                    <% if(element.date){ %>
+                        <div class="d-flex justify-content-between" style="margin: 10px 0;">
+                            <h3 id="<%=index%>">
+                                
+                            </h3>
+                            <script>
+                                if('<%= element.date%>'){
+                                    $('#<%=index%>').html(new Date('<%= element.date%>').toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
+                                }
+                            </script>
+                            <h3>
+                                <%=element.adress%>
+                            </h3>
+                        </div>
+                    <% } %>
+
+                    
+
+
+                    <!-- Card content -->
+                    <!-- <div class="card-body card-event" > -->
+                        <!-- Title-->
+                        <!-- <a href="<%=section.url%>/<%=element.url%>"> -->
+                            
+                        <!-- </a> -->
+                        
+
+                        <!-- <script>
+                            var txt = "<%=element.description%>";
+                            function htmlDecode(input) {
+                                var doc = new DOMParser().parseFromString(input, "text/html");
+                                return doc.documentElement.textContent;
+                            }
+                            var html = htmlDecode(txt);
+                            $("#<%=element._id%>").html(html);
+                        </script> -->
+                        <!-- Text -->
+                        <!-- <p class="card-text"><%=element.description%></p> -->
+                        
+                        
+
+                    <!-- </div> -->
+                    <!-- Card content -->
+
+                </div>
+                <!-- Card -->
+
+            </div>
+            <!-- Grid column -->
+            </a>
+            <% }) %>
+    </div>

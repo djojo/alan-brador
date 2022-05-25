@@ -1,0 +1,159 @@
+<%- include('../partials/header') %>
+<%- include('../partials/menu', {menu: menu, general: general}) %>
+<%- include('../partials/flash') %>
+
+<%if(general.backgroundImage){%>
+    <style media="screen">
+        .content {
+        background: url('/upload/<%=general.backgroundImage%>') no-repeat center center fixed !important;
+        -webkit-background-size: cover !important;
+        -moz-background-size: cover !important;
+        -o-background-size: cover !important;
+        background-size: cover !important;
+        /* backdrop-filter: brightness(40%) !important; */
+        min-height: 100vh !important;
+        color:white  !important;
+        /* backdrop-filter: blur(10px) !important; */
+        }
+        .police-menu{
+        color:white !important;
+        }
+    </style>
+<%}%>
+
+<div class="container gsapBox">
+    <h1 class="display-3 centered">CONFIRMATION</h1>
+
+<div class="container gsapBox">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h3>Confirmation de votre commande </h3>
+                </div>
+                <div class="ibox-content">
+                    <p>Commande n° <%=order._id%></p>
+                    <p>Vous avez reçu un mail de confirmation</p>
+                    <p>Merci d'avoir passé commande chez nous, à bientôt !</p>
+                </div>
+                <div class="ibox-content">
+                    <div class="d-flex justify-content-between">
+                        <a href="/"><button class="btn btn-white roboto"><i class="fa fa-arrow-left"></i> Retour à l'accueil</button></a>
+                        <a href="/checkout"><button class="button-link"> Télécharger</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h3>Récapitulatif </h3>
+                </div>
+                <div class="ibox-content">
+                    <p><%=order.firstName%> <%=order.lastName%></p>
+                    <p><%=order.address.address%>, <%=order.address.zipCode%></p>
+                    <p><%=order.address.city%>, <%=order.address.country%></p>
+                    <p><%=order.address.phone%></p>
+                </div>
+                <div class="ibox-content">
+                    <% order.checkoutCart.items.forEach(function(element){ %>
+                        <table class="table shoping-cart-table" style="height: 160px;">
+                            <tbody>
+                            <tr>
+                                <td width="90">
+                                    <div class="cart-product-imitation">
+                                        <img style="width: 100%;" src="upload/<%=element.images[0]%>"/>
+                                    </div>
+                                </td>
+                                <td class="desc">
+                                    <h3>
+                                    <a href='<%=element.sectionUrl%>/<%=element.url%>' class="text-navy">
+                                        <%= element.title%>
+                                    </a>
+                                    </h3>
+                                    <p class="small">
+                                        <%= element.legend%>
+                                    </p>
+                                </td>
+                                <td>
+                                    <h4>
+                                        <%= element.price%> €
+                                    </h4>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <hr>
+                    <%}); %>    
+
+                    <p>Vous serez livré d'ici 5 jours.</p>
+                </div>
+                <div class="ibox-content">
+                    <h3>Total : <%=order.checkoutCart.total%> €</h3>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h3>Facture</h3>
+                </div>
+                <div class="ibox-content">
+                    <div class="m-t-sm" style="text-align: center;">
+                        <div class="btn-group">
+                            <!-- <a href="/"></a><button class="btn btn-white"><i class="fa fa-arrow-left"></i> Annuler</button> -->
+                            <a href="/checkout"><button class="button-link"> Télécharger</button></a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <!-- <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Support</h5>
+                </div>
+                <div class="ibox-content text-center">
+                    <h3><i class="fa fa-phone"></i> +33 6 18 27 50 25</h3>
+                    <span class="small">
+                        Please contact with us if you have any questions. We are avalible 24h.
+                    </span>
+                </div>
+            </div>
+
+            <div class="ibox">
+                <div class="ibox-content">
+
+                    <p class="font-bold">
+                    Other products you may be interested
+                    </p>
+                    <hr>
+                    <div>
+                        <a href="#" class="product-name"> Product 1</a>
+                        <div class="small m-t-xs">
+                            Many desktop publishing packages and web page editors now.
+                        </div>
+                        <div class="m-t text-righ">
+
+                            <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div>
+                        <a href="#" class="product-name"> Product 2</a>
+                        <div class="small m-t-xs">
+                            Many desktop publishing packages and web page editors now.
+                        </div>
+                        <div class="m-t text-righ">
+
+                            <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+
+<%- include('../partials/footer') %>

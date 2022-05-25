@@ -1,0 +1,8 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/3adcd127-9c4c-421b-b759-869a80def98e/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/generic-portfolio",
+    "appService.deploySubpath": ".",
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ]
+}

@@ -1,0 +1,131 @@
+<%- include('../partials/header') %>
+<%- include('../partials/menu', {menu: menu, general: general}) %>
+<%- include('../partials/flash') %>
+
+
+<!--------------------------- B A C K G R O U N D         I M A G E --------------------------------->
+<%if(section.image){%>
+  <style media="screen">
+    .content {
+      background: url('/upload/<%=section.image%>') no-repeat center center fixed !important;
+      -webkit-background-size: cover !important;
+      -moz-background-size: cover !important;
+      -o-background-size: cover !important;
+      background-size: cover !important;
+      /* backdrop-filter: brightness(40%) !important; */
+      min-height: 100vh !important;
+      color:white  !important;
+      /* backdrop-filter: blur(10px) !important; */
+    }
+    .police-menu{
+      color:white !important;
+    }
+  </style>
+<%}%>
+
+
+
+<!--------------------------- M O D A L    B O X --------------------------------->
+<div id="modal" class="modalBox">
+
+  <div class="modalContent">
+    
+    <div id="modalMain"></div>
+    <span class="modalClose">&times;</span>
+  </div>
+
+</div>
+
+
+<div class="container">
+  <!-- On met les routes en fonction du type de section -->
+  <% if(section.type == "gallery"){ %>
+    <%- include('gallery-details', {section: section, element: element}) %>
+  <% } else if(section.type == "events"){ %>
+    <%- include('events-details', {section: section, element: element}) %>
+  <% } else if(section.type == "shop"){ %>
+    <%- include('shop-details', {section: section, element: element}) %>
+  <% } else if(section.type == "articles"){ %>
+    <%- include('articles-details', {section: section, element: element}) %>
+  <% } %>
+</div>
+
+<!--------------------------- D E S C R I P T I O N   S C R I P T --------------------------------->
+<script type="text/javascript">
+  
+  function htmlDecode(input) {
+      var doc = new DOMParser().parseFromString(input, "text/html");
+      return doc.documentElement.textContent;
+  }
+  var txt = "<%=element.description%>";
+  var html = htmlDecode(txt);
+  $("#description").html(html);
+</script> 
+
+<!--------------------------- G A L E R I E   S C R I P T --------------------------------->
+<script src="js/lightbox.min.js"></script>
+<script>
+lightbox.option({
+'resizeDuration': 0,
+'wrapAround': true,
+'fadeDuration':	100,
+'imageFadeDuration': 600,
+'fitImagesInViewport': true,
+'albumLabel': '%1 sur %2',
+'alwaysShowNavOnTouchDevices': true,
+disableScrolling:true
+})
+</script>
+
+<!--------------------------- Y O U T U B E     S C R I P T --------------------------------->
+<script type="text/javascript">
+  function OpenModal(url){
+    let html = "<iframe style='height:80vh' width='100%' src='https://www.youtube.com/embed/"+url+"?controls=0&autoplay=true' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
+    //document.body.scrollTop = 0; // For Safari
+    //document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    $("#modalMain").html(html);
+    $(".modalBox").show();
+  }
+    // Get the modal
+  var ebModal = document.getElementById('modal');
+
+  // Get the button that opens the modal
+  var ebBtn = document.getElementById("mySizeChart");
+
+  // Get the <span> element that closes the modal
+  var ebSpan = document.getElementsByClassName("modalClose")[0];
+
+  // When the user clicks on <span> (x), close the modal
+  ebSpan.onclick = function() {
+      ebModal.style.display = "none";
+      $("#modalMain").html(html);
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+      if (event.target == ebModal) {
+          ebModal.style.display = "none";
+          $("#modalMain").html(html);
+      }
+  }
+
+  $( window ).resize(function() {
+    ResizeBoxYoutube();
+  });
+
+  $(document).ready(function() {
+    ResizeBoxYoutube();
+  });
+
+  function ResizeBoxYoutube(){
+    let width = $(".img-container").width();
+      $(".blurYoutube").css("width", width);
+  }
+
+
+</script>
+
+
+
+
+<%- include('../partials/footer') %>

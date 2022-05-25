@@ -1,0 +1,255 @@
+<%- include('../partials/header') %>
+<%- include('../partials/menu', {menu: menu, general: general}) %>
+<%- include('../partials/flash') %>
+
+<style>
+.swiperArticles {
+  width: 100%;
+  height: 500px;
+}
+.swiperProducts {
+  width: 100%;
+  height: 700px;
+}
+
+</style>
+
+<div class="container">
+  
+<div class="row">
+<!-- 
+  <div class="col-md-12">
+
+  </div> -->
+
+  <div class="col-md-4" style="margin-bottom: 30px;">
+    <div class="swiper-slide"><h3 style="top: 50%;position: relative;transform: translateY(-50%);padding:20px; text-align: center;" id="homeMessage"></h3></div>
+    <!-- Slider main container -->
+  </div>
+  <div class="col-md-8 element-box-hover" style="margin-bottom: 20px;">
+
+    <div class="swiperArticles">
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+        
+        <% general.showcaseElements.forEach(function (element, index){ %>
+          <% if(element.section.type === "articles"){ %>
+            <div style="cursor:pointer;" onclick="location.href='<%=element.section.url%>/<%=element.url%>';" class="swiper-slide card card-personal">
+              <!--------------------------- I M A G E ------------------------------->
+              <%if(element.images.length !=0){%>
+                  <img class="card-img-home" src="/upload/<%=element.images[0]%>" alt="Card image cap">
+              <%}%>
+              <!-- Card content -->
+              <div style="padding: 2rem;" class="card-home">
+                  <!-- Title-->
+                  <h1 style="color:white;background: black;display: inline;">
+                      <%if(element.images.length !=0){%>
+                          <%=element.legend%>
+                      <%} else{%>
+                          News
+                      <%}%>
+                  </h1>
+                  <p style="color:white !important;height: 320px; padding: 1.2rem 0px; font-size: 1.6rem !important;" class="card-meta">
+                      <span style="background: rgba(0,0,0,0.8);padding: 5px;line-height: 3rem;"><%=element.title%></span>
+                  </p>
+                  <hr>
+                  <div class="d-flex justify-content-between">
+                      <h5 style="color:white !important;min-width: 11rem;" id="hour-<%=element._id%>">
+                      </h5>
+                      <script>
+                          if('<%= element.updatedAt%>'){
+                              $('#hour-<%=element._id%>').html('' + new Date('<%= element.updatedAt%>').toLocaleDateString('fr-FR', { weekday: 'long', month: 'long', day: 'numeric' }));
+                          }
+                      </script>
+                      <span style="overflow: hidden;height: calc(1rem + 0.7rem);">
+                          <!--------------------------- T A G S ------------------------------->
+                          <% element.tags.forEach(function(tag){ %>
+                              <a class="badge text-decoration-none link-light" href="#!"><%=tag%></a>
+                          <% }); %>
+                      </span>
+                  </div>
+              </div>
+          </div>
+          <!-- <div class="swiper-slide">
+            <img class="card-img-event" style="width: 100%;" src="upload/<%= element.images[0] %>" />
+            <%= element.title %>
+          </div> -->
+          <% } %>
+        <% }); %>
+      </div>
+      <!-- If we need pagination -->
+      <!-- <div class="swiper-pagination"></div> -->
+
+      <!-- If we need navigation buttons -->
+      <!-- <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div> -->
+
+      <!-- If we need scrollbar -->
+      <!-- <div class="swiper-scrollbar"></div> -->
+    </div>
+
+            
+  </div>
+
+  
+  <!---------------------------------  S L I D E R      E C O M M E R C E --------------------------->
+  <% if(general.eCommerce == true){ %>
+    <!-- Slider main container -->
+        <% general.showcaseElements.forEach(function (element, index){ %>
+            <% if(element.section.type === "shop"){ %>
+            <div class="col-sm-6 col-md-4 col-lg-4" style="margin-bottom: 30px;">
+              <div style="cursor:pointer;" onclick="location.href='<%=element.section.url%>/<%=element.url%>';" class="swiper-slide card card-personal element-box-hover">
+                <!--------------------------- I M A G E ------------------------------->
+                <%if(element.images.length !=0){%>
+                    <img class="" src="/upload/<%=element.images[0]%>" alt="Card image cap">
+                <%}%>
+                <div style="padding: 2rem 0;" class="centered">
+                  <h3>
+                      <%=element.title%>
+                  </h3>
+                  <p style=" padding: 1.2rem 0px; font-size: 1.6rem !important;" class="card-meta">
+                      <%=element.price%> €
+                  </p>
+                  
+                  <!--  E L E M E N T   -   A D D    T O    C A R T-->
+                  
+                    <div style="margin-bottom:20px;" class="card-footer pt-0 border-top-0 bg-transparent">
+                        <div class="text-center">
+                          <% if(element.nbCopy >= 0){ %>
+                            <% if(currentUser && currentUser.cart.items.some(function(cartItem){ return cartItem.element._id.equals(element._id); })) { %>
+                                        <a href="/cart" style="color:white !important;background:rgba(0,0,0,0.8);" class="button-link">Dans le panier</a>
+                            <% } else { %>
+                                        <a class="button-link" href="/cart/new/<%= element._id %>/<%= element.section.title %>/element">Ajouter au panier</a>
+                            <% } %>
+                          <% } else { %>
+                              <span class="button-link" style="color:white !important;background:rgba(0,0,0,0.8);">Out of stock</a>
+                          <% } %>
+                        </div>
+                    </div>
+                
+                    
+                </div>
+            </div>
+          </div>
+          <!-- <div class="swiper-slide">
+            <img class="card-img-event" style="width: 100%;" src="upload/<%= element.images[0] %>" />
+            <%= element.title %>
+          </div> -->
+          <% } %>
+        <% }); %>
+  <% } %>
+
+  <div class="col-md-8 element-box-hover" style="margin-bottom: 20px;">
+
+    <div class="swiperArticles">
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+        
+        <% general.showcaseElements.forEach(function (element, index){ %>
+          <% if(element.section.type === "gallery"){ %>
+            <div style="cursor:pointer;" onclick="location.href='<%=element.section.url%>/<%=element.url%>';" class="swiper-slide card card-personal">
+              <!--------------------------- I M A G E ------------------------------->
+              <%if(element.images.length !=0){%>
+                  <img class="card-img-home" src="/upload/<%=element.images[0]%>" alt="Card image cap">
+              <%}%>
+              <!-- Card content -->
+              <div style="padding: 2rem;" class="card-home">
+                  <!-- Title-->
+                  <h1 style="color:white;background: black;display: inline;">
+                        <%=element.title%>
+                  </h1>
+                
+                  
+              </div>
+          </div>
+          <!-- <div class="swiper-slide">
+            <img class="card-img-event" style="width: 100%;" src="upload/<%= element.images[0] %>" />
+            <%= element.title %>
+          </div> -->
+          <% } %>
+        <% }); %>
+      </div>
+      <!-- If we need pagination -->
+      <!-- <div class="swiper-pagination"></div> -->
+
+      <!-- If we need navigation buttons -->
+      <!-- <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div> -->
+
+      <!-- If we need scrollbar -->
+      <!-- <div class="swiper-scrollbar"></div> -->
+    </div>
+
+            
+  </div>
+  <div class="col-md-4" style="margin-bottom: 20px;">
+    <div class="swiper-slide">
+      <h3 style="top: 50%;position: relative;transform: translateY(-50%);padding:20px; text-align: center;">
+        Merci pour votre visite et à bientôt !
+      </h3>
+   </div>
+    <!-- Slider main container -->
+  </div>
+  
+  
+</div>
+
+</div>
+
+<%- include('../partials/footer') %>
+
+<script>
+  var txt = "<%= general.homeMessage %>";
+  function htmlDecode(input) {
+      var doc = new DOMParser().parseFromString(input, "text/html");
+      return doc.documentElement.textContent;
+  }
+  var html = htmlDecode(txt);
+  $("#homeMessage").html(html);
+
+
+  const swiper1 = new Swiper(".swiperArticles", {
+        spaceBetween: 30,
+        effect: "fade",
+        loop: true,
+        autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+        }
+        // navigation: {
+        //   nextEl: ".swiper-button-next",
+        //   prevEl: ".swiper-button-prev",
+        // },
+        // pagination: {
+        //   el: ".swiper-pagination",
+        //   clickable: true,
+        // },
+      });
+
+      var swiper3 = new Swiper(".swiperProducts", {
+        slidesPerView: 3,
+        spaceBetween: 30,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
+
+      const swiper2 = new Swiper(".swiperGallery", {
+        // spaceBetween: 30,
+        effect: "fade",
+        loop: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        }
+        // navigation: {
+        //   nextEl: ".swiper-button-next",
+        //   prevEl: ".swiper-button-prev",
+        // },
+        // pagination: {
+        //   el: ".swiper-pagination",
+        //   clickable: true,
+        // },
+      });
+</script>

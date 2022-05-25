@@ -1,0 +1,171 @@
+
+<!-- <h1 class="display-3 centered"><%= section.title %></h1> -->
+
+<section class="my-5">
+
+    <div class="row">
+      <div class="col-lg-12 gsapBox">
+        
+        <h1 class="display-5 fw-bolder" style="text-align: center;">
+          <%=section.title%>
+        </h1>
+        <!-- <h1 style="font-size: 3rem; font-weight: bold; text-align: center;text-transform: uppercase;"><%= section.title %></h1> -->
+
+        <img style="margin: 50px auto;width:100%;height: 400px;object-fit: cover;" src="upload/<%=section.images[0]%>" />
+        <!--------------------------- D E S C R I P T I O N ------------------------------->
+        <%if(section.description){%>
+          <div class="element-details-box">
+            <p id="description"></p>
+          </div>
+        <%}%>
+
+        <!--------------------------- W E B     L I N K S --------------------------------->
+        <%if(section.webLinks.length !=0){%>
+          <div class="element-details-box" style="margin: 100px;">
+            <!-- <h3><%=lang.textLinks%></h3> -->
+            <!-- <hr> -->
+            <div style="display: flex;justify-content: center;">
+              <% section.webLinks.forEach(function(element){ %>
+                <a target="_blank" href="<%= element.adress %>">
+                  <span class="fw-bolder" style=" padding:0 2rem; font-size:2rem; font-family: 'Barlow Condensed', sans-serif;"><%= element.name %></span>
+                </a>
+              <%});%>
+              
+            </div>
+          </div>
+        <%}%>
+
+        <!--------------------------- Y O U T U B E     L I N K S --------------------------------->
+        <%if(section.youtube.length !=0){%>
+          <div class="element-details-box">
+            <!-- <h3><%=lang.textVideos%></h3>
+            <hr> -->
+            <div class="row">
+              <%for(i=0; i<section.youtube.length; i++){ %>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <div class="gallery-alan" style="color: #333 !important; text-decoration: none; cursor: pointer;">
+                    <figure class="img-container">
+                      <div onclick="OpenModal('<%=section.youtube[i]%>');" class="blurYoutube"></div>
+                      <iframe width="100%" height="250px"
+                        src="https://www.youtube.com/embed/<%=section.youtube[i]%>?controls=1" title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                    </figure>
+                  </div>
+                </div>
+                <%}%>
+            </div>
+          </div>
+        <%}%>
+
+        <!--------------------------- I M A G E S ------------------------------->
+        <%if(section.images.length !=0){%>
+          <div class="element-details-box">
+            <!-- <h3><%=lang.textGallery%></h3>
+            <hr> -->
+            <div class="row">
+              <% section.images.forEach(function(image){%>
+                <div class="col-xs-3 col-sm-4 col-md-3 col-lg-3 col-xl-2" style="margin-bottom: 20px;">
+                  <a href="upload/<%=image%>" data-lightbox="slider">
+                    <img style="width:100%;height: 100%;object-fit: cover;" src="upload/<%=image%>" />
+                  </a>
+                </div>
+                <%});%>
+            </div>
+          </div>
+        <%}%>
+        
+        
+      </div>
+  </section>
+
+
+  <!-----------------------------   M O D A L    B O X --------------------------------->
+<div id="modal" class="modalBox">
+
+  <div class="modalContent">
+    
+    <div id="modalMain"></div>
+    <span class="modalClose">&times;</span>
+  </div>
+
+</div>
+
+<!--------------------------- G A L E R I E   S C R I P T --------------------------------->
+<script type="text/javascript" src="js/lightbox.min.js"></script>
+<script type="text/javascript">
+lightbox.option({
+'resizeDuration': 0,
+'wrapAround': true,
+'fadeDuration':	100,
+'imageFadeDuration': 600,
+'fitImagesInViewport': true,
+'albumLabel': '%1 sur %2',
+'alwaysShowNavOnTouchDevices': true,
+disableScrolling:true
+});
+
+</script>
+
+<!--------------------------- Y O U T U B E     S C R I P T --------------------------------->
+<script type="text/javascript">
+  function OpenModal(url){
+    let html = "<iframe style='height:80vh' width='100%' src='https://www.youtube.com/embed/"+url+"?controls=0&autoplay=true' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
+    //document.body.scrollTop = 0; // For Safari
+    //document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    $("#modalMain").html(html);
+    $(".modalBox").show();
+  }
+    // Get the modal
+  var ebModal = document.getElementById('modal');
+
+  // Get the button that opens the modal
+  var ebBtn = document.getElementById("mySizeChart");
+
+  // Get the <span> element that closes the modal
+  var ebSpan = document.getElementsByClassName("modalClose")[0];
+
+  // When the user clicks on <span> (x), close the modal
+  ebSpan.onclick = function() {
+      ebModal.style.display = "none";
+      $("#modalMain").html(html);
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+      if (event.target == ebModal) {
+          ebModal.style.display = "none";
+          $("#modalMain").html(html);
+      }
+  }
+
+  $( window ).resize(function() {
+    ResizeBoxYoutube();
+  });
+
+  $(document).ready(function() {
+    ResizeBoxYoutube();
+  });
+
+  function ResizeBoxYoutube(){
+    let width = $(".img-container").width();
+      $(".blurYoutube").css("width", width);
+  }
+
+
+</script>
+
+<!--------------------------- D E S C R I P T I O N     S C R I P T --------------------------------->
+
+<script type="text/javascript">
+  var txt = "<%=section.description%>";
+  function htmlDecode(input) {
+      var doc = new DOMParser().parseFromString(input, "text/html");
+      return doc.documentElement.textContent;
+  }
+  var html = htmlDecode(txt);
+  $("#description").html(html);
+
+  
+</script> 

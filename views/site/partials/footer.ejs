@@ -1,0 +1,101 @@
+
+<div style="color:#333;text-align:center;margin-top: 50px;padding-bottom: 50px;">
+  <h6 class="police-menu">2022 © <%= lang.appName %></h6>
+</div>
+
+
+</div> <!------- CONTENT PAGE END  ------->
+
+
+<script type="text/javascript">
+
+function animMenu(x) {
+    x.classList.toggle("change");
+    $('.menu-box').fadeToggle();
+  }
+
+
+    $(".dropbtn").click(function(){
+      document.getElementById("myDropdown").classList.toggle("show");
+    });
+    
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+  // var percent = 0
+  // $('.loading-box').toggleClass('start');
+  // var timer = setInterval(function () {
+  // $('.loading').css("width",percent+"%")
+  // percent += 1
+
+  // if( percent > 100 ){
+  //   // $( ".content" ).animate({
+  //   // opacity: 1
+  //   // }, 500, function() {
+  //   //   // Animation complete.
+  //   // });
+  //   // $('.loading-box').hide();
+
+    
+  //   // $('.loading-box').toggleClass('animate').promise().done(function() {
+  //     // if ($('.loading-box').hasClass("animate")) {
+  //     //   $( ".content" ).animate({
+  //     //     opacity: 1
+  //     //     }, 500, function() {
+  //     //       // Animation complete.
+  //     //   });
+  //     // }
+  //   // });
+  //   clearInterval(timer);
+  // }
+  // },5);
+
+  window.addEventListener("load", function(event) {
+    // $('.loading-box').hide();
+    $( ".loading-box" ).animate({
+      opacity: 0
+      }, 500, function() {
+          // $( ".content" ).animate({
+          //   opacity: 1
+          //   }, 500, function() {
+          //     // Animation complete.
+          // });  
+          $( ".content" ).fadeIn(1000);
+          gsap.from(".gsapBox", {duration: 1, y: -100, opacity: 0, scale: 0.5, ease: "circ.out"});
+    });
+    // console.log("Toutes les ressources sont chargées !");
+    // $('.loading-box').toggleClass('animate').promise().done(function() {
+    //   if ($('.loading-box').hasClass("animate")) {
+    //   }
+    // });
+  });
+
+
+  window.onresize = function(event) {
+    if ($(window).width() < 1000) {
+      $(".menu-box").fadeOut(100);
+      // alert(window.innerHeight);
+      // $(".content").css("min-height", window.innerHeight - 100 );
+    }
+    else {
+      $(".menu-box").fadeIn(50);
+      // window.css({overflow: "hidden"});
+    }
+  };
+</script>
+
+
+
+
+</body>
+</html>

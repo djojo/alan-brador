@@ -1,0 +1,28 @@
+<!-- <section class="my-5"> -->
+
+    <div class="masonry">
+
+            <% elements.forEach(function(element){ %>
+                <% if(element.images.length > 0){ %>
+                    
+                        <div style="cursor:pointer;" onclick="location.href='<%=section.url%>/<%=element.url%>';" class="grid gsapBox">
+                            <% if(element.images[0]){ %>
+                                <img src="upload/<%=element.images[0]%>">
+                            <%} else {%>
+                                <img src="img/<%= lang.noImg %>">
+                            <%}%>
+                            <div class="grid__body">
+                                <!-- <div class="relative"> -->
+                                    <h3 class="grid__title"><%=element.title%></h3>
+                                    <!-- <p class="grid__author"><%=element.description%></p> -->
+                                <!-- </div> -->
+                                <!-- <div class="mt-auto">
+                                    <span class="grid__tag">#tag1</span>
+                                </div> -->
+                            </div>
+                        </div>
+                <% } %>
+            <% }) %>
+    </div>
+
+<!-- </section> -->

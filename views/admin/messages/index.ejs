@@ -1,0 +1,74 @@
+<%- include('../partials/adminheader') %>
+<%- include('../partials/adminmenu') %>
+<%- include('../partials/adminflash') %>
+
+
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="display-3">MESSAGES</h1>
+    <hr/>
+    <% if(listMessages.length > 0){ %>
+      <p class="lead">Voila vos derniers messages...</p>
+      <table class="table lead">
+          <thead>
+              <tr>
+                  <th>
+                      Prénom
+                  </th>
+                  <th>
+                      Nom
+                  </th>
+                  <th>
+                    Message
+                  </th>
+                  <th>
+                    Email
+                  </th>
+                  <th>
+                    Telephone
+                  </th>
+                  <th style="width: 200px;">Date</th>
+                  <th></th>
+              </tr>
+          </thead>
+          <tbody>
+            <%  listMessages.forEach(function(item){ %>
+
+                <tr>
+                  <td><%=item.firstname%></td>
+                  <td><%=item.lastname%></td>
+                  <td id="content-<%=item._id%>"></td>
+                  <script type="text/javascript">
+                    function htmlDecode(input) {
+                        var doc = new DOMParser().parseFromString(input, "text/html");
+                        return doc.documentElement.textContent;
+                    }
+                    var txt = "<%=item.content%>";
+                    var html = htmlDecode(txt);
+                    $("#content-<%=item._id%>").html(html);
+                  </script> 
+                  <td><%=item.email%></td>
+                  <td><%=item.phone%></td>
+                  <td id="date-<%=item._id%>"></td>
+                  <script type="text/javascript">
+                    $('#date-<%=item._id%>').html(new Date('<%= item.createdAt%>').toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
+                  </script>
+                  <td>
+                      <form title="Delete" style="display: inline-block;" action="/admin/message/delete" method="POST">
+                        <button value="<%=item._id%>" name="messageId" class="btn btn-outline-danger btn-sm" type="submit"><i class="fa fa-trash fa-lg"></i></button>
+                      </form>
+                  </td>
+                </tr>
+
+
+            <%  }) %>
+          </tbody>
+      </table>
+    <% } else { %>
+      <p class="lead">Vous n'avez pas de messages...</p>
+    <% } %>
+</div>
+</div>
+
+
+<%- include('../partials/adminfooter') %>

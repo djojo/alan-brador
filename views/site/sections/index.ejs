@@ -1,0 +1,50 @@
+<%- include('../partials/header') %>
+<%- include('../partials/menu', {menu: menu, general: general}) %>
+<%- include('../partials/flash') %>
+
+<%if(section.image){%>
+  <style media="screen">
+    .content {
+      background: url('/upload/<%=section.image%>') no-repeat center center fixed !important;
+      -webkit-background-size: cover !important;
+      -moz-background-size: cover !important;
+      -o-background-size: cover !important;
+      background-size: cover !important;
+      /* backdrop-filter: brightness(40%) !important; */
+      min-height: 100vh !important;
+      color:white  !important;
+      /* backdrop-filter: blur(10px) !important; */
+    }
+    .police-menu{
+      color:white !important;
+    }
+    .element-details-box{
+      background: rgba(0,0,0,0.3);
+      padding: 20px 40px;
+    }
+  </style>
+<%}%>
+
+ 
+<div class="container">
+
+  <% if(section.type == "gallery"){ %>
+    <%- include('gallery', {section: section, elements: elements}) %>
+  <% } else if(section.type == "events"){ %>
+    <%- include('events', {section: section, elements: elements}) %>
+  <% } else if(section.type == "shop"){ %>
+    <%- include('shop', {section: section, elements: elements}) %>
+  <% } else if(section.type == "articles"){ %>
+    <%- include('articles', {section: section, elements: elements}) %>
+    <% } else if(section.type == "about"){ %>
+  <%- include('about', {section: section, elements: elements}) %>
+  <% } else if(section.type == "page"){ %>
+    <%- include('page', {section: section, elements: elements}) %>
+  <% } %>
+  
+</div>
+
+
+
+
+<%- include('../partials/footer') %>

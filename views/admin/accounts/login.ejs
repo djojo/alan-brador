@@ -1,0 +1,26 @@
+<%- include('../partials/adminheader') %>
+<%- include('../partials/adminflash') %>
+
+
+<div class="jumbotron centered">
+	<h1 class="display-3 text-center"><%= lang.appName %></h1>
+	<h1 class="display-6 text-center"><%= lang.menuLogin %></h1>
+	<div class="form-custom-small">
+		<div class="login-register">
+			<form action="/login" method="POST" autocomplete="off">
+				<div class="form-floating">
+					<input type="text" name="username" placeholder="<%= lang.email %>" class="form-control">
+					<label for="floatingInput"><%= lang.email %></label>
+				</div>
+				<div class="form-floating">
+					<input type="password" name="password" placeholder="<%= lang.password %>" class="form-control">
+					<label for="floatingPassword"><%= lang.password %></label>
+				</div>
+				<button type="submit" class="w-100 link-site" ><%= lang.menuLogin %></button>
+			</form>
+			<p class="mt-2"><%= lang.messageNoAccount %> <a href="/register" class="text-center"><%= lang.menuSignup %></a></p>
+		</div>
+	</div>
+</div>
+
+<%- include("../partials/adminfooter") %>

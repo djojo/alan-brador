@@ -1,0 +1,188 @@
+<%- include('../partials/header') %>
+<%- include('../partials/menu', {menu: menu, general: general}) %>
+<%- include('../partials/flash') %>
+
+<%if(general.backgroundImage){%>
+    <style media="screen">
+        .content {
+        background: url('/upload/<%=general.backgroundImage%>') no-repeat center center fixed !important;
+        -webkit-background-size: cover !important;
+        -moz-background-size: cover !important;
+        -o-background-size: cover !important;
+        background-size: cover !important;
+        /* backdrop-filter: brightness(40%) !important; */
+        min-height: 100vh !important;
+        color:white  !important;
+        /* backdrop-filter: blur(10px) !important; */
+        }
+        .police-menu{
+        color:white !important;
+        }
+    </style>
+<%}%>
+
+<div class="container gsapBox">
+    <h1 class="display-3 centered"><%=lang.textCart%></h1>
+
+<div class="container gsapBox">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h3><%=lang.textArticles%> <span class="pull-right">(<strong><%=user.cart.items.length%></strong>)</span></h3>
+                    
+                </div>
+                <% user.cart.items.forEach(function(cartItem){ %>
+                    <div class="ibox-content" >
+                            <table class="table shoping-cart-table">
+                                <tbody>
+                                <tr>
+                                    <td width="90">
+                                        <div class="cart-product-imitation">
+                                            <img style="width: 100%;" src="upload/<%=cartItem.element.images[0]%>"/>
+                                        </div>
+                                    </td>
+                                    <td class="desc">
+                                        <h3>
+                                        <a href='<%=cartItem.element.sectionUrl%>/<%=cartItem.element.url%>' class="text-navy">
+                                            <%= cartItem.element.title%>
+                                        </a>
+                                        </h3>
+                                        <p class="small">
+                                            <%= cartItem.element.legend%>
+                                        </p>
+                                        <!-- <dl class="small m-b-none">
+                                            <dt>Description lists</dt>
+                                            <dd>A description list is perfect for defining terms.</dd>
+                                        </dl> -->
+    
+                                        <div class="m-t-sm">
+                                            <!-- <a href="#" class="text-muted"><i class="fa fa-gift"></i> Add gift package</a> -->
+                                            <!-- | -->
+                                            <a href="/cart/remove/<%= cartItem.element._id%>" class="roboto" style="color:rgba(0,0,0,0.8) !important;font-size: 0.8rem;" ><i class="fa fa-trash"></i> <%=lang.textDeleteFromCart%></a>
+                                        </div>
+                                    </td>
+    
+                                    <!-- <td>
+                                        <%= cartItem.element.price%> €
+                                        <s class="small text-muted"><%= 1.5*cartItem.element.price %> €</s>
+                                    </td> -->
+                                    <td width="65">
+                                        <input type="text" class="form-control" placeholder="1">
+                                    </td>
+                                    <td>
+                                        <h4>
+                                            <%= cartItem.element.price%> €
+                                        </h4>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+    
+                    </div>
+                <%}); %>
+
+                <% if(user.cart.items.length>0){ %>
+                    <div class="ibox-content">
+                        <div class="d-flex justify-content-between">
+                            <a href="/"><button class="btn btn-white roboto"><i class="fa fa-arrow-left"></i> <%=lang.textSeeTheShop%></button></a>
+                            <a href="/checkout"><button class="button-link" ><i class="fa fa fa-shopping-cart"></i> Checkout</button></a>
+                        </div>
+                    </div>
+                <% } else { %>		
+                    <hr>
+                    <div class="text-center screen-center-cart">
+                        <!-- <img src="https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90" class="empty-cart-img"> -->
+                        <p><%=lang.textYouHaveNothingInYourCart%></p>
+                        <!-- <a href="/" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Start </a> -->
+                    </div>
+                <% } %>
+                
+                
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h3>Récapitulatif</h3>
+                </div>
+                <% if(user.cart.items.length>0){ %>
+                    <div class="ibox-content">
+                        <span class="roboto">
+                            <%=lang.textTotal%>
+                        </span>
+                        <h2 class="font-bold">
+                            <%=user.cart.total%> €
+                        </h2>
+    
+                        <hr>
+                        <!-- <span class="text-muted small">
+                            *For United States, France and Germany applicable sales tax will be applied
+                        </span> -->
+                        <div class="m-t-sm" style="text-align: center;">
+                            <div class="btn-group">
+                                <!-- <a href="/"></a><button class="btn btn-white"><i class="fa fa-arrow-left"></i> Annuler</button> -->
+                                <a href="/checkout"><button class="button-link" ><i class="fa fa fa-shopping-cart"></i> Checkout</button></a>
+                            </div>
+                        </div>
+                    </div>
+                <% } else { %>		
+                    <div class="text-center screen-center-cart">
+                        <!-- <img src="https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90" class="empty-cart-img"> -->
+                        <p><%=lang.textSeeTheShop%></p>
+                        <!-- <a href="/" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Start </a> -->
+                    </div>
+                <% } %>
+                
+            </div>
+
+            <!-- <div class="ibox">
+                <div class="ibox-title">
+                    <h5>Support</h5>
+                </div>
+                <div class="ibox-content text-center">
+                    <h3><i class="fa fa-phone"></i> +33 6 18 27 50 25</h3>
+                    <span class="small">
+                        Please contact with us if you have any questions. We are avalible 24h.
+                    </span>
+                </div>
+            </div>
+
+            <div class="ibox">
+                <div class="ibox-content">
+
+                    <p class="font-bold">
+                    Other products you may be interested
+                    </p>
+                    <hr>
+                    <div>
+                        <a href="#" class="product-name"> Product 1</a>
+                        <div class="small m-t-xs">
+                            Many desktop publishing packages and web page editors now.
+                        </div>
+                        <div class="m-t text-righ">
+
+                            <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div>
+                        <a href="#" class="product-name"> Product 2</a>
+                        <div class="small m-t-xs">
+                            Many desktop publishing packages and web page editors now.
+                        </div>
+                        <div class="m-t text-righ">
+
+                            <a href="#" class="btn btn-xs btn-outline btn-primary">Info <i class="fa fa-long-arrow-right"></i> </a>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,120 @@
+<h3 style="position:absolute;">
+  <span onclick="location.href='<%=section.url%>';" style="cursor:pointer;" >
+    <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+    &nbsp;
+    <%= section.title %>
+  </span>
+</h3>
+
+
+<section class="my-5 gsapBox">
+    <!--------------------------- T I T L E ------------------------------->
+    <%if(element.title){%>
+      <h1 class="display-5 fw-bolder"><%=element.title%></h1>
+    <%}%>
+    <%if(element.images.length !=0){%>
+        <img class="element-event-details-img" src="upload/<%=element.images[0]%>" />
+    <%}%>
+
+    <% if(element.date){ %>
+      <div class="d-flex justify-content-between" style="margin: 10px 0;">
+          <h3 id="dateEvent">
+              
+          </h3>
+          <script>
+              if('<%= element.date%>'){
+                  $('#dateEvent').html(new Date('<%= element.date%>').toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
+              }
+          </script>
+          <h3>
+              <%=element.adress%>
+          </h3>
+      </div>
+  <% } %>
+
+    
+    <!--------------------------- L E G E N D ------------------------------->
+    <!-- <%if(element.legend){%>
+      <div class="element-detail-box centered">
+        <p>
+          <%=element.legend%>
+        </p>
+      </div>
+    <%}%> -->
+
+    <!--------------------------- A R T I C L E    C O N T E N T ------------------------------->
+    <script>
+      function htmlDecode(input) {
+                var doc = new DOMParser().parseFromString(input, "text/html");
+                return doc.documentElement.textContent;
+            }
+    </script>
+    
+    <%if(element.articleContent){%>
+      <div class="my-5">
+        <% element.articleContent.forEach(function(par, index){ %>
+          <div class="element-details-box">
+            <%if(par.subTitle){%>
+              <h3><%=par.subTitle%></h3>
+              <hr>
+            <%} %>
+            <%if(par.paragraph){%>
+              <p id="content-<%=index%>"></p>
+              <script>
+                var txt = '<%=par.paragraph%>';
+                var html = htmlDecode(txt);
+                $("#content-<%=index%>").html(html);
+              </script>
+            <%}%>
+            <%if(par.quote){%>
+              <div class="quote">"<%=par.quote%>"</div>
+            <%} %>
+          </div>
+        <% }); %>
+      </div>
+    <%}%>
+
+    <div class="my-5 gsapBox">
+      <iframe width="100%" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=<%=element.adress%>&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://123movies-to.org"></a><br>
+    </div>
+  
+    <!--------------------------- I M A G E S ------------------------------->
+    <%if(element.images){%>
+      <div class="element-detail-box">
+        <h3>Galerie</h3>
+        <hr>
+        <div class="row">
+          <% element.images.forEach(function(image){%>
+            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 col-xl-2">
+              <a href="upload/<%=image%>" data-lightbox="slider">
+                <img style="margin-bottom: 5px;width:100%;" src="upload/<%=image%>" />
+              </a>
+            </div>
+            <%});%>
+        </div>
+      </div>
+    <%}%>
+    <!--------------------------- Y O U T U B E     L I N K S --------------------------------->
+    <%if(element.youtube.length !=0){%>
+      <div class="element-detail-box">
+        <h3>Vidéos</h3>
+        <hr>
+        <div class="row">
+          <%for(i=0; i<element.youtube.length; i++){ %>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+              <div class="gallery-alan" style="color: #333 !important; text-decoration: none; cursor: pointer;">
+                <figure class="img-container">
+                  <div onclick="OpenModal('<%=element.youtube[i]%>');" class="blurYoutube"></div>
+                  <iframe width="100%" height="250px"
+                    src="https://www.youtube.com/embed/<%=element.youtube[i]%>?controls=0" title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+                </figure>
+              </div>
+            </div>
+            <%}%>
+        </div>
+      </div>
+      <%}%>
+  </section>
