@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 //jshint esversion:6
 const express = require("express");
 const app = express(); //on initialise express js

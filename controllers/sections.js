@@ -45,7 +45,7 @@ module.exports.set = function(app) {
       // console.log(req.body._id);
       var order = req.body.order;
       // console.log(order);
-      order = order.replaceAll(/[&]/g,'');
+      order = order.replace(/[&]/g,'');
       var sections = order.split('section[]=');
       sections.splice(0,1);
       // console.log(sections);
@@ -110,13 +110,13 @@ module.exports.set = function(app) {
 
       //on créer l'url
       var url = req.body.title;
-      url = url.replaceAll(/[#{}^;/§°()!.,÷\?:%@&=+$`"'€*]/g,'');
-      url = url.replaceAll(' ','-');
-      url = url.replaceAll('à', 'a');
-      url = url.replaceAll('é', 'e');
-      url = url.replaceAll('è', 'e');
-      url = url.replaceAll('ù', 'u');
-      url = url.replaceAll('ç', 'c');
+      url = url.replace(/[#{}^;/§°()!.,÷\?:%@&=+$`"'€*]/g,'');
+      url = url.replace(/' /g,'-');
+      url = url.replace(/à/g, 'a');
+      url = url.replace(/é/g, 'e');
+      url = url.replace(/è/g, 'e');
+      url = url.replace(/ù/g, 'u');
+      url = url.replace(/ç/g, 'c');
       url = url.toLowerCase();
       console.log(url);
 
@@ -243,13 +243,13 @@ module.exports.set = function(app) {
 
       //on créer l'url
       var url = req.body.title;
-      url = url.replaceAll(/[#{}^;/§°()!.,÷\?:%@&=+$`"'€*]/g,'');
-      url = url.replaceAll(' ','-');
-      url = url.replaceAll('à', 'a');
-      url = url.replaceAll('é', 'e');
-      url = url.replaceAll('è', 'e');
-      url = url.replaceAll('ù', 'u');
-      url = url.replaceAll('ç', 'c');
+      url = url.replace(/[#{}^;/§°()!.,÷\?:%@&=+$`"'€*]/g,'');
+      url = url.replace(/' /g,'-');
+      url = url.replace(/à/g, 'a');
+      url = url.replace(/é/g, 'e');
+      url = url.replace(/è/g, 'e');
+      url = url.replace(/ù/g, 'u');
+      url = url.replace(/ç/g, 'c');
       url = url.toLowerCase();
       console.log(url);
 
