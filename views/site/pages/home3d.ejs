@@ -27,14 +27,14 @@
       <meta property="og:url" content="https://alanbrador.com/">
       <meta property="og:title" content="Alan Brador - Composer, Producer, DJ">
       <meta property="og:description" content="Discover my latest projects and contact me for a collaboration.">
-      <meta property="og:image" content="img/elgeogeo.png">
+      <meta property="og:image" content="pix/studio1.jpg">
 
       <!-- Twitter -->
       <meta property="twitter:card" content="summary_large_image">
       <meta property="twitter:url" content="https://alanbrador.com/">
       <meta property="twitter:title" content="Alan Brador - Composer, Producer, DJ">
       <meta property="twitter:description" content="Discover my latest projects and contact me for a collaboration.">
-      <meta property="twitter:image" content="img/elgeogeo.png">
+      <meta property="twitter:image" content="pix/studio1.jpg">
 
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,7 +69,7 @@
           <% menu.forEach(function(menuElement){ %>
               <div onclick="scrollll('<%=menuElement.url%>');" class="link-site-medium"><%=menuElement.title%></div>
           <% }); %>
-          <div onclick="scrollll('contact');" class="link-site-medium">Contact</div>
+          <!-- <div onclick="scrollll('contact');" class="link-site-medium">Contact</div> -->
         </span>
 
         <!-- MOBILE -->
@@ -94,48 +94,28 @@
               $("section").scrollTop(0);
         });
 
-        $(window).scroll(function() {
-          $("#navScroll").fadeOut();
-        });
         function scrollll(id){
-          // alert(window.innerWidth);
           if(window.innerWidth < 800 ){
             $('#menuBox').fadeOut();
           }
           if(id == "home"){
-            // $("#navScroll").fadeIn();
+            $("#navScroll").fadeIn();
           } else{
             $("#navScroll").fadeOut();
           }
           $("section").css({'opacity': 0});
-          // $("section").animate({
-          //   opacity: 0
-          // }, 1000);
           $([document.documentElement, document.body]).animate({
             scrollTop: $("#"+id).offset().top,
-              // scrollTop: $("#"+id).offset().top -150
             },
             {
               easing: 'swing',
               duration: 800,
               complete: function(){
-                // $("#"+id).css({'opacity': 1});
                 $("#"+id).animate({
                   opacity: 1
                 }, 300);
               }
             });
-          
-
-          // <% for(index=0;index<10*menu.length+3;index++){ %>
-    
-          //     torus<%= index %>.rotation.z += 30;
-
-          // <% }; %>
-          // camera.rotation.z = t * 0.2;
-
-          // alert('oui')
-            // $(window).scrollTop(1000);
         }
 
         // Get the container element
@@ -158,8 +138,9 @@
   
       <main id="home">
   
-        <header style="margin-top:130px;" class="gsapBox">
-            <h1 class="textgeo text-title">Alan&nbsp;&nbsp;&nbsp;&nbsp;Brador</h1>
+        <header style="margin-top:50px;" class="gsapBox">
+            <!-- <h1 class="textgeo text-title">Alan&nbsp;&nbsp;&nbsp;&nbsp;Brador</h1> -->
+            <img class="img logo-animation" style="margin: 50px auto;height: 500px; object-fit: contain;" src="pix/logo.png"/>
             <h1 class="textgeo text-subtitle">Composer, Producer, DJ</h1>
         </header>
         
@@ -172,7 +153,7 @@
 
                     <h1 class="text-title"><%= menuElement.title %></h1>
 
-                    <img class="img" style="margin: 50px auto;height: 300px;" src="upload/<%=menuElement.images[0]%>"/>
+                    <img class="img" style="margin: 50px auto;height: 300px; object-fit: cover; object-position: center;" src="upload/<%=menuElement.images[0]%>"/>
 
                     <% if(menuElement.description){ %>
                       <div style="grid-template-columns: repeat(1, 1fr);padding: 0 2rem;max-width: 800px; margin: 0 auto 150px auto;">
@@ -262,32 +243,31 @@
             <% } else if(menuElement.type === "about"){ %>
               <section id="<%=menuElement.url%>" >
                 <!-- <blockquote> -->
-                  <h1 class="text-title">Alan&nbsp;&nbsp;&nbsp;&nbsp;Brador</h1>
-                  
-                    <% menuElement.images.forEach(function(image){ %>
-                      <div style="display:grid;grid-template-columns: repeat(1, 1fr);width:100%; display: block; height: 300px;margin-top:150px;">
-                        <img style="width: 100%;height: 300px;object-fit: cover;" src="upload/<%=image%>"/>
+                      <h1 class="text-title">Alan&nbsp;&nbsp;&nbsp;&nbsp;Brador</h1>
+                      <div style="display:grid;grid-template-columns: repeat(1, 1fr);width:100%; display: block; height: 300px;margin-top:50px;">
+                        <img style="width: 100%;height: 400px;object-fit: cover;object-position:top;" src="pix/studio1.jpg"/>
                       </div>
-                    <% }); %>
                     
                     <% if(menuElement.description){ %>
-                      <div style="display:grid;grid-template-columns: repeat(1, 1fr);margin-bottom:50px;padding: 0 2rem;">
+                      <div style="display:grid;grid-template-columns: repeat(1, 1fr);margin:50px 0;padding: 0 2rem;">
                         <p class="text-description" id="description<%=index%>" class="lead gsapBox"></p>
                       </div>
                     <% } %>
 
+                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/2Ek8rnsOYEgX0vDjSEj5dv?utm_source=generator" width="100%" height="552" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
-                    <div style="display: grid;grid-template-columns: repeat(1, 1fr);margin-bottom:50px;" >
-                        <a class="links-page" target="_blank" href="mailto:geoffroy.rouaix@hotmail.com">
+
+                    <div style="display: grid;grid-template-columns: repeat(1, 1fr);margin:50px 0;" >
+                        <a class="links-page" target="_blank" href="https://www.instagram.com/alanbradormusic/">
                           Contact, Booking
                         </a>
                     </div>
 
-                    <div style="display: grid;grid-template-columns: repeat(1, 1fr);margin-bottom:150px;" >
+                    <!-- <div style="display: grid;grid-template-columns: repeat(1, 1fr);margin-bottom:150px;" >
                       <a class="links-page" href="tel:+33618275025">
                         WattsApp: +33 6 18 27 50 25
                       </a>
-                  </div>
+                    </div> -->
 
 
                     <!-- <p><%=menuElement.description%></p> -->
@@ -373,7 +353,7 @@
         
   
   
-        <section id="contact" >
+        <!-- <section id="contact" >
 
           <h1 class="textgeo text-title">Contact</h1>
 
@@ -381,37 +361,16 @@
             <a class="links-page" target="_blank" href="mailto:geoffroy.rouaix@hotmail.com">
               Contact, Booking
             </a>
-        </div>
+          </div>
 
-        <div style="display: grid;grid-template-columns: repeat(1, 1fr);margin-bottom:150px;" >
-          <a class="links-page" href="tel:+33618275025">
-            WattsApp: +33 6 18 27 50 25
-          </a>
-        </div>
-      
-          <!-- <div style="grid-template-columns: repeat(1, 1fr);">
-
-            <h1 style="font-size: 3rem; font-weight: bold; text-align: center;margin-top:150px;text-transform: uppercase;">Message me</h1>
-            <div class="form-custom-small">
-              <form action="/contact" method="POST" style="font-family: brandon-grotesque, sans-serif;">
-                <div class="form-floating">
-                  <input required type="text" class="form-control" placeholder="<%= lang.firstName %>" name="firstName">
-                  <input required type="text" class="form-control" placeholder="<%= lang.lastName %>" name="lastName">
-                </div>
-                <div class="form-floating">
-                  <input required type="email" class="form-control" placeholder="<%= lang.email %>" name="email">
-                  <input type="text" class="form-control" placeholder="<%= lang.phone %>" name="phone">
-                </div>
-                <div class="form-floating">
-                  <textarea required style="font-family: brandon-grotesque, sans-serif;height: calc(9.5rem + 2px);" class="form-control" placeholder="<%= lang.yourProject %>" rows="3" name="content"></textarea>
-                </div>
-                <div id="buttonText" style="text-align: center;width: 100%;"><button onclick="Loading();" class="link-site-medium" type="submit"><%= lang.buttonSend %></button></div>
-                <span id="buttonLoading" style="display:none;"></span>
-              </form>
-            </div>
-          </div> -->
+          <div style="display: grid;grid-template-columns: repeat(1, 1fr);margin-bottom:150px;" >
+            <a class="links-page" href="tel:+33618275025">
+              WattsApp: +33 6 18 27 50 25
+            </a>
+          </div>
           
-        </section>
+        </section> -->
+
         <script>
   
           function Loading(){
@@ -451,6 +410,14 @@
   //GSAP
   gsap.from(".gsapBox", {duration: 1, y: -100, opacity: 0, scale: 0.5, ease: "circ.out"});
 
+  // Animation du logo
+  gsap.to(".logo-animation", {
+    scale: 1.05,
+    duration: 2,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut"
+  });
 
     // import './style.css';
   // import * as THREE from '../three';
@@ -491,7 +458,7 @@ function randomIntFromInterval(min, max) { // min and max included
 // const posXs = [1,3,4];
 
 const geometry = new THREE.TorusGeometry(10, 2, 6, 6);
-const material = new THREE.MeshStandardMaterial({ color: 0xf1c40f });
+const material = new THREE.MeshStandardMaterial({ color: 0xB77921 });
 
 
 
@@ -561,74 +528,16 @@ const material = new THREE.MeshStandardMaterial({ color: 0xf1c40f });
 </script>
 <% for(index=0;index<10*menu.length+3;index++){ %>
     <script>
-
-
-        // if(index == 12){
-        //   pos
-        // }
-        var pos = '<%= (index+1)*2 %>';
-        // const torus = new THREE.Mesh(geometry, material);
-        const torus<%= index %> = new THREE.Mesh(geometry);
-        
-        
+        var pos = <%= (index+1)*15 %>; // écart augmenté
+        const torus<%= index %> = new THREE.Mesh(geometry, material); // applique le matériau doré
         torus<%= index %>.position.z = pos;
         torus<%= index %>.position.x = 0;
-        
         scene.add(torus<%= index %>);
-        
-        // var planetSize = planetSizes[randomIntFromInterval(0,planetSizes.length)];
-        // var posY = posYs[randomIntFromInterval(0,posYs.length)];
-        // var pos = '<%= (index+1)*30 %>' * posXs[randomIntFromInterval(0,posXs.length)];
-        // const moon<%= index %> = new THREE.Mesh(
-        //     new THREE.SphereGeometry(planetSize, 32, 32),
-        //     new THREE.MeshStandardMaterial({
-        //     map: moonTexture,
-        //     normalMap: normalTexture,
-        //     })
-        // );
-        // scene.add(moon<%= index %>);
-        // if(<%= index %> % 2 == 1){
-        //     moon<%= index %>.position.setX(-planetSize*2 - 10);
-        //     moon<%= index %>.position.setY(-posY);
-        // }
-        // else{
-        //     moon<%= index %>.position.setX(+planetSize*1.3 +10);
-        //     moon<%= index %>.position.setY(+posY);
-        // }
-        // moon<%= index %>.position.z = pos;
     </script>
 <% }; %>
 
 
 <script type="text/javascript">
-  
-  //le model 3d car
-  // let car;
-  // let loader = new THREE.GLTFLoader();
-  // loader.load('3d/car/scene.gltf', function(gltf){
-  //   car = gltf.scene.children[0];
-  //   car.scale.set(0.01,0.01,0.01);
-  //   scene.add(gltf.scene);
-  //   car.position.z = 100;
-  //   car.position.setX(-20);
-  //   car.position.setY(0);
-  //   car.rotation.z = 1;
-  //   // animate();
-  // });
-  
-  //le model 3d face hero
-//   let face;
-//   let loaderFace = new THREE.GLTFLoader();
-//   loaderFace.load('3d/cryptodealer.gltf', function(gltf){
-//     face = gltf.scene.children[0];
-//     // face.scale.set(1,1,1);
-//     scene.add(gltf.scene);
-//     face.position.z = 40;
-//     face.position.setX(-5);
-//     face.position.setY(-3);
-//     face.rotation.y = 1.7;
-//     // animate();
-//   });
   
   
   // *************************************************************************
@@ -663,28 +572,6 @@ const material = new THREE.MeshStandardMaterial({ color: 0xf1c40f });
   
   
   
-  // function addStar() {
-  //   const geometry = new THREE.SphereGeometry(0.25, 24, 24);
-  //   const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
-  //   const star = new THREE.Mesh(geometry, material);
-  //
-  //   // const [x, y, z] = Array(3)
-  //   //   .fill()
-  //   //   .map(() => THREE.MathUtils.randFloatSpread(100));
-  //
-  //   const [x, y, z] = [Math.random() * (-50), Math.random() * -50, Math.random() * -50];
-  //
-  //
-  //   // alert(x + " " + y + " " + z);
-  //
-  //   star.position.set(x, y, z);
-  //   star.acceleration = 0.0002;
-  //   scene.add(star);
-  // }
-  // Array(200).fill().forEach(addStar);
-  
-  
-  
   
   
   window.addEventListener("resize", onWindowResize, false);
@@ -710,42 +597,6 @@ const material = new THREE.MeshStandardMaterial({ color: 0xf1c40f });
   const ambientLight = new THREE.AmbientLight(0xffffff);
   ambientLight.intensity = 1;
   scene.add(pointLight, ambientLight);
-  
-  // Helpers
-  
-  // const lightHelper = new THREE.PointLightHelper(pointLight)
-  // const gridHelper = new THREE.GridHelper(200, 50);
-  // scene.add(lightHelper, gridHelper)
-  
-  // const controls = new OrbitControls(camera, renderer.domElement);
-  
-  
-  
-  // *************************************************************************
-  
-  // ------------------------------ BACKGROUND -------------------------------------
-  
-  // *************************************************************************
-  
-//   const spaceTexture = new THREE.TextureLoader().load('img/galaxyTexture2.jpg');
-//   scene.background = spaceTexture;
-  
-  
-  // *************************************************************************
-  
-  // ------------------------------ TORUS -------------------------------------
-  
-  // *************************************************************************
-  
-//   const geometry = new THREE.TorusGeometry(10, 2, 6, 6);
-//   const material = new THREE.MeshStandardMaterial({ color: 0xf1c40f });
-  // const torus = new THREE.Mesh(geometry, material);
-//   const torus = new THREE.Mesh(geometry);
-  
-//   torus.position.z = -13;
-//   torus.position.x = 0;
-  
-//   scene.add(torus);
 
   
   // *************************************************************************
@@ -754,11 +605,11 @@ const material = new THREE.MeshStandardMaterial({ color: 0xf1c40f });
   
   // *************************************************************************
   
-  const geoTexture = new THREE.TextureLoader().load('upload/<%=general.showcaseElements[0].images[0]%>');
-  const elgeogeo = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map: geoTexture }));
-  scene.add(elgeogeo);
-  elgeogeo.position.z = -10;
-  elgeogeo.position.x = 0;
+  // const geoTexture = new THREE.TextureLoader().load('upload/<%=general.showcaseElements[0].images[0]%>');
+  // const elgeogeo = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map: geoTexture }));
+  // scene.add(elgeogeo);
+  // elgeogeo.position.z = -10;
+  // elgeogeo.position.x = 0;
   
   
   // *************************************************************************
@@ -870,47 +721,9 @@ const material = new THREE.MeshStandardMaterial({ color: 0xf1c40f });
   // Animation Loop
   
   var i = 0;
-  function animate(index) {
+  function animate() {
     requestAnimationFrame(animate);
-  
-
-    //const count = geometry.attributes.position.count;
-
-    // const now = Date.now() / 300
-    // for (let i= 0; i<200 ; i++){
-      
-      // var scale = i/100000; // adjust the multiplier to whatever
-      // sphere.scale.x += scale;
-      // sphere.scale.y += scale;
-      // sphere.scale.z += scale;
-      // i++;
-      // console.log(i);
-      // const xsin = Math.sin(i + now)
-      // geometry.attributes.position.setZ(i, xsin)
-    // }
-    elgeogeo.rotation.x += 0.01;
-    elgeogeo.rotation.y += 0.01;
-    // torus.rotation.x += 0.01;
-    // torus.rotation.y += 0.005;
-    // torus.rotation.z += 0.01;
-    // <% menu.forEach(function(menuElement, index){ %>
- 
-    //     moon<%= index %>.rotation.x += 0.005;
-    //     moon<%= index %>.rotation.y -= 0.005;
-    // <% }); %>
-    // moon.rotation.x += 0.005; !!!!!
-    // earth.rotation.y += 0.005;
-    starGeo.vertices.forEach(p => {
-      p.velocity += p.acceleration
-      p.z -= p.velocity;
-  
-      if (p.z < -200) {
-        p.z = 200;
-        p.velocity = 0;
-      }
-    });
-    starGeo.verticesNeedUpdate = true;
-    stars.rotation.z +=0.002;
+    camera.position.z += 0.01; // La caméra avance dans le tunnel
     renderer.render(scene, camera);
   }
   

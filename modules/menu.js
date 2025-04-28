@@ -13,6 +13,7 @@ module.exports = {
 function getMenu() {
     return new Promise(resolve => {
         Section.find({}, function(err, sections){
+            // console.log(sections);
             sections = sections.filter(e=>e.visible != false);
             sections = sections.filter(e=>e.type != "landing");
             resolve(sections);

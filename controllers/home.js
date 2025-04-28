@@ -26,28 +26,6 @@ module.exports.set = function(app) {
     // ------------------------------------ H O M E -----------------------------
 
     app.get("/", async function(req, res){
-        // General.findOne({config : "app"}, async function(err, general){
-        //     if (!general) {
-        //         //on créer la config de base du site
-        //         const general = new General(ConfigApp.general); 
-        //         general.save();
-        //         //On redirige vers lui meme une fois la config créer
-        //         res.redirect("/home");
-        //     } else {
-        //         //le menu data + general data
-        //         let dataMenu = await Menu.getMenu();
-        //         // console.log(general);
-        //         res.render("site/pages/home", {general: general, menu: dataMenu});
-        //     }
-        // }).populate({
-        //     path: 'showcaseElements',
-        //     model: 'Element',
-        //     populate: {
-        //         path: 'section',
-        //         model: 'Section'
-        //       } 
-        //   });
-
 
         General.findOne({config : "app"}, async function(err, general){
             if (!general) {
@@ -89,35 +67,35 @@ module.exports.set = function(app) {
 
     // ------------------------------------ H O M E   3 D-----------------------------
 
-    app.get("/home3d", async function(req, res){
-        General.findOne({config : "app"}, async function(err, general){
-            if (!general) {
-                //on créer la config de base du site
-                const general = new General(ConfigApp.general); 
-                general.save();
-                //On redirige vers lui meme une fois la config créer
-                res.redirect("/home");
-            } else {
-                //le menu data + general data
-                let dataMenu = await Menu.getMenu();
+    // app.get("/home3d", async function(req, res){
+    //     General.findOne({config : "app"}, async function(err, general){
+    //         if (!general) {
+    //             //on créer la config de base du site
+    //             const general = new General(ConfigApp.general); 
+    //             general.save();
+    //             //On redirige vers lui meme une fois la config créer
+    //             res.redirect("/home");
+    //         } else {
+    //             //le menu data + general data
+    //             let dataMenu = await Menu.getMenu();
 
-                let app = await Menu.getApp();
+    //             let app = await Menu.getApp();
 
-                const date = new Date();
-                const day = date.toLocaleDateString('en-EN', { year: 'numeric', month: 'long', day: 'numeric' });
+    //             const date = new Date();
+    //             const day = date.toLocaleDateString('en-EN', { year: 'numeric', month: 'long', day: 'numeric' });
                 
-                // console.log(general);
-                res.render("site/pages/home3d", {general: general, menu: dataMenu, app: app, day: day});
-            }
-        }).populate({
-            path: 'showcaseElements',
-            model: 'Element',
-            populate: {
-                path: 'section',
-                model: 'Section'
-              } 
-          });
-    });
+    //             // console.log(general);
+    //             res.render("site/pages/home3d", {general: general, menu: dataMenu, app: app, day: day});
+    //         }
+    //     }).populate({
+    //         path: 'showcaseElements',
+    //         model: 'Element',
+    //         populate: {
+    //             path: 'section',
+    //             model: 'Section'
+    //           } 
+    //       });
+    // });
 
 
     // ------------------------------------ MUSIC -----------------------------

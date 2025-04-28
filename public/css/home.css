@@ -21,7 +21,7 @@ body{
   }
 
   main {
-    /* width: 100vw; */
+    width: 100vw;
     color: white;
     z-index: 99;
     position: absolute;
@@ -125,8 +125,8 @@ body{
 
   .active,.link-site-medium:hover{
     color: #c23616 !important;
-    background: rgba(255, 255, 255, 0.95) !important;
-    /* border: 3px solid rgba(255, 255, 255, 0.95) !important; */
+    /* background: rgba(255, 255, 255, 0.95) !important; */
+    text-shadow: 2px 0 0 #b77921, -2px 0 0 #b77921, 0 2px 0 #b77921, 0 -2px 0 #b77921, 1px 1px #b77921, -1px -1px 0 #b77921, 1px -1px 0 #b77921, -1px 1px 0 #b77921;
     /* transform: scale(1.1); */
     text-shadow: none;
   }

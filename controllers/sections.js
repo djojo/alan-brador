@@ -112,6 +112,7 @@ module.exports.set = function(app) {
       var url = req.body.title;
       url = url.replace(/[#{}^;/§°()!.,÷\?:%@&=+$`"'€*]/g,'');
       url = url.replace(/' /g,'-');
+      url = url.replace(/ /g, '-');
       url = url.replace(/à/g, 'a');
       url = url.replace(/é/g, 'e');
       url = url.replace(/è/g, 'e');
@@ -241,51 +242,19 @@ module.exports.set = function(app) {
       //on met en lowercase le titre
       var title = req.body.title.toLowerCase();
 
-      //on créer l'url
+      //on modifie l'url
       var url = req.body.title;
       url = url.replace(/[#{}^;/§°()!.,÷\?:%@&=+$`"'€*]/g,'');
       url = url.replace(/' /g,'-');
+      url = url.replace(/ /g, '-');
       url = url.replace(/à/g, 'a');
       url = url.replace(/é/g, 'e');
       url = url.replace(/è/g, 'e');
       url = url.replace(/ù/g, 'u');
       url = url.replace(/ç/g, 'c');
       url = url.toLowerCase();
+      console.log("uuuuuuuuuuurl : ");
       console.log(url);
-
-      // On regarde si le titre de la section existe déjà
-      // Section.findOne({_id: req.body.sectionId}, function(err, section){
-      //     if(section.title == title){
-      //       console.log("meme titre car meme section !");
-      //     }
-      //     else{
-      //       try {
-      //         const sectionExists = Section.countDocuments({ title: title });
-      //         if(sectionExists == 1) {
-      //           console.log("meme titre sur une autre section !");
-      //             errors.push({
-      //                 param: 'title',
-      //                 msg: 'Une section porte déjà ce nom !'
-      //             });
-      //         }
-      //       } catch(err) {
-      //           res.redirect("/admin/sections/edit/" + req.body.sectionId);
-      //       }
-      //     }
-      // });
-
-      
-
-      // try{
-      //   if(errors.length > 0) {
-      //     req.flash("error", errors[0].msg);
-      //     // res.redirect("/", { messages: req.flash('info') });
-      //     res.redirect("/admin/sections/edit/" + req.body.sectionId);
-      //   }
-      // }
-      // catch (err){
-      //   console.log(err);
-      // }
 
       //l'image background
       let imageNewUrl = req.body.actualBackgroundImage;
