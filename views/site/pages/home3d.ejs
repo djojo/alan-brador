@@ -64,16 +64,31 @@
 
       <div class="menuSite gsapBox">
         <!-- ORDI  -->
-        <span id="menuBox">
+        <div id="menuBox">
           <div onclick="scrollll('home');" class="link-site-medium active">Home</div>
           <% menu.forEach(function(menuElement){ %>
               <div onclick="scrollll('<%=menuElement.url%>');" class="link-site-medium"><%=menuElement.title%></div>
           <% }); %>
           <!-- <div onclick="scrollll('contact');" class="link-site-medium">Contact</div> -->
-        </span>
+        </div>
+
+        <div id="menuBoxMobile">
+          <div class="close-menu-btn" onclick="$('#menuBoxMobile').fadeOut();">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </div>
+          <div onclick="scrollll('home');" class="link-site-medium active">Home</div>
+          <% menu.forEach(function(menuElement){ %>
+              <div onclick="scrollll('<%=menuElement.url%>');" class="link-site-medium"><%=menuElement.title%></div>
+          <% }); %>
+          <img id="logo-mobile" class="img logo-animation" style="margin: 50px auto;height: 500px; object-fit: contain;" src="pix/logo.png"/>
+          <!-- <div onclick="scrollll('contact');" class="link-site-medium">Contact</div> -->
+        </div>
 
         <!-- MOBILE -->
-        <div onclick="$('#menuBox').fadeIn();" class="link-site-medium" id="buttonMenu">Menu</div>
+        <div onclick="openMobileMenu(event);" class="link-site-medium" id="buttonMenu">Menu</div>
+
         <!-- <span id="menuMobile">
           <div onclick="scrollll('home');" class="link-site-medium active">Home</div>
           <br>
@@ -90,13 +105,39 @@
       </div>
       <script>
 
-        $(".link-site-medium").on("click",function(){
+        // Empêcher la fermeture du menu quand on clique dedans
+        $(document).ready(function() {
+          $('#menuBoxMobile').on('click', function(event) {
+            event.stopPropagation();
+          });
+          
+          // Fermer le menu quand on clique ailleurs sur le document
+          $(document).on('click', function(event) {
+            if($('#menuBoxMobile').is(':visible') && !$(event.target).closest('#buttonMenu').length) {
+              $('#menuBoxMobile').fadeOut();
+            }
+          });
+        });
+
+        // Fonction pour ouvrir le menu mobile
+        function openMobileMenu(e) {
+          if (e) {
+            e.stopPropagation();
+          }
+          $('#menuBoxMobile').fadeIn();
+        }
+
+        $(".link-site-medium").on("click",function(event){
               $("section").scrollTop(0);
+              // Ne pas fermer le menu si on clique sur le bouton menu
+              if(window.innerWidth < 800 && $(this).attr('id') !== 'buttonMenu'){
+                $('#menuBoxMobile').fadeOut();
+              }
         });
 
         function scrollll(id){
           if(window.innerWidth < 800 ){
-            $('#menuBox').fadeOut();
+            $('#menuBoxMobile').fadeOut();
           }
           if(id == "home"){
             $("#navScroll").fadeIn();
@@ -141,7 +182,7 @@
         <header style="margin-top:50px;" class="gsapBox">
             <!-- <h1 class="textgeo text-title">Alan&nbsp;&nbsp;&nbsp;&nbsp;Brador</h1> -->
             <img class="img logo-animation" style="margin: 50px auto;height: 500px; object-fit: contain;" src="pix/logo.png"/>
-            <h1 class="textgeo text-subtitle">Composer, Producer, DJ</h1>
+            <!-- <h1 class="textgeo text-subtitle">Composer, Producer, DJ</h1> -->
         </header>
         
 
@@ -528,9 +569,9 @@ const material = new THREE.MeshStandardMaterial({ color: 0xB77921 });
 
 
 </script>
-<% for(index=0;index<10*menu.length+3;index++){ %>
+<% for(index=0;index<20*menu.length+10;index++){ %>
     <script>
-        var pos = <%= (index+1)*15 %>; // écart augmenté
+        var pos = <%= (index+1)*30 %>; // écart beaucoup plus grand
         const torus<%= index %> = new THREE.Mesh(geometry, material); // applique le matériau doré
         torus<%= index %>.position.z = pos;
         torus<%= index %>.position.x = 0;
@@ -681,8 +722,8 @@ const material = new THREE.MeshStandardMaterial({ color: 0xB77921 });
 
     // moon.rotation.y += 0.0075; !!!!
     // earth.rotation.y += 0.0075;
-    stars.rotation.y +=0.02;
-    camera.position.z = t * -0.01;
+    stars.rotation.y += 0.03;
+    camera.position.z = t * -0.015;
     // camera.rotation.z += 1;
     // camera.position.z = t * -0.01;
     // camera.position.x = t * -0.0002;
@@ -725,7 +766,7 @@ const material = new THREE.MeshStandardMaterial({ color: 0xB77921 });
   var i = 0;
   function animate() {
     requestAnimationFrame(animate);
-    camera.position.z += 0.01; // La caméra avance dans le tunnel
+    camera.position.z += 0.005; // Ralentissement de l'avancée automatique
     renderer.render(scene, camera);
   }
   
